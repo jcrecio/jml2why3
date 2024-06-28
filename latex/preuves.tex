@@ -1,0 +1,415 @@
+\documentclass{article}
+
+\usepackage[utf8]{inputenc}
+
+\usepackage{amsthm}
+\usepackage{amsfonts}
+\usepackage{amsmath}
+
+\newtheorem{thm}{Theorem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{corollary}{Corollary}
+\newcommand{\capa}{\hbox{cap}}
+\newcommand{\rank}{\hbox{rank}}
+\newcommand{\NN}{\mathbb{N}}
+
+\DeclareMathOperator{\rang}{rang}
+\DeclareMathOperator{\Inversions}{Inversions}
+\DeclareMathOperator{\NB}{NB}
+\DeclareMathOperator{\CB}{CB}
+
+\begin{document}
+\title{Algorithmes de calcul des ordres d'appel}
+\author{Hugo Gimbert}
+\maketitle
+
+
+\section{Cas d'un seul taux boursier}
+
+Soit $C$ l'ensemble des candidats partitionné en deux sous-ensemble
+$B$ les candidats boursiers et $\NB$ les candidats non-boursiers.
+
+L'algorithme du calcul de l'ordre d'appel avec un seul taux
+prend en entrée un taux minimum de candidats boursiers
+$q_B\in [0,1]$
+et
+un classement pédagogique $\rang:C \to 1\ldots |C|$
+des candidats.
+On suppose que les rangs dans le classement pédagogique
+sont des entiers consécutifs à partir de $1$
+sans ex-aequo, c'est-à-dire que $\rang(C)=\{1\ldots |C|\}$.
+Ce classement induit une permutation $(c_i)_{i\in 1\ldots |C|}$,
+c'est l'unique permutation telle que $\forall i\in 1\ldots |C|, \rang(c_i) = i$.
+
+
+\subsection{Spécification}
+
+
+L'algorithme calcule  une autre permutation
+$(d_k)_{k\in 1\ldots |C|}$ des candidats, appelée l'ordre d'appel,
+qui garantit les propriétés suivantes.
+\begin{itemize}
+ \item[(P1)]
+ Pour tout $k$, l'ensemble de candidats $d_1,\ldots,d_k$ contient au moins $q_B  * k$  candidats boursiers ; ou sinon, aucun candidat parmi $d_{k+1}\ldots d_{|C|}$ n'est boursier. 
+ \item[(P2)]
+Un candidat boursier qui a le rang $r$ dans le classement pédagogique n’est jamais doublé par personne et aura donc un rang inférieur ou égal à $r$ dans l’ordre d’appel.
+\item[(P3)]
+Un candidat non boursier qui a le rang $r$ dans le classement pédagogique ne double jamais personne et aura un rang compris entre $r$ et l'arrondi à l'entier supérieur de $r(1 + q_B / (1 - q_B) )$ dans l’ordre d’appel. 
+\item[(P4)]
+Comparé au classement pédagogique, l’ordre d’appel minimise le nombre d’inversions (distance de Kendall-tau), parmi ceux qui garantissent la première propriété. 
+\item[(P5)]
+Si l’on munit l’ensemble des sélections ordonnées de candidats de l’ordre lexicographique induit par les classements, alors l’ordre d’appel est le maximum parmi toutes les sélections qui garantissent la première propriété.
+\end{itemize}
+
+\subsection{Implémentation}
+
+L'algorithme commence par extraire de  $(c_i)_{i\in 1\ldots |C|}$ les
+permutations correspondantes $(b_i)_{i\in 1\ldots |B|}$ des boursiers
+et $(nb_i)_{i\in 1\ldots |\NB|}$ des non-boursiers.
+Elles sont caractérisées par
+\begin{itemize}
+\item
+$(b_i)_{i\in 1\ldots |B|}$ est une permutation de $B$,
+\item
+$\forall 1 \leq i \leq j \leq |B|, \rang(b_i) \leq \rang(b_j)$.
+\item
+$(nb_i)_{i\in 1\ldots |\NB|}$ est une permutation de $\NB$,
+\item
+$\forall 1 \leq i \leq j \leq |\NB|, \rang(nb_i) \leq \rang(nb_j)$.
+\end{itemize}
+
+Le calcul est effectué en $n+1$
+ étapes $0,1,\ldots ,n$.
+ Au début de l'étape $k$, 
+ la permutation $d_1\ldots d_{k}$
+ est déjà calculée, ainsi que deux indices $r_k(B) \in 0\ldots |B|$
+ et $r_k(\NB) \in 0\ldots |\NB|$.
+ Initialement $k=0$ et $r_0(B)=0$ et $r_0(\NB)=0$.
+ Le calcul se termine au début de l'étape $k=n$.
+ 
+ Les deux indices $r_k(B)$ et $r_k(\NB)$ sont des pointeurs dans les
+ permutations $(b_i)_{i\in 1\ldots |B|}$
+ et $(nb_i)_{i\in 1\ldots |\NB|}$
+ qui sont mis-à-jour de manière à garantir les invariants
+ \begin{align*}
+&B\cap \{d_1,\ldots,d_k\}=\{b_1,\ldots, b_{r_k(B)}\}\\
+&\NB\cap \{d_1,\ldots,d_k\}=\{nb_1,\ldots, nb_{r_k(\NB)}\}\enspace.
+ \end{align*}
+ 
+\medskip
+
+Le choix de $d_{k+1}$ est fait à l'étape $k$ comme suit.
+
+On dit que
+le taux effectif de boursier est \emph{contraignant}
+après $d_1\ldots d_{k}$, si ajouter
+un non-boursier à la permutation ferait passer le taux de boursiers
+en dessous du  minimum fixé alors qu'il reste un boursier
+à sélectionner c'est-à-dire si 
+\[
+(r_k(B) < |B|) \text{ et } (r_k(B) < q_B * (k+1))\enspace.
+\]
+
+Le choix de $d_{k+1}$ est fait parmi un ou deux candidats \emph{éligibles}.
+L'ensemble des candidats éligibles est calculé comme suit.
+Si il reste un boursier non-sélectionné, i.e. si $r_k(B) < |B|$, alors le candidat $b_{r_k(B) + 1}$ est éligible.
+De plus, si le taux n'est pas contraignant après $d_1\ldots d_{k}$
+et qu'il reste un non-boursier non-sélectionné, i.e. si $r_k(\NB) < |\NB|$, alors le candidat $nb_{r_k(\NB) + 1}$ est éligible.
+
+On choisit pour $d_{k+1}$ le candidat le mieux classé pédagogiquement parmi les candidats
+éligibles.
+ \begin{itemize}
+ \item
+Si c'est le boursier $d_{k+1}=b_{r_k(B) + 1}$ alors
+$r_{k+1}(B)=r_k(B) + 1$ et $r_{k+1}(\NB)=r_k(\NB)$.
+ \item
+Si c'est le non-boursier $d_{k+1}=nb_{r_k(\NB) + 1}$ alors
+$r_{k+1}(B)=r_k(B) $ et $r_{k+1}(\NB)=r_k(\NB) + 1$.
+\end{itemize}
+ 
+  
+ 
+\subsection{Preuve des invariants}
+
+Pour démontrer les propriétés (P1)-(P5),
+il suffit de montrer que l'algorithme maintient les invariants suivants.
+
+Pour tout $k\in 0\ldots |C|$ on note
+\[
+g(k)
+=
+\mid B \cap \{d_1,\ldots , d_k\}\mid\enspace.
+\]
+Donc le taux est contraignant après $d_1,\ldots, d_k$
+si 
+\[
+( g(k) < |B|) \text{ et } (r_k(B) < q_B * (k+1))\enspace.
+\]
+
+L'algorithme satisfait les invariants suivants.
+ \begin{itemize}
+ \item[(I0)]
+$\forall 1 \leq i \leq k$,   $g(i) = r_i(B)$.
+\item[(I0')]
+ $\forall 1 \leq i \leq k$,   si le taux n'est pas contraignant 
+ après $d_1,\ldots, d_{i-1}$
+ alors $d_i$ est le candidat le mieux classé parmi
+ $C \setminus \{d_1\ldots d_{i-1}\}$.
+ Si le taux est  contraignant 
+  après $d_1,\ldots, d_{i-1}$
+ alors $d_i$ est le candidat le mieux classé parmi
+ $B \setminus \{b_1\ldots b_{g(i-1)}\}$
+ \item[(I1)]
+$d_1\ldots d_{k}$ est une permutation de $\{b_1\ldots b_{r_k(B)}\} \cup \{nb_1\ldots nb_{r_k(\NB)}\}$,
+
+ \item[(I2)]
+ $\forall 1 \leq i \leq k$,
+ si $d_i$ et $d_k$ sont de même type alors $\rang(d_i) \leq \rang(d_k)$.
+ \item[(I3)]
+ $\forall 1 \leq i \leq k$,
+ si $d_k$ est boursier alors $\rang(d_i) \leq \rang(d_k) \leq k$.
+ \item[(I4)]
+ $\forall 1 \leq i \leq k$,
+ si $d_k$ est non-boursier  et $\rang(d_i) > \rang(d_k)$
+ alors $d_i$ est boursier et le taux est contraignant 
+  après $d_1,\ldots, d_{i-1}$.
+ \item[(I5)]
+ $\forall 1 \leq i \leq k$,
+ si $d_i$ est non-boursier et $x_i=\mid \{ j \in 1\ldots i \mid \rang(d_j) > \rang(d_i)\} \mid $
+ alors $x_i < q_B * i + 1$.
+ \item[(I6)]
+ $\forall 1 \leq i \leq k$,
+ si le taux est contraignant  après $d_1,\ldots, d_{i}$
+ alors $i < |C|$ et $d_{i+1} \in B$.
+ \item[(I7)]
+ $\forall 1 \leq i \leq k$,
+ si  $g(i)  < q_B * i$ alors $g(i)=|B|$.
+ \end{itemize}
+
+
+\subsection{Preuve des propriétés à partir des invariants}
+
+ \medskip
+ 
+\paragraph{Propriété $(P1)$.}
+ Soit $k\in 1 \ldots |C|$ tel que $g(k) < q_B * k$.
+ Alors $g(k)=|B|$ d'après (I7) .
+ Donc d'après (I1),
+ \[
+ \forall k \leq i \leq |C|, B =  \{d_1\ldots d_{i}\}\cap B\enspace.
+ \]
+ donc par comptage, et puisque $(d_k)_{k \in 1 \ldots |C|}$ est une permutation,
+ \[
+ \forall k < i \leq |C|, d_i \not \in B\enspace.
+ \] 
+ 
+\paragraph{Propriété $(P2)$.}
+  Immédiate par (I3).
+ 
+ \paragraph{Propriété $(P3)$.}
+  D'après (I5) $x_k < q_B * k + 1$.
+ D'après (I2) et (I3), $1\ldots \rang(d_k) \subseteq \rang(\{d_1\ldots d_k\})$.
+ Donc $k=\rang(d_k) + x_k$.
+ Finalement
+ $k < \rang(d_k) + q_B * k + 1$
+ donc
+ $\rang(d_k) \leq k < 1 +  \rang(d_k) / (1 - q_B)$,
+ i.e. (P3). 
+ 
+ 
+ \paragraph{Propriété $(P5)$.}
+ Soit $(d'_k)_{k\in 1 \ldots |C|}$ une autre permutation de $C$ différente de $(d_k)_{k\in 1 \ldots |C|}$
+ et qui respecte la propriété $(P1)$.
+ Soit $k$ le plus petit indice où les deux permutations diffèrent.
+ On veut montrer que $\rang(d_k) < \rang(d'_k)$.
+
+Il y a deux cas, selon que le taux est contraignant ou non
+ après $d_1,\ldots, d_{k-1}$.
+
+ Si le taux n'est pas contraignant après $d_1,\ldots, d_{k-1}$,
+ alors d'après (I0'),
+ $d_k$ est le candidat le mieux classé parmi
+ $C \setminus \{d_1\ldots d_{k-1}\}$
+ et puisque $\{d_1\ldots d_{k-1}\}=\{d'_1\ldots d'_{k-1}\}$ alors 
+ $d'_k \in C \setminus \{d_1\ldots d_{k-1}\}$ donc
+ en particulier $d_k$ est mieux classé que $d'_k$ i.e. $\rang(d_k) < \rang(d'_k)$.
+
+ Si le taux est contraignant après $d_1,\ldots, d_{k-1}$
+ alors d'après (I0'),
+ $d_k$ est le candidat le mieux classé parmi
+ $B \setminus \{b_1\ldots b_{g(k-1)}\}$.
+ De plus $d'_k$ est nécessairement boursier 
+ car le taux est contraignant
+ et
+ $(d'_k)_{k\in 1 \ldots |C|}$ respecte $(P1)$ donc
+ puisque $\{d_1\ldots d_{k-1}\}=\{d'_1\ldots d'_{k-1}\}$ alors 
+ $d'_k \in B \setminus \{b_1\ldots b_{g(k-1)}\}$ et
+ en particulier $d_k$ est mieux classé que $d'_k$ i.e. $\rang(d_k) < \rang(d'_k)$.
+
+ 
+
+ \medskip
+ 
+ \paragraph{Propriété $(P4)$.}
+ On utilise
+ le \emph{nombre d'inversions} ou indice de Kendall-Tau
+ défini pour toute permutation $(e_k)_{k\in 1 \ldots |C|}$
+ des candidats par
+\begin{multline*}
+\Inversions((e_k)_{k\in 1 \ldots |C|}) = \mid \{ i \in 1 \ldots |C|, j \in 1 \ldots |C|,\\ (i < j \land \rang(e_i) > \rang(e_j)) \lor (i > j \land \rang(e_i) < \rang(e_j))\}\mid \enspace
+\end{multline*}
+
+Soit $(d''_k)_{k\in 1 \ldots |C|}$ qui minimise 
+le nombre d'inversions
+ parmi toutes les permutations qui respectent (P1).
+
+On veut montrer que $(d_k)_{k\in 1 \ldots |C|}= (d''_k)_{k\in 1 \ldots |C|}$.
+A contrario, supposons que ce soit faux,
+et soit $k$ le plus petit indice où les deux permutations diffèrent:
+\begin{align*}
+&d_1,\ldots , d_{k-1}=d'_1,\ldots , d''_{k-1}\\
+& d_k \neq d''_{k}\enspace.
+\end{align*}
+
+
+Montrons que 
+$(d''_k)_{k\in 1 \ldots |C|}$ vérifie la propriété (I2) avec $k=|C|$.
+Remarquons qu'échanger deux boursiers ou deux non-boursiers préserve
+$(P1)$.
+Donc si (I2) n'était pas satisfaite on pourrait échanger
+les deux candidats correspondants et diminuer ainsi le nombre d'inversions,
+contredisant de ce fait la minimalité de $(d''_k)_{k\in 1 \ldots |C|}$.
+
+Et 
+$(d''_k)_{k\in 1 \ldots |C|}$ vérifie la propriété (I3) avec $k=|C|$,
+par le même genre de raisonnement.
+
+\medskip
+
+Posons $d=d_k$ et $d''=d''_k$.
+Puisque les $(d_i)_{i\in 1\ldots |C|}$ sont deux à deux distincts,
+que $d_1,\ldots , d_{k-1}=d'_1,\ldots , d''_{k-1}$ et que $d_k = d \neq d'' =d''_k$
+alors il existe $k_0 \in k+1 \ldots |C|$ et $k_0''\in k+1 \ldots |C|$ tel que
+\begin{align*}
+&d = d_k = d''_{k''_0}\\
+&d'' = d''_k = d_{k_0}\enspace.
+\end{align*}
+
+Il y a trois cas selon les caractéristiques des candidats $d$ et $d''$.
+\begin{itemize}
+\item
+Supposons $d$ et $d''$  de même type. D'après (I2), 
+$d$ est le mieux classé des candidats de sa catégorie dans
+$|C|\setminus \{d_1,\ldots, d_{k-1}\}$.
+Et $d's$ est le mieux classé des candidats de sa catégorie dans
+$|C|\setminus \{d''_1,\ldots, d''_{k-1}\} = |C|\setminus \{d_1,\ldots, d_{k-1}\} $.
+Donc $d=d''$.
+\item
+
+Supposons $d$  boursier. 
+%Remarquons que ni $d$ ni $d'$ n'apparaissent dans
+% $d_1,\ldots , d_{k-1}=d'_1,\ldots , d'_{k-1}$.
+% 
+Puisque $(d_i)_{i\in 1\ldots |C|}$ et $(d''_i)_{i\in 1\ldots |C|}$ 
+respectent toutes deux la contrainte $P1$
+et puisqu'elles coincident sur leurs prefix de longueur $k-1$
+alors d'après (P5) $\rang(d_k) < \rang(d''_k)$.
+Donc $\rang(d''_{k''_0}) = \rang(d_k) < \rang(d_{k_0}) = \rang(d''_k)$.
+C'est une contradiction avec (I3) car $k < k''_0$ et $d = d''_{k''_0}$ est boursier.
+
+\item
+
+Reste le cas où $d$ n'est pas boursier et $d''$ est boursier.
+Que se passerait t'il si l'on échangeait le boursier $d''=d''_k$
+avec le non-boursier $d=d''_{k_0}$ et  dans $(d''_k)_{k\in 1 \ldots |C|}$?
+?
+Notons $(d'''_i)_{i\in 1 \ldots |C|}$ cette nouvelle permutation.
+
+Déjà, cela diminuerait le nombre d'inversions,
+i.e.
+\[
+\Inversions((d'''_i)_{i\in 1 \ldots |C|}) < \Inversions((d''_i)_{i\in 1 \ldots |C|})\enspace.
+\]
+en effet, $\rang(d''_{k_0}) = \rang(d_k) < \rang(d_{k_0}) = \rang(d''_k)$
+où l'inégalité centrale est obtenue en appliquant (I3)
+à $(d_i)_{i\in 1 \ldots |C|}$.
+
+On montre maintenant que la nouvelle permutation $(d'''_i)_{k\in 1 \ldots |C|}$ respecterait $(P1)$,
+ce qui contredira la minimalité de $(d''_i)_{k\in 1 \ldots |C|}$ et terminera la preuve.
+
+Pour toute permutation des candidats $(e_i)_{i\in 1\ldots |C|}$
+et tout $\ell \in 1 \ldots |C|$, notons $CB((e_i)_{i\in 1\ldots |C|},\ell)$
+la propriété
+\begin{itemize}
+ \item[]  l'ensemble de candidats $e_1,\ldots,e_i$ contient au moins $q_B  * i$  candidats boursiers ; ou sinon, aucun candidat parmi $e_{i+1}\ldots d_{|C|}$ n'est boursier.
+\end{itemize}
+Ce qui fait que pour montrer que $(d'''_i)_{k\in 1 \ldots |C|}$ satisfait $(P1)$
+il suffit de montrer $CB((d'''_i)_{i\in 1\ldots |C|},\ell)$ pour tout $\ell \in 1 \ldots |C|$.
+
+\medskip
+
+Le cas $\ell\in 1\ldots k-1$ est trivial car  $(d_i)_{k\in 1 \ldots |C|}$ satisfait $(P1)$
+et $d_1\ldots d_{k-1} = d''_1\ldots d''_{k-1}$.
+
+\medskip
+
+Passons au cas $\ell = k$.
+Prouvons tout d'abord que 
+l'ensemble de candidats $d_1 \ldots d_{k-1}$ contient au moins $q_B  * (k+1)$  candidats boursiers.
+En effet $(d_i)_{i\in 1\ldots |C|}$ satisfait (P1) et que
+$d_{k_0}$ est boursier donc
+l'ensemble de candidats $d_1,\ldots,d_{k}$ contient au moins $q_B  * (k+1)$  candidats boursiers
+et on conclut puisque $d=d_k$ est non-boursier.
+Puisque $d_1 \ldots d_{k-1}=d'''_1\ldots d'''_{k-1}$ alors
+l'ensemble de candidats $d'''_1,\ldots,d'''_{k}$ contient au moins $q_B  * (k+1)$  candidats boursiers
+donc $CB((d'''_i)_{i\in 1\ldots |C|},\ell)$ est bien vérifiée.
+
+\medskip
+
+Passons maintenant au cas $\ell \in k+1\ldots k_0-1$.
+Pour cela montrons au préalable qu'il n'y a que des boursiers dans la suite
+$d''_k,\ldots,d''_{k''_0-1}$.
+Soit $\ell \in k\ldots k''_0-1$ et supposons a contrario que $d''_\ell$ 
+est non-boursier.
+D'après (I2), appliqué à $(d_i)_{i\in 1\ldots |C|}$
+le candidat $d$ est le non-boursier le mieux classé 
+parmi $C \setminus \{d_1\ldots d_{k-1}\}$.
+Et par (I2) appliquée à $(d''_i)_{i\in 1\ldots |C|}$,
+le candidat $d''_\ell$ est le non-boursier le mieux classé
+parmi $C \setminus \{d''_1\ldots d''_{\ell-1}\}$.
+Or $\{d_1\ldots d_{k-1}\}\subseteq \{d''_1\ldots d''_{\ell-1}\}$
+donc $\rang(d)\leq \rang(d''_\ell)$.
+Donc $\rang(d''_{k''_0}) \leq \rang(d''_\ell)$ et $\ell < k''_0$,
+contradiction avec (I2).
+Finalement, il n'y a bien que des boursiers dans la suite
+$d''_k,\ldots,d''_{k''_0-1}$
+
+Montrons $CB((d'''_i)_{i\in 1\ldots |C|},\ell)$
+pour $\ell \in k+1\ldots k_0-1$.
+Comme montré plus haut,
+l'ensemble de candidats $d'''_1,\ldots,d'''_{k}$ contient au moins $q_B  * (k+1)$  candidats boursiers
+donc l'ensemble de candidats $d'''_1,\ldots,d'''_{\ell}$ contient au moins 
+$q_B  * (k+1) + (\ell - k)$  candidats boursiers et on conclut puisque
+$q_B  * (k+1) + (\ell - k) \geq q_B  * (k+1 + \ell - k) = q_B  * (1 + \ell)$
+
+\medskip
+
+On termine en montrant que
+ $CB((d'''_i)_{i\in 1\ldots |C|},\ell)$
+pour $\ell \in k_0\ldots |C|$.
+Puisque $(d''_i)_{i\in 1\ldots |C|}$ satisfait (P1)
+alors $CB((d''_i)_{i\in 1\ldots |C|},\ell)$ est vraie.
+Les ensembles de candidats $d''_1,\ldots,d''_{\ell}$ et $d'''_1,\ldots,d'''_{\ell}$
+coincident à permutation près, donc ils contiennent le même nombre de boursiers
+et de plus si il n'y a aucun boursier dans $d''_{\ell+1},\ldots,d''_{|C|}$
+alors il n'y en a aucun dans $d'''_{\ell+1},\ldots,d'''_{|C|}$.
+Donc $CB((d'''_i)_{i\in 1\ldots |C|},\ell)$ est bien vérifiée.
+
+\end{itemize}
+
+
+
+ 
+  
+ 
+\end{document}

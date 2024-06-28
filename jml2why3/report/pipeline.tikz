@@ -1,0 +1,29 @@
+\begin{tikzpicture}[
+    every node/.style={
+      % draw,
+      align=center,
+      anchor=base,
+      text depth=+0pt
+    },
+    node distance=2em,
+    process/.style={mybox,join},
+    data/.style={join=by -latex},
+  ]
+  \begin{scope}[mychain=going right]
+    \node[data] {Java/JML\\\small (source code)};
+    \node[process] {OpenJML};
+    \node[data] {Java/JML\\\small (typed AST)};
+    \node[process] {\jmlwhy{}};
+    \node[data] {Why3\\\small (source code)};
+    \node[process] (why) {Why3};
+    \node[data] (vcs) {VCs +\\proofs};
+  \end{scope}
+  \node (vcsa) [above=1em of vcs] {\ldots};
+  \node (vcsb) [below=1em of vcs] {\ldots};
+  \draw[-latex] (why) edge (vcsa) (why) edge (vcsb);
+\end{tikzpicture}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "test"
+%%% End:

@@ -1,0 +1,334 @@
+
+module Nullable
+
+  type nullable 'a = Null | NonNull 'a
+
+  let predicate is_null (n:nullable 'a) ensures { result <-> n = Null } =
+    match n with
+    | Null -> true
+    | NonNull _ -> false
+    end
+
+  let predicate is_non_null (n:nullable 'a) ensures { result <-> n <> Null } =
+    [@inline:trivial]
+    match n with
+    | NonNull _ -> true
+    | Null -> false
+    end
+
+  lemma not_null_is_non_null :
+    forall n: nullable 'a. n <> Null ->
+    exists x: 'a. n = NonNull x
+
+  lemma is_null_or_non_null :
+    forall n: nullable 'a.
+    is_null n \/ is_non_null n
+
+  function get_non_null (n:nullable 'a) : 'a
+
+  axiom get_non_null__spec1: forall n: nullable 'a, x: 'a.
+    n <> Null (* axiomatization is a snakepit *) ->
+    get_non_null n = x ->
+    n = NonNull x
+
+  axiom get_non_null__spec2: forall n: nullable 'a, x: 'a.
+    n = NonNull x ->
+    get_non_null n = x
+
+  let get_non_null (n:nullable 'a) : 'a
+    requires { is_non_null n }
+    ensures { n = NonNull result }
+    ensures { match n with NonNull x -> result = x | Null -> false end }
+  = match n with
+    | NonNull x -> x
+    | Null -> absurd
+    end
+
+  let function map (f: 'a -> 'b) (n: nullable 'a) : nullable 'b
+    ensures { match n with Null -> result = Null | NonNull x -> result = NonNull (f x) end }
+    returns {
+      | Null -> n = Null
+      | NonNull y -> match n with NonNull x -> y = f x | Null -> false end
+    }
+  = match n with
+    | Null -> Null
+    | NonNull x -> NonNull (f x)
+    end
+
+  lemma map_nullable_keeps_nullable: forall n, f: 'a -> 'b.
+    is_non_null n <->
+    is_non_null
+      (match n with
+       | Null -> Null
+       | NonNull x -> NonNull (f x)
+       end)
+end
+
+module LinkedList
+  use int.Int
+  use mach.int.Int32
+  use seq.Seq
+  use Nullable
+
+  type linked_list 'a = {
+    mutable seq : seq (nullable 'a);
+    mutable size: int32
+  }
+  invariant { length seq = size }
+  by { seq = empty; size = 0:int32 }
+  meta coercion function seq
+
+  predicate is_empty (l: linked_list 'a) =
+    l = empty
+
+  let is_empty (l: linked_list 'a) : bool
+    ensures { result <-> is_empty l }
+  = length l.seq = 0
+
+  function get (l: linked_list 'a) (i: int) : nullable 'a =
+    [@inline:trivial]
+    Seq.get l.seq i
+
+  let empty () : linked_list 'a
+    ensures { is_empty result }
+  = { seq = empty; size = 0:int32 }
+
+  let add (l: linked_list 'a) (v: nullable 'a) : unit
+    writes { l.seq, l.size }
+    requires { l.size < max_int32 }
+    ensures { length l = length (old l) + 1 }
+    ensures { l[length l - 1] = v }
+    ensures { forall i. 0 <= i < length (old l) -> l[i] = (old l)[i] }
+  = l.seq <- snoc l.seq v;
+    l.size <- l.size + (1:int32);
+
+  use mach.int.Int32
+
+  let get (l: linked_list 'a) (i: int32)
+    ensures { result = get l i }
+  = Seq.get l.seq (to_int i)
+end
+
+module Queue
+  use export queue.Queue
+  use int.Int
+  use seq.Seq
+  use seq.FreeMonoid
+  use Nullable
+
+  (** Closer to Java’s queue methods *)
+
+  let nullable_push (v: nullable 'a) (q: t 'a)
+    requires { v <> Null }
+    writes { q }
+    ensures { match v with NonNull x -> q = snoc (old q) x | Null -> false end }
+    (* ensures { forall x: 'a. q = snoc (old q) x -> v = NonNull x } *)
+  = match v with
+    | NonNull x -> push x q
+    | Null -> absurd
+    end
+
+  let nullable_peek (q: t 'a) : nullable 'a =
+    ensures peek_empty { [@expl: peek empty] q = empty <-> result = Null }
+    ensures peek_non_empty { [@expl: peek non_empty] q <> empty -> result = NonNull q[0] }
+    if is_empty q then
+      Null
+    else
+      NonNull (safe_peek q)
+
+  let nullable_pop (q: t 'a) : nullable 'a =
+    writes { q }
+    ensures pop_empty {[@expl: pop empty1] old q = empty -> q = empty /\ is_null result }
+    ensures pop_non_empty {[@expl: pop non_empty2] old q <> empty -> q = (old q)[1 ..] /\ result = NonNull (old q)[0] }
+    returns {
+      | Null -> old q = q = empty 
+      | NonNull x -> old q <> empty /\ q = (old q)[1..] /\ x = (old q)[0]
+    }
+    if is_empty q then
+      Null
+    else
+      NonNull (safe_pop q)
+
+  use mach.int.Int32
+
+  val length32 (q: t 'a) : int32
+    ensures { result = length q }
+end
+
+module Address
+
+  type address
+
+  val same (a1 a2: address) : bool
+    ensures { result = True <-> a1 = a2 }
+
+  val fresh (_: unit) : address 
+
+  use bool.Bool
+  use Nullable
+
+  let predicate nullable_same (p: 'a -> 'a -> bool) (o1 o2: nullable 'a) =
+    match o1, o2 with
+    | NonNull x1, NonNull x2 ->
+      p x1 x2
+    | Null, Null -> true
+    | _ -> false
+    end
+
+  (* lemma nullable_same_transitive: forall p: 'a -> 'a -> bool, o1 o2 o3. *)
+  (*   nullable_same p o1 o2 -> *)
+  (*   nullable_same p o2 o3 -> *)
+  (*   nullable_same p o1 o3 *)
+
+  let predicate nullable_same_address (address: 'a -> address) (o1 o2: nullable 'a) =
+    match o1, o2 with
+    | NonNull x1, NonNull x2 ->
+      same (address x1) (address x2)
+    | Null, Null -> true
+    | _ -> false
+    end
+end
+
+module Utils
+  use int.Int
+  use mach.int.Int32
+  use mach.peano.Peano
+  use bool.Bool
+  use import seq.Seq as S
+  use seq.FreeMonoid
+  use import mach.array.Array32 as A
+  use map.Map
+  use Nullable
+
+  (** {2 General utilities} *)
+
+  let ignore (_:'a) = ()
+
+  predicate exists_ (_: 'a) =
+    true (* Yes, really? Enforces invariants on the argument; target for JML’s `\invariant_for` *)
+
+  (** {2 Boolean utilities} *)
+
+  let biff (b1 b2: bool) : bool ensures { result = True <-> b1 = b2 }
+    = notb (xorb b1 b2)
+
+  (** {2 Int32 utilities} *)
+
+  let peano_to_int32 (p:Peano.t) : int32 =
+    requires { 0 <= p <= max_int32 }
+    ensures { result = p.v }
+    Int32.of_int (Peano.to_int p)
+
+  let lemma int32exists (i:int)
+    requires { Int32.in_bounds i }
+    ensures { Int32.to_int result = i }
+  = Int32.of_int i
+
+  (** {2 Array utilities} *)
+
+  (** Copied from array.Array; missing from mach.array.Array32 *)
+  val ghost function ([<-]) (a: A.array 'a) (i: int) (v: 'a): A.array 'a
+    ensures { result.length = a.length }
+    ensures { result.elts = Map.(a.elts[i <- v]) }
+
+  predicate non_null_elements (a:array (nullable 'a)) =
+    [@inline:trivial]
+    forall i. 0 <= i < a.length -> is_non_null Map.(a.elts[i])
+
+  lemma aux1 : 
+    forall a: array 'a, i x.
+    A.(a[i <- x][i]) = x
+
+  lemma aux2 :
+    forall a: array 'a, i j x.
+    i <> j ->
+    A.(a[i <- x][j] = a[j])
+
+  (** {2 Sequence utilities} *)
+
+  lemma non_zero_length_seq: forall s: seq 'a.
+    0 < S.length s <-> s <> empty
+
+  lemma pop_non_empty_stack_decreases_length : forall s s': seq 'a.
+    0 < S.length s ->
+    s' = s[1 ..] ->
+    Seq.length s' = Seq.length s - 1
+
+  lemma shift_seq_equal: forall s: seq 'a.
+    forall j. 0 <= j < S.length s - 1 ->
+    S.(s[1..][j] = s[j+1])
+
+  lemma shift_seq_length: forall s: seq 'a.
+    S.(0 < length s -> length s - 1 = length s[1..length s])
+
+  lemma in_range_rest: forall s: seq (nullable int), min max.
+    S.(forall i. 0 <= i < length s -> match s[i] with Null -> true | NonNull n -> min <= n < max end) ->
+    S.(forall i. 0 <= i < length s - 1 -> match s[1..][i] with Null -> true | NonNull n -> min <= n < max end)
+
+  (** {2 Occurrences in array} *)
+
+  use int.NumOf
+
+  function occ_array (x: 'a) (a: array 'a) (l u: int) : int =
+    [@inline:trivial]
+    numof (fun i -> a.elts i = x) l u
+
+  lemma occ_array_non_negative : forall x: 'a, a l u.
+    0 <= occ_array x a l u
+
+  let rec lemma occ_array_zero (a: array 'a) (x: 'a) (l u i: int)
+    requires { l <= u }
+    requires { occ_array x a l u = 0 }
+    ensures { l <= i < u -> a.elts i <> x }
+    variant { u - l }
+  = if l = u
+    then ()
+    else occ_array_zero a x (l+1) u i
+
+  lemma l3 :
+    forall a1 a2: array 'a, x i.
+    length a1 = length a2 ->
+    0 <= i < a1.length ->
+    a1.elts = set a2.elts i x ->
+    occ_array x a1 0 (i + 1) =
+    occ_array x a2 0 i + 1
+    (* unfold A.([])! *)
+
+  lemma l4 :
+    forall a1 a2: array 'a, x y i.
+    length a1 = length a2 ->
+    0 <= i < a1.length ->
+    x <> y ->
+    a1.elts = set a2.elts i y ->
+    occ_array x a1 0 (i + 1) =
+    occ_array x a2 0 i
+    (* unfold A.([])! *)
+
+  (** {2 Occurrences} *)
+
+  use seq.Occ
+
+  lemma occ_non_negative : forall s: seq 'a, x l u.
+    0 <= Occ.occ x s l u
+
+  lemma l1 : Seq.(
+    forall s: seq 'a, x.
+    0 < length s ->
+    x <> s[0] ->
+    occ_all x s = occ_all x s[1..]
+  )
+
+  lemma l2 :  Seq.(
+    forall s: seq 'a, x.
+    0 < length s ->
+    x = s[0] ->
+    occ_all x s = occ_all x s[1..] + 1
+  )
+
+  lemma l5: Seq.(
+    forall s: seq 'a, i x.
+    0 <= i < length s ->
+    s[i] = x ->
+    0 < occ_all x s
+  )
+end

@@ -1,0 +1,35 @@
+\documentclass[a4paper,12pt,titlepage]{extarticle}
+
+\input{packages.tex}
+
+\bibliography{bib}
+
+\begin{document}
+
+\input{title.tex}
+
+\input{abstract.tex}
+
+\tableofcontents
+
+\newpage{}
+
+\input{mf.tex}
+\input{parcoursup.tex}
+
+\input{preuves.tex}
+\input{perspectives.tex}
+
+\input{liens_cours.tex}
+
+% TODO: conclusion ?
+
+% TODO: contributions à why3 ? Queue, PQueue, lemmes sur les séquences, permutations...
+
+\appendix
+
+\input{appendix.tex}
+
+\printbibliography{}
+
+\end{document}

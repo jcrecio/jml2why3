@@ -1,0 +1,39 @@
+\section{Parcoursup}
+  \subsection{Généralités}
+    Parcoursup est une plateforme gouvernementale française utilisée par les étudiants pour candidater à des formations de l'enseignement supérieur. Le principe général est le suivant:
+    \begin{itemize}
+      \item les étudiants candidatent à plusieurs formations ;
+      \item chaque formation classe l'ensemble des étudiants selon les critères de son choix\footnote{On parlera de \emph{classement pédagogique}.} ;
+      \item la plateforme Parcoursup apporte des modifications aux classements pédagogiques\footnote{Le nouveau classement est appelé l'\emph{ordre d'appel}.}, selon des critères et des algorithmes publics et notifie les candidats acceptés, qui doivent alors faire un choix parmi les formations où ils sont acceptés\footnote{Tout en gardant la possibilité de choisir une autre formation où ils sont sur liste d'attente pour le moment.} ;
+      \item lorsqu'un candidat choisit une formation parmi celles où il a été accepté, cela libère des places dans les autres, qui sont alors proposées aux candidats suivants sur l'ordre d'appel.
+    \end{itemize}
+
+    Plus de détails sont donnés dans~\cite{AlgoPS}.
+
+  \subsection{Algorithme avec taux de boursiers}
+
+    Pour passer du classement pédagogique à l'ordre d'appel, il existe plusieurs cas, selon les formations. Chaque cas correspond à un algorithme particulier. Le cas le plus simple est celui avec un taux de boursiers.
+
+    Pour chaque formation sélective, le recteur de l'académie fixe un taux minimum de boursiers à qui l'on doit proposer une place dans la formation.
+
+    Initialement, l'ordre d'appel est vide. On dit que le taux est contraignant s'il reste au moins un boursier qui n'a pas été ajouté à l'ordre d'appel et si le fait d'ajouter un candidat non-boursier à l'ordre d'appel rendrait le taux de boursiers dans l'ordre d'appel inférieur au taux minimum.
+
+    Pour remplir l'ordre d'appel, on procède comme suit:
+
+    \begin{itemize}
+      \item si le taux n'est pas contraignant, alors, on prend le meilleur candidat, qu'il soit boursier ou non ;
+      \item si le taux est contraignant, alors, on prend le meilleur candidat boursier.
+    \end{itemize}
+
+  \subsection{Propriétés de l'algorithme avec taux de boursiers}
+
+    On souhaite vérifier cinq propriétés de l'algorithme. Elles ont été publiées avec la description des différents algorithmes\cite{AlgoPS}. On a introduit une propriété $P_0$, qui est une propriété implicite du document.
+
+    \begin{description}
+      \item[$P_0$] L'ordre d'appel est une permutation du classement pédagogique. Ce qui signifie que l'on n'a pas ajouté ou perdu de candidat en modifiant le classement.
+      \item[$P_1$] Pour tout préfixe de l'ordre d'appel, soit le taux de boursiers est respecté, soit il n'y a plus aucun boursier après. Ce qui signifie que l'on a toujours respecté le taux si c'était possible.
+      \item[$P_2$] Un candidat boursier avec le rang $r$ dans le classement pédagogique aura au moins le rang $r$ dans l'ordre d'appel. Ce qui signifie qu'un boursier n'est jamais doublé par personne, et donc, que son rang ne peut que devenir meilleur ou rester le même.
+      \item[$P_3$] Un candidat non-boursier avec le rang $r$ dans le classement pédagogique aura au mieux le rang $r$ dans l'ordre d'appel et au pire le rang $r \times (1 + q_b / (100 - q_b)$ avec $q_b$ le taux de boursiers. Ce qui signifie qu'un candidat non-boursier ne double jamais personne, et donc, que son rang ne peut que rester le même ou être moins bon ; cela signifie aussi qu'il ne peut pas perdre plus de places que ce qu'impose le taux minimum de boursiers.
+      \item[$P_4$] Parmi toutes les permutations possibles du classement pédagogique qui respectent $P_1$, l'ordre d'appel est celle qui minimise le nombre d'inversions --- distance de Kendall-tau. Cela signifie que pour faire respecter le taux de boursiers, on a modifié le classement pédagogique le moins possible.
+      \item[$P_5$] L'ordre d'appel est le minimum selon l'ordre lexicographique induit par les classements parmi toutes les permutations possibles du classement pédagogique qui respectent $P_1$. Cela signifie que pour faire respecter le taux de boursiers, on a favorisé les meilleurs candidats autant que faire se peut.
+    \end{description}

@@ -1,0 +1,39 @@
+\section{Le \bsc{lri}, l'équipe \bsc{vals}, les méthodes formelles}
+
+  Le \bsc{lri}\footnote{Laboratoire de Recherche en Informatique.} est un laboratoire de l'Université Paris-Sud. C'est une \bsc{umr}\footnote{Unité Mixte de Recherche.} du \bsc{cnrs}. Le \bsc{lri} est composé de plusieurs équipes dont notamment l'équipe \bsc{vals}\footnote{Vérification, Algorithmes, Langages et Systèmes.}, qui mène de nombreux travaux dans le domaine des méthodes formelles.
+
+  \subsection{\enquote{Software is hard.}\texorpdfstring{\protect\footnote{Donald \bsc{Knuth}}}{}}
+
+  Du fait de leur complexité, les programmes sont rarement exempts de bugs. Une question majeure et récurrente en informatique est de trouver des moyens permettant de prévenir l'introduction de bugs et de garantir leur absence. Pour cela, plusieurs méthodes sont possibles.
+
+  \subsection{Approche \emph{a priori}}
+
+  Une solution partielle à ce problème a par exemple été de chercher à concevoir des langages de programmation qui permettent d'éviter des classes d'erreurs courantes. C'est par exemple ce qui a été fait dans des langages comme OCaml avec le typage statique. Cependant, cette approche ne permet de vérifier que des propriétés génériques (e.g. \emph{le programme est bien typé}) et non pas spécifiques à notre programme (e.g. \emph{le programme calcule les mille premiers nombres premiers}). En effet, dans une telle approche, on ne connaît pas le programme à l'avance et encore moins les propriétés spécifiques qu'il est censé vérifier. Or, prouver une propriété qui n'a pas même été énoncée est impossible.
+
+  \subsection{Les tests}
+    \subsubsection{Les tests manuels}
+    On peut bien évidemment tester notre programme à la main, en l'exécutant et vérifiant qu'il se comporte comme prévu. Cette approche comporte de nombreux inconvénients: dans certains cas il est impossible ou extrêmement coûteux de tester le programme en conditions réelles, une intervention humaine est nécessaire à chaque fois que l'on veut vérifier le programme. Il n'est pas non plus garanti que l'on aura testé l'ensemble des cas possibles d'utilisation du programme. Enfin, si l'on détecte un problème, il n'est pas forcément aisé de retrouver l'origine de celui-ci. De plus, se comporter \emph{comme prévu} est plutôt vague et sujet à l'interprétation.
+
+    \subsubsection{Les tests unitaires}
+Pour pallier à cela, il est possible de réaliser des \emph{tests unitaires}: pour chaque fonction de notre programme, on écrit à la main un ensemble de tests automatisés, qui appellent la fonction sur une entrée donnée et comparent le résultat avec le résultat attendu. Cette façon de faire permet de résoudre la majorité des problèmes liés aux tests manuels, à l'exception de l'exhaustivité. Une fonction peut potentiellement avoir un nombre très important ou infini d'entrées valides: il n'est alors pas envisageable ou possible d'écrire un test pour chacune.
+
+  \subsection{La vérification}
+  Si l'on veut vérifier une propriété de manière exhaustive, et donc, sur une infinité de cas, il ne nous reste plus qu'une possibilité: la démonstration mathématique. On pourrait faire une preuve sur le papier, mais bien que pouvant fournir une bonne intuition quant à la raison pour laquelle le programme est correct ou sur la marche à suivre pour la preuve, il est possible et même courant de se tromper en procédant ainsi. On préfère pour cela, et pour d'autres raisons, une preuve mécanisée.
+
+Il existe plusieurs méthodes permettant de vérifier une propriété d'un programme. On peut notamment citer le \emph{model checking}, l'\emph{interprétation abstraite} et la \emph{vérification déductive}.
+
+  \subsubsection{La vérification déductive}
+
+    \enquote{Deductive program verification is the art of turning the correctness of a program into a mathematical statement and then proving it.}\cite{Filliatre11}
+
+    Étant donnée une spécification d'un programme, il faut donc commencer par la transcrire. Cela nécessite d'avoir une logique permettant d'énoncer de façon formelle les propriétés que l'on souhaite vérifier.
+
+    L'énoncé permet alors de générer des \bsc{vc}\footnote{Verification Conditions, ou conditions de vérification en français.}, qu'il faut prouver. Pour cela, deux méthodes sont possibles :
+    \begin{itemize}
+      \item une preuve interactive, au moyen d'assistants de preuve tels que Coq, HOL ou Isabelle ;
+      \item une preuve automatique, où l'on délègue à des prouveurs automatiques de théorèmes tels qu'Alt-Ergo, Z3 ou CVC4.
+    \end{itemize}
+
+    La vérification déductive peut mener à la génération d'un important nombre de \bsc{vc}. On préfère éviter d'avoir à toutes les traiter interactivement et donc, on essaie autant que faire se peut de passer par une preuve automatique. Cela présente plusieurs avantages: l'effort à fournir est réduit et l'on peut plus facilement modifier le programme ou bien l'énoncé que l'on cherche à vérifier.
+
+    Dans certains cas, les prouveurs échouent. Il faut alors tenter de les aider en ajoutant des assertions ou des invariants, ou, en dernier recours, passer à une preuve interactive.

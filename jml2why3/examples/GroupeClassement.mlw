@@ -1,0 +1,159 @@
+use int.Int
+use ref.Ref
+use mach.peano.Peano
+use mach.int.Int32
+use seq.Mem
+use seq.FreeMonoid
+use option.Option
+use bool.Bool
+use map.Map
+use seq.Seq
+use queue.Queue
+use jml2why3.Utils
+use jml2why3.Nullable
+use jml2why3.Array
+
+(** Manual conversion of GroupeClassement.java as target of jml2why3 *)
+
+type voeu_classe = {
+  mutable estBoursier: bool;
+  mutable estResident: bool;
+  mutable rang: int32;
+  mutable rangAppel: int32;
+}
+
+let voeu_classe__new () : voeu_classe =
+  val rang: int32 in
+  val estBoursier: bool in
+  val estResident: bool in
+  let rangAppel = 0 in
+  {rang=rang; estBoursier=estBoursier; estResident=estResident; rangAppel=rangAppel}
+
+let voeu_classe__init (this: voeu_classe) (rang: int32) (estBoursier estResident: bool) =
+  this.rang <- rang;
+  this.estBoursier <- estBoursier;
+  this.estResident <- estResident
+
+let voeu_classe__test () =
+  let v =
+    ref (let this = voeu_classe__new () in
+         voeu_classe__init this 0 true true;
+         this) in
+  v.contents <- {v.contents with rang=1}
+
+let calculer_ordre_appel (voeux_classes: array voeu_classe) (tauxMinBoursiersPourcents tauxMinResidentsPourcents: int32) : array voeu_classe
+  requires { voeux_classes.length * 100 < max_int32 }
+  requires { non_null_elements voeux_classes }
+  requires { 0 <= tauxMinBoursiersPourcents <= 100 }
+  requires { 0 <= tauxMinResidentsPourcents <= 100 }
+  ensures { non_null_elements result }
+= let qBR, qBnR, qnBR, qnBnR = Queue.create (), Queue.create (), Queue.create (), Queue.create () in
+
+  let ref i = 0:int32 in
+  while i <= voeux_classes.length - 1 do
+    invariant { Seq.length qBR + Seq.length qBnR + Seq.length qnBR + Seq.length qnBnR = i }
+    invariant { forall i. 0 <= i < Seq.length qBR -> qBR[i].estBoursier /\ qBR[i].estResident }
+    invariant { forall i. 0 <= i < Seq.length qBnR -> qBnR[i].estBoursier /\ not qBnR[i].estResident }
+    invariant { forall i. 0 <= i < Seq.length qnBR -> not qnBR[i].estBoursier /\ qnBR[i].estResident }
+    invariant { forall i. 0 <= i < Seq.length qnBnR -> not qnBnR[i].estBoursier /\ not qnBnR[i].estResident }
+    let voe = get_non_null voeux_classes[i] in
+    if voe.estBoursier then
+      if voe.estResident then
+        Queue.push (voe:{voeu_classe}) qBR
+      else
+        Queue.push (voe:{voeu_classe}) qBnR
+    else
+      if voe.estResident then
+        Queue.push (voe:{voeu_classe}) qnBR
+      else
+        Queue.push (voe:{voeu_classe}) qnBnR;
+    i <- i + 1
+  done;
+
+  let nbBoursiersTotal = peano_to_int32 (Queue.length qBR) + peano_to_int32 (Queue.length qBnR) in
+  let nbResidentsTotal = peano_to_int32 (Queue.length qBR) + peano_to_int32 (Queue.length qnBR) in
+
+  let ordreAppel = Array.make voeux_classes.length in
+
+  let ref nbAppeles = 0:int32 in
+  while nbAppeles <= voeux_classes.length - 1 do
+    invariant { 0 <= Seq.length qBR + Seq.length qBnR <= nbBoursiersTotal }
+    invariant { 0 <= Seq.length qBR + Seq.length qnBR <= nbResidentsTotal }
+    invariant { nbAppeles + Seq.length qBR + Seq.length qBnR + Seq.length qnBR + Seq.length qnBnR = voeux_classes.length }
+    invariant { forall i. 0 <= i < Seq.length qBR -> qBR[i].estBoursier /\ qBR[i].estResident }
+    invariant { forall i. 0 <= i < Seq.length qBnR -> qBnR[i].estBoursier /\ not qBnR[i].estResident }
+    invariant { forall i. 0 <= i < Seq.length qnBR -> not qnBR[i].estBoursier /\ qnBR[i].estResident }
+    invariant { forall i. 0 <= i < Seq.length qnBnR -> not qnBnR[i].estBoursier /\ not qnBnR[i].estResident }
+    invariant { forall i. 0 <= i < voeux_classes.length -> (ordreAppel i = Null <-> nbAppeles <= i) }
+
+    let nbBoursierRestants = peano_to_int32 (Queue.length qBR) + peano_to_int32 (Queue.length qBnR) in
+    let nbResidentsRestants = peano_to_int32 (Queue.length qBR) + peano_to_int32 (Queue.length qnBR) in
+    let nbBoursiersAppeles = nbBoursiersTotal - nbBoursierRestants in
+    let nbResidentsAppeles = nbResidentsTotal - nbResidentsRestants in
+
+    let contrainteTauxBoursier = 0 < nbBoursierRestants  && (nbBoursiersAppeles * 100 < tauxMinBoursiersPourcents * (1 + nbAppeles)) in
+    assert { contrainteTauxBoursier -> 0 < Seq.length qBR || 0 < Seq.length qBnR };
+
+    let contrainteTauxResident = 0 < nbResidentsRestants && (nbResidentsAppeles * 100 < tauxMinResidentsPourcents * (1 + nbAppeles)) in
+    assert { contrainteTauxResident -> 0 < Seq.length qBR || 0 < Seq.length qnBR };
+
+    (* assert { qBR <> empty || qBnR <> empty || qnBR <> empty || qnBnR <> empty }; *)
+
+    let meilleur = ref Null in
+    (if not Queue.is_empty qBR
+     then
+       let v = Queue.safe_peek qBR in
+       (* assert { v.estBoursier /\ v.estResident }; *)
+       meilleur.contents <- NonNull v);
+    (if not Queue.is_empty qBnR &&
+        not contrainteTauxResident &&
+          (is_null meilleur.contents || (get_non_null meilleur.contents).rang < (Queue.safe_peek qBnR).rang)
+     then
+       let v = Queue.safe_peek qBnR in
+       (* assert { v.estBoursier /\ not v.estResident }; *)
+       meilleur.contents <- NonNull v);
+    (if not Queue.is_empty qnBR &&
+        not contrainteTauxBoursier &&
+          (is_null meilleur.contents || (get_non_null meilleur.contents).rang < (Queue.safe_peek qnBR).rang)
+     then
+       let v = Queue.safe_peek qnBR in
+       (* assert { not v.estBoursier /\ v.estResident }; *)
+       meilleur.contents <- NonNull v);
+    (if not Queue.is_empty qnBnR &&
+        not contrainteTauxBoursier &&
+        not contrainteTauxResident &&
+          (is_null meilleur.contents || (get_non_null meilleur.contents).rang < (Queue.safe_peek qnBnR).rang)
+     then
+       let v = Queue.safe_peek qnBnR in
+       (* assert { not v.estBoursier /\ not v.estResident }; *)
+       meilleur.contents <- NonNull v);
+
+    (if is_null meilleur.contents
+     then
+       (assert { 0 < Seq.length qBnR };
+        let v = Queue.safe_peek qBnR in
+        (* assert { v.estBoursier /\ not v.estResident }; *)
+        meilleur.contents <- NonNull v));
+
+    let meilleur = get_non_null meilleur.contents in
+    if meilleur.estBoursier then
+      if meilleur.estResident then
+        ignore (Queue.safe_pop qBR)
+      else
+        ignore (Queue.safe_pop qBnR)
+    else
+      if meilleur.estResident then
+        ignore (Queue.safe_pop qnBR)
+      else
+        ignore (Queue.safe_pop qnBnR);
+    ordreAppel[nbAppeles] <- NonNull (meilleur:{voeu_classe});
+    nbAppeles <- nbAppeles + 1;
+  done;
+
+  let ref i = 0:int32 in
+  while i <= voeux_classes.length - 1 do
+    ordreAppel[i] <- NonNull (pure { {(get_non_null ordreAppel[i]) with rangAppel = i} });
+    i <- i + 1
+  done;
+
+  ordreAppel

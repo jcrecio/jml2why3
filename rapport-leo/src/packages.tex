@@ -1,0 +1,67 @@
+\usepackage[french]{babel}
+
+\usepackage{euler}
+\usepackage{fontspec}                 % encoding
+
+\usepackage{graphicx}                                 % to include img
+\usepackage{enumitem}                                 % powerful lists
+\usepackage{xspace}                                   % correct quotes printing
+\usepackage[np]{numprint}                             % correct numbers printing
+\usepackage{amsmath}                                  % maths and better typo
+\usepackage{amssymb}                                  % more maths
+\usepackage{dsfont}                                   % and even more maths
+\usepackage{color}                                    % color power
+\usepackage[dvipsnames, table]{xcolor}                  % more color power
+\usepackage{microtype}                                % better typo
+
+\usepackage{hyperref} % internal and external links (e.g. mail, www)
+\usepackage{cleveref}
+
+\usepackage[cache=false, draft=false]{minted}         % source code
+
+\usepackage{placeins} % float displaying
+\usepackage{csquotes}
+\usepackage{ellipsis} % correct ...
+\usepackage[notransparent]{svg}
+
+\usepackage[
+  autolang=other,
+  backend=biber,         % choix de l'outil de traitement
+  backref=true,          % liens dans la bibliographie pour remonter dans le texte
+  backrefstyle=none,     % afficher toutes les utilisations de la référence
+  bibstyle=alphabetic,   % style pour les clés des références dans la bibliographie : [initialesAnnée]
+  citestyle=alphabetic,  % style pour les clés des références dans le texte : [initialesAnnée]
+  sorting=none,          % bibliographie triée par ordre d'utilisation des références
+]{biblatex}                  % support des bibliographies
+
+\usepackage{calligra}
+\usepackage[bottom]{footmisc}
+\usepackage{wrapfig}
+
+\setmainfont{Linux Libertine O}
+\setsansfont{Linux Biolinum O}
+%\setmonofont{Source Code Pro}
+%\newfontfamily\unicodemonofont{Everson Mono}
+
+\newcommand\myshade{85}
+\colorlet{mylinkcolor}{violet}
+\colorlet{mycitecolor}{YellowOrange}
+\colorlet{myurlcolor}{Aquamarine}
+
+\usemintedstyle{paraiso-dark}
+\setminted{bgcolor=lightBackground}
+\setminted{linenos, autogobble, breaklines, breakanywhere, breakautoindent, fontseries=m, fontsize=\fontsize{12pt}{12pt}, frame=none, stepnumber=2}
+
+\hypersetup{linkcolor  = mylinkcolor!\myshade!black,
+citecolor  = mycitecolor!\myshade!black,
+urlcolor   = myurlcolor!\myshade!black,
+colorlinks = true,
+pdfstartview=FitH
+}
+
+\graphicspath{{./../img/}}
+
+\definecolor{darkBackground}{HTML}{282c34}            % source code background
+\definecolor{darkBackgroundHighlight}{HTML}{2c323c}   % source code background
+\definecolor{lightBackground}{HTML}{D7D3CB}           % source code background
+\definecolor{processblue}{cmyk}{0.96,0,0,0}

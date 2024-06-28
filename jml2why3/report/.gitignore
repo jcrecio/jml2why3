@@ -1,0 +1,11 @@
+extract.tex
+*.aux
+*.fdb_latexmk
+*.fls
+*.log
+*.out
+*.pdf
+main.bbl
+main.blg
+main.toc
+main.rel

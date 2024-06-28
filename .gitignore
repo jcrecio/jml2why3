@@ -1,0 +1,5 @@
+*.bak
+src/algo1.ml
+*.cm*
+*.o
+

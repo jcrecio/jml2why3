@@ -1,0 +1,1055 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE why3session PUBLIC "-//Why3//proof session v5//EN"
+"http://why3.lri.fr/why3session.dtd">
+<why3session shape_version="8">
+<prover id="0" name="Z3" version="4.8.4" timelimit="1" steplimit="0" memlimit="1000"/>
+<prover id="1" name="Alt-Ergo" version="2.3.0" timelimit="1" steplimit="0" memlimit="1000"/>
+<prover id="2" name="CVC4" version="1.6" timelimit="1" steplimit="0" memlimit="1000"/>
+<prover id="4" name="CVC4" version="1.7" timelimit="1" steplimit="0" memlimit="1000"/>
+<file>
+<path name=".."/><path name="algo1.mlw"/>
+<theory name="Top">
+ <goal name="nombre_boursiers_snoc" proved="true">
+ <proof prover="1"><result status="valid" time="0.05" steps="169"/></proof>
+ </goal>
+ <goal name="VC ordre_appel_valide" expl="VC for ordre_appel_valide" proved="true">
+ <proof prover="4"><result status="valid" time="0.17" steps="50175"/></proof>
+ </goal>
+ <goal name="VC taux_b_est_contraignant_f" expl="VC for taux_b_est_contraignant_f" proved="true">
+ <proof prover="1"><result status="valid" time="0.02" steps="62"/></proof>
+ </goal>
+ <goal name="VC meilleur_candidat_est_b" expl="VC for meilleur_candidat_est_b" proved="true">
+ <proof prover="1"><result status="valid" time="0.02" steps="84"/></proof>
+ </goal>
+ <goal name="VC creer_ordre_appel_valide" expl="VC for creer_ordre_appel_valide" proved="true">
+ <transf name="split_vc" proved="true" >
+  <goal name="VC creer_ordre_appel_valide.0" expl="taux b ok" proved="true">
+  <proof prover="1"><result status="valid" time="0.01" steps="34"/></proof>
+  </goal>
+  <goal name="VC creer_ordre_appel_valide.1" expl="nb voeux positif" proved="true">
+  <proof prover="1"><result status="valid" time="0.02" steps="36"/></proof>
+  </goal>
+  <goal name="VC creer_ordre_appel_valide.2" expl="b seulement" proved="true">
+  <proof prover="1"><result status="valid" time="0.01" steps="36"/></proof>
+  </goal>
+  <goal name="VC creer_ordre_appel_valide.3" expl="nb seulement" proved="true">
+  <proof prover="1"><result status="valid" time="0.01" steps="36"/></proof>
+  </goal>
+  <goal name="VC creer_ordre_appel_valide.4" expl="b triés" proved="true">
+  <proof prover="1"><result status="valid" time="0.02" steps="36"/></proof>
+  </goal>
+  <goal name="VC creer_ordre_appel_valide.5" expl="nb triés" proved="true">
+  <proof prover="1"><result status="valid" time="0.02" steps="36"/></proof>
+  </goal>
+  <goal name="VC creer_ordre_appel_valide.6" expl="nb v ok" proved="true">
+  <proof prover="1"><result status="valid" time="0.02" steps="38"/></proof>
+  </goal>
+  <goal name="VC creer_ordre_appel_valide.7" expl="reste b taux ok" proved="true">
+  <proof prover="1"><result status="valid" time="0.02" steps="42"/></proof>
+  </goal>
+  <goal name="VC creer_ordre_appel_valide.8" expl="s&#39;il n&#39;y a plus de boursiers, on les a tous appelés" proved="true">
+  <proof prover="1"><result status="valid" time="0.04" steps="249"/></proof>
+  </goal>
+  <goal name="VC creer_ordre_appel_valide.9" expl="s&#39;il y a tous les boursiers dans un préfixe, il n&#39;en reste plus à appeler" proved="true">
+  <proof prover="1"><result status="valid" time="0.05" steps="268"/></proof>
+  </goal>
+  <goal name="VC creer_ordre_appel_valide.10" expl="nb b appeles correct" proved="true">
+  <proof prover="1"><result status="valid" time="0.03" steps="104"/></proof>
+  </goal>
+  <goal name="VC creer_ordre_appel_valide.11" expl="total nb b constant" proved="true">
+  <proof prover="1"><result status="valid" time="0.03" steps="109"/></proof>
+  </goal>
+  <goal name="VC creer_ordre_appel_valide.12" expl="taux ok or no more b" proved="true">
+  <proof prover="1"><result status="valid" time="0.02" steps="50"/></proof>
+  </goal>
+  <goal name="VC creer_ordre_appel_valide.13" expl="all taken on prefix imply no b left" proved="true">
+  <proof prover="1"><result status="valid" time="0.02" steps="54"/></proof>
+  </goal>
+  <goal name="VC creer_ordre_appel_valide.14" expl="no b left eq all taken" proved="true">
+  <proof prover="1"><result status="valid" time="0.01" steps="42"/></proof>
+  </goal>
+  <goal name="VC creer_ordre_appel_valide.15" expl="taux ok or all taken" proved="true">
+  <proof prover="1"><result status="valid" time="0.04" steps="106"/></proof>
+  </goal>
+  <goal name="VC creer_ordre_appel_valide.16" expl="precondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.01" steps="42"/></proof>
+  </goal>
+  <goal name="VC creer_ordre_appel_valide.17" expl="precondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.02" steps="43"/></proof>
+  </goal>
+  <goal name="VC creer_ordre_appel_valide.18" expl="precondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.03" steps="177"/></proof>
+  </goal>
+  <goal name="VC creer_ordre_appel_valide.19" expl="precondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.03" steps="51"/></proof>
+  </goal>
+  <goal name="VC creer_ordre_appel_valide.20" expl="precondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.02" steps="50"/></proof>
+  </goal>
+  <goal name="VC creer_ordre_appel_valide.21" expl="precondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.02" steps="50"/></proof>
+  </goal>
+  <goal name="VC creer_ordre_appel_valide.22" expl="precondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.02" steps="50"/></proof>
+  </goal>
+  <goal name="VC creer_ordre_appel_valide.23" expl="precondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.02" steps="50"/></proof>
+  </goal>
+  <goal name="VC creer_ordre_appel_valide.24" expl="precondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.02" steps="52"/></proof>
+  </goal>
+  <goal name="VC creer_ordre_appel_valide.25" expl="precondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.02" steps="52"/></proof>
+  </goal>
+  <goal name="VC creer_ordre_appel_valide.26" expl="precondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.02" steps="52"/></proof>
+  </goal>
+  <goal name="VC creer_ordre_appel_valide.27" expl="precondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.02" steps="52"/></proof>
+  </goal>
+  <goal name="VC creer_ordre_appel_valide.28" expl="postcondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.03" steps="120"/></proof>
+  </goal>
+  <goal name="VC creer_ordre_appel_valide.29" expl="postcondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.03" steps="126"/></proof>
+  </goal>
+  <goal name="VC creer_ordre_appel_valide.30" expl="postcondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.03" steps="132"/></proof>
+  </goal>
+  <goal name="VC creer_ordre_appel_valide.31" expl="postcondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.02" steps="66"/></proof>
+  </goal>
+ </transf>
+ </goal>
+ <goal name="VC t_ok" expl="VC for t_ok" proved="true">
+ <proof prover="1"><result status="valid" time="0.02" steps="26"/></proof>
+ </goal>
+ <goal name="VC t_okb" expl="VC for t_okb" proved="true">
+ <proof prover="1"><result status="valid" time="0.06" steps="88"/></proof>
+ </goal>
+ <goal name="VC choisir_boursier" expl="VC for choisir_boursier" proved="true">
+ <transf name="split_vc" proved="true" >
+  <goal name="VC choisir_boursier.0" expl="precondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.18" steps="684"/></proof>
+  </goal>
+  <goal name="VC choisir_boursier.1" expl="precondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.01" steps="20"/></proof>
+  </goal>
+  <goal name="VC choisir_boursier.2" expl="taux b ok (type invariant)" proved="true">
+  <proof prover="1"><result status="valid" time="0.02" steps="26"/></proof>
+  </goal>
+  <goal name="VC choisir_boursier.3" expl="nb voeux positif (type invariant)" proved="true">
+  <proof prover="1"><result status="valid" time="0.02" steps="31"/></proof>
+  </goal>
+  <goal name="VC choisir_boursier.4" expl="b seulement (type invariant)" proved="true">
+  <proof prover="1"><result status="valid" time="0.40" steps="1384"/></proof>
+  </goal>
+  <goal name="VC choisir_boursier.5" expl="nb seulement (type invariant)" proved="true">
+  <proof prover="1"><result status="valid" time="0.02" steps="35"/></proof>
+  </goal>
+  <goal name="VC choisir_boursier.6" expl="b triés (type invariant)" proved="true">
+  <proof prover="1"><result status="valid" time="0.05" steps="262"/></proof>
+  </goal>
+  <goal name="VC choisir_boursier.7" expl="nb triés (type invariant)" proved="true">
+  <proof prover="1"><result status="valid" time="0.02" steps="39"/></proof>
+  </goal>
+  <goal name="VC choisir_boursier.8" expl="nb v ok (type invariant)" proved="true">
+  <proof prover="1"><result status="valid" time="0.08" steps="417"/></proof>
+  </goal>
+  <goal name="VC choisir_boursier.9" expl="reste b taux ok (type invariant)" proved="true">
+  <proof prover="1"><result status="valid" time="0.04" steps="103"/></proof>
+  </goal>
+  <goal name="VC choisir_boursier.10" expl="s&#39;il n&#39;y a plus de boursiers, on les a tous appelés (type invariant)" proved="true">
+  <proof prover="1"><result status="valid" time="0.12" steps="519"/></proof>
+  </goal>
+  <goal name="VC choisir_boursier.11" expl="s&#39;il y a tous les boursiers dans un préfixe, il n&#39;en reste plus à appeler (type invariant)" proved="true">
+  <proof prover="1"><result status="valid" time="0.29" steps="818"/></proof>
+  </goal>
+  <goal name="VC choisir_boursier.12" expl="nb b appeles correct (type invariant)" proved="true">
+  <proof prover="1"><result status="valid" time="0.14" steps="690"/></proof>
+  </goal>
+  <goal name="VC choisir_boursier.13" expl="total nb b constant (type invariant)" proved="true">
+  <proof prover="1"><result status="valid" time="0.06" steps="321"/></proof>
+  </goal>
+  <goal name="VC choisir_boursier.14" expl="taux ok or no more b (type invariant)" proved="true">
+  <proof prover="1"><result status="valid" time="0.02" steps="53"/></proof>
+  </goal>
+  <goal name="VC choisir_boursier.15" expl="all taken on prefix imply no b left (type invariant)" proved="true">
+  <proof prover="1"><result status="valid" time="0.02" steps="57"/></proof>
+  </goal>
+  <goal name="VC choisir_boursier.16" expl="no b left eq all taken (type invariant)" proved="true">
+  <proof prover="1"><result status="valid" time="0.02" steps="44"/></proof>
+  </goal>
+  <goal name="VC choisir_boursier.17" expl="type invariant" proved="true">
+  <proof prover="1"><result status="valid" time="0.38" steps="1002"/></proof>
+  </goal>
+  <goal name="VC choisir_boursier.18" expl="type invariant" proved="true">
+  <proof prover="1"><result status="valid" time="0.52" steps="1942"/></proof>
+  </goal>
+  <goal name="VC choisir_boursier.19" expl="type invariant" proved="true">
+  <proof prover="1"><result status="valid" time="0.02" steps="52"/></proof>
+  </goal>
+  <goal name="VC choisir_boursier.20" expl="type invariant" proved="true">
+  <proof prover="1"><result status="valid" time="0.38" steps="1024"/></proof>
+  </goal>
+  <goal name="VC choisir_boursier.21" expl="type invariant" proved="true">
+  <proof prover="0"><result status="valid" time="0.40" steps="586922"/></proof>
+  </goal>
+  <goal name="VC choisir_boursier.22" expl="type invariant" proved="true">
+  <transf name="case" proved="true" arg1="(i &lt; length1 (seq oa_ordre_appel) - 1)">
+   <goal name="VC choisir_boursier.22.0" expl="true case (type invariant)" proved="true">
+   <transf name="assert" proved="true" arg1="(voeu_lt candidat (seq oa_ordre_appel)[length1 (seq oa_ordre_appel) -1]&#39;&#39;)">
+    <goal name="VC choisir_boursier.22.0.0" expl="asserted formula" proved="true">
+    <proof prover="1" timelimit="10"><result status="valid" time="0.27" steps="1006"/></proof>
+    </goal>
+    <goal name="VC choisir_boursier.22.0.1" expl="true case (type invariant)" proved="true">
+    <transf name="assert" proved="true" arg1="(voeu_lt (seq (boursiers oa1))[0]&#39;&#39; (seq (boursiers oa1))[1]&#39;&#39;)">
+     <goal name="VC choisir_boursier.22.0.1.0" expl="asserted formula" proved="true">
+     <proof prover="0"><result status="valid" time="0.11" steps="269875"/></proof>
+     </goal>
+     <goal name="VC choisir_boursier.22.0.1.1" expl="true case (type invariant)" proved="true">
+     <proof prover="1"><result status="valid" time="0.11" steps="277"/></proof>
+     </goal>
+    </transf>
+    </goal>
+   </transf>
+   </goal>
+   <goal name="VC choisir_boursier.22.1" expl="false case (type invariant)" proved="true">
+   <proof prover="4"><result status="valid" time="0.87" steps="150334"/></proof>
+   </goal>
+  </transf>
+  </goal>
+  <goal name="VC choisir_boursier.23" expl="type invariant" proved="true">
+  <proof prover="1"><result status="valid" time="0.34" steps="1213"/></proof>
+  </goal>
+  <goal name="VC choisir_boursier.24" expl="type invariant" proved="true">
+  <transf name="case" proved="true" arg1="(i &lt; length1 (seq oa_ordre_appel) - 1)">
+   <goal name="VC choisir_boursier.24.0" expl="true case (type invariant)" proved="true">
+   <transf name="assert" proved="true" arg1="(voeu_lt candidat (seq (boursiers oa1))[0]&#39;&#39;)">
+    <goal name="VC choisir_boursier.24.0.0" expl="asserted formula" proved="true">
+    <proof prover="1"><result status="valid" time="0.35" steps="1063"/></proof>
+    </goal>
+    <goal name="VC choisir_boursier.24.0.1" expl="true case (type invariant)" proved="true">
+    <transf name="assert" proved="true" arg1="(voeu_lt (seq (boursiers oa1))[0]&#39;&#39; (seq (boursiers oa1))[1]&#39;&#39;)">
+     <goal name="VC choisir_boursier.24.0.1.0" expl="asserted formula" proved="true">
+     <proof prover="0"><result status="valid" time="0.10" steps="273021"/></proof>
+     </goal>
+     <goal name="VC choisir_boursier.24.0.1.1" expl="true case (type invariant)" proved="true">
+     <proof prover="1"><result status="valid" time="0.08" steps="277"/></proof>
+     </goal>
+    </transf>
+    </goal>
+   </transf>
+   </goal>
+   <goal name="VC choisir_boursier.24.1" expl="false case (type invariant)" proved="true">
+   <proof prover="4"><result status="valid" time="1.09" steps="156710"/></proof>
+   </goal>
+  </transf>
+  </goal>
+  <goal name="VC choisir_boursier.25" expl="type invariant" proved="true">
+  <transf name="case" proved="true" arg1="(i &lt; length1 (seq oa_ordre_appel) - 1)">
+   <goal name="VC choisir_boursier.25.0" expl="true case (type invariant)" proved="true">
+   <proof prover="1"><result status="valid" time="0.07" steps="321"/></proof>
+   </goal>
+   <goal name="VC choisir_boursier.25.1" expl="false case (type invariant)" proved="true">
+   <proof prover="1"><result status="valid" time="0.61" steps="1108"/></proof>
+   </goal>
+  </transf>
+  </goal>
+  <goal name="VC choisir_boursier.26" expl="type invariant" proved="true">
+  <proof prover="1"><result status="valid" time="0.46" steps="2610"/></proof>
+  </goal>
+  <goal name="VC choisir_boursier.27" expl="type invariant" proved="true">
+  <proof prover="1"><result status="valid" time="0.32" steps="1665"/></proof>
+  </goal>
+  <goal name="VC choisir_boursier.28" expl="type invariant" proved="true">
+  <proof prover="1"><result status="valid" time="0.51" steps="2567"/></proof>
+  </goal>
+  <goal name="VC choisir_boursier.29" expl="type invariant" proved="true">
+  <proof prover="1" timelimit="10"><result status="valid" time="0.66" steps="2042"/></proof>
+  </goal>
+  <goal name="VC choisir_boursier.30" expl="postcondition" proved="true">
+  <proof prover="1" timelimit="10"><result status="valid" time="0.03" steps="114"/></proof>
+  </goal>
+  <goal name="VC choisir_boursier.31" expl="postcondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.03" steps="120"/></proof>
+  </goal>
+ </transf>
+ </goal>
+ <goal name="VC t_oknb" expl="VC for t_oknb" proved="true">
+ <proof prover="1" timelimit="10"><result status="valid" time="0.06" steps="88"/></proof>
+ </goal>
+ <goal name="VC choisir_non_boursier" expl="VC for choisir_non_boursier" proved="true">
+ <transf name="split_vc" proved="true" >
+  <goal name="VC choisir_non_boursier.0" expl="precondition" proved="true">
+  <proof prover="1" timelimit="10"><result status="valid" time="0.11" steps="625"/></proof>
+  </goal>
+  <goal name="VC choisir_non_boursier.1" expl="precondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.02" steps="20"/></proof>
+  </goal>
+  <goal name="VC choisir_non_boursier.2" expl="taux b ok (type invariant)" proved="true">
+  <proof prover="1"><result status="valid" time="0.02" steps="26"/></proof>
+  </goal>
+  <goal name="VC choisir_non_boursier.3" expl="nb voeux positif (type invariant)" proved="true">
+  <proof prover="1"><result status="valid" time="0.02" steps="31"/></proof>
+  </goal>
+  <goal name="VC choisir_non_boursier.4" expl="b seulement (type invariant)" proved="true">
+  <proof prover="1"><result status="valid" time="0.02" steps="33"/></proof>
+  </goal>
+  <goal name="VC choisir_non_boursier.5" expl="nb seulement (type invariant)" proved="true">
+  <proof prover="4"><result status="valid" time="0.25" steps="60837"/></proof>
+  </goal>
+  <goal name="VC choisir_non_boursier.6" expl="b triés (type invariant)" proved="true">
+  <proof prover="1"><result status="valid" time="0.02" steps="37"/></proof>
+  </goal>
+  <goal name="VC choisir_non_boursier.7" expl="nb triés (type invariant)" proved="true">
+  <proof prover="1"><result status="valid" time="0.04" steps="277"/></proof>
+  </goal>
+  <goal name="VC choisir_non_boursier.8" expl="nb v ok (type invariant)" proved="true">
+  <proof prover="1"><result status="valid" time="0.07" steps="340"/></proof>
+  </goal>
+  <goal name="VC choisir_non_boursier.9" expl="reste b taux ok (type invariant)" proved="true">
+  <proof prover="1"><result status="valid" time="0.03" steps="108"/></proof>
+  </goal>
+  <goal name="VC choisir_non_boursier.10" expl="s&#39;il n&#39;y a plus de boursiers, on les a tous appelés (type invariant)" proved="true">
+  <proof prover="1"><result status="valid" time="0.34" steps="1612"/></proof>
+  </goal>
+  <goal name="VC choisir_non_boursier.11" expl="s&#39;il y a tous les boursiers dans un préfixe, il n&#39;en reste plus à appeler (type invariant)" proved="true">
+  <proof prover="1" timelimit="10"><result status="valid" time="0.26" steps="435"/></proof>
+  </goal>
+  <goal name="VC choisir_non_boursier.12" expl="nb b appeles correct (type invariant)" proved="true">
+  <proof prover="1"><result status="valid" time="0.13" steps="465"/></proof>
+  </goal>
+  <goal name="VC choisir_non_boursier.13" expl="total nb b constant (type invariant)" proved="true">
+  <proof prover="1"><result status="valid" time="0.02" steps="48"/></proof>
+  </goal>
+  <goal name="VC choisir_non_boursier.14" expl="taux ok or no more b (type invariant)" proved="true">
+  <proof prover="1"><result status="valid" time="0.02" steps="53"/></proof>
+  </goal>
+  <goal name="VC choisir_non_boursier.15" expl="all taken on prefix imply no b left (type invariant)" proved="true">
+  <proof prover="1"><result status="valid" time="0.02" steps="57"/></proof>
+  </goal>
+  <goal name="VC choisir_non_boursier.16" expl="no b left eq all taken (type invariant)" proved="true">
+  <proof prover="1"><result status="valid" time="0.02" steps="44"/></proof>
+  </goal>
+  <goal name="VC choisir_non_boursier.17" expl="type invariant" proved="true">
+  <proof prover="1"><result status="valid" time="0.73" steps="2496"/></proof>
+  </goal>
+  <goal name="VC choisir_non_boursier.18" expl="type invariant" proved="true">
+  <proof prover="1"><result status="valid" time="0.02" steps="50"/></proof>
+  </goal>
+  <goal name="VC choisir_non_boursier.19" expl="type invariant" proved="true">
+  <proof prover="1" timelimit="10"><result status="valid" time="0.24" steps="1054"/></proof>
+  </goal>
+  <goal name="VC choisir_non_boursier.20" expl="type invariant" proved="true">
+  <proof prover="1"><result status="valid" time="0.14" steps="455"/></proof>
+  </goal>
+  <goal name="VC choisir_non_boursier.21" expl="type invariant" proved="true">
+  <proof prover="1" timelimit="10"><result status="valid" time="0.53" steps="976"/></proof>
+  </goal>
+  <goal name="VC choisir_non_boursier.22" expl="type invariant" proved="true">
+  <proof prover="1" timelimit="10"><result status="valid" time="0.21" steps="1104"/></proof>
+  </goal>
+  <goal name="VC choisir_non_boursier.23" expl="type invariant" proved="true">
+  <transf name="case" proved="true" arg1="(i &lt; length1 (seq oa_ordre_appel) - 1)">
+   <goal name="VC choisir_non_boursier.23.0" expl="true case (type invariant)" proved="true">
+   <transf name="assert" proved="true" arg1="(voeu_lt candidat (seq oa_ordre_appel)[length1 (seq oa_ordre_appel) -1]&#39;&#39;)">
+    <goal name="VC choisir_non_boursier.23.0.0" expl="asserted formula" proved="true">
+    <proof prover="1"><result status="valid" time="0.10" steps="317"/></proof>
+    </goal>
+    <goal name="VC choisir_non_boursier.23.0.1" expl="true case (type invariant)" proved="true">
+    <transf name="assert" proved="true" arg1="(voeu_lt (seq (non_boursiers oa1))[0]&#39;&#39; (seq (non_boursiers oa1))[1]&#39;&#39;)
+">
+     <goal name="VC choisir_non_boursier.23.0.1.0" expl="asserted formula" proved="true">
+     <proof prover="0"><result status="valid" time="0.10" steps="267454"/></proof>
+     </goal>
+     <goal name="VC choisir_non_boursier.23.0.1.1" expl="true case (type invariant)" proved="true">
+     <proof prover="1" timelimit="10"><result status="valid" time="0.11" steps="349"/></proof>
+     </goal>
+    </transf>
+    </goal>
+   </transf>
+   </goal>
+   <goal name="VC choisir_non_boursier.23.1" expl="false case (type invariant)" proved="true">
+   <proof prover="4"><result status="valid" time="1.04" steps="162625"/></proof>
+   </goal>
+  </transf>
+  </goal>
+  <goal name="VC choisir_non_boursier.24" expl="type invariant" proved="true">
+  <proof prover="1"><result status="valid" time="0.07" steps="261"/></proof>
+  </goal>
+  <goal name="VC choisir_non_boursier.25" expl="type invariant" proved="true">
+  <proof prover="1" timelimit="10"><result status="valid" time="1.55" steps="3902"/></proof>
+  </goal>
+  <goal name="VC choisir_non_boursier.26" expl="type invariant" proved="true">
+  <proof prover="1"><result status="valid" time="0.21" steps="1054"/></proof>
+  </goal>
+  <goal name="VC choisir_non_boursier.27" expl="type invariant" proved="true">
+  <proof prover="1"><result status="valid" time="0.25" steps="908"/></proof>
+  </goal>
+  <goal name="VC choisir_non_boursier.28" expl="type invariant" proved="true">
+  <proof prover="1"><result status="valid" time="0.22" steps="1067"/></proof>
+  </goal>
+  <goal name="VC choisir_non_boursier.29" expl="type invariant" proved="true">
+  <proof prover="1" timelimit="10"><result status="valid" time="0.20" steps="1027"/></proof>
+  </goal>
+  <goal name="VC choisir_non_boursier.30" expl="postcondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.03" steps="114"/></proof>
+  </goal>
+  <goal name="VC choisir_non_boursier.31" expl="postcondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.03" steps="120"/></proof>
+  </goal>
+  <goal name="VC choisir_non_boursier.32" expl="postcondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.02" steps="47"/></proof>
+  </goal>
+ </transf>
+ </goal>
+ <goal name="nb_b_last" proved="true">
+ <proof prover="1" timelimit="10"><result status="valid" time="1.98" steps="4528"/></proof>
+ </goal>
+ <goal name="VC propriete5" expl="VC for propriete5" proved="true">
+ <transf name="split_vc" proved="true" >
+  <goal name="VC propriete5.0" expl="precondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.02" steps="42"/></proof>
+  </goal>
+  <goal name="VC propriete5.1" expl="precondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.02" steps="42"/></proof>
+  </goal>
+  <goal name="VC propriete5.2" expl="assertion" proved="true">
+  <proof prover="1"><result status="valid" time="0.67" steps="923"/></proof>
+  </goal>
+  <goal name="VC propriete5.3" expl="assertion" proved="true">
+  <proof prover="1"><result status="valid" time="0.02" steps="44"/></proof>
+  </goal>
+  <goal name="VC propriete5.4" expl="assertion" proved="true">
+  <transf name="case" proved="true" arg1="(k &lt; i)">
+   <goal name="VC propriete5.4.0" expl="true case (assertion)" proved="true">
+   <transf name="assert" proved="true" arg1="(inv p @ k = k)">
+    <goal name="VC propriete5.4.0.0" expl="asserted formula" proved="true">
+    <transf name="assert" proved="true" arg1="(s[k]&#39;&#39; = cl[k]&#39;&#39;)">
+     <goal name="VC propriete5.4.0.0.0" expl="asserted formula" proved="true">
+     <proof prover="1"><result status="valid" time="0.13" steps="337"/></proof>
+     </goal>
+     <goal name="VC propriete5.4.0.0.1" expl="asserted formula" proved="true">
+     <transf name="assert" proved="true" arg1="(cl[inv p @ k]&#39;&#39; = s[k]&#39;&#39;)">
+      <goal name="VC propriete5.4.0.0.1.0" expl="asserted formula" proved="true">
+      <proof prover="1" timelimit="10"><result status="valid" time="0.26" steps="900"/></proof>
+      </goal>
+      <goal name="VC propriete5.4.0.0.1.1" expl="asserted formula" proved="true">
+      <transf name="assert" proved="true" arg1="(k &lt;&gt; inv p @ k -&gt; rang_distinct cl[k]&#39;&#39; cl[inv p @ k]&#39;&#39;)">
+       <goal name="VC propriete5.4.0.0.1.1.0" expl="asserted formula" proved="true">
+       <proof prover="1" timelimit="10"><result status="valid" time="2.16" steps="6327"/></proof>
+       </goal>
+       <goal name="VC propriete5.4.0.0.1.1.1" expl="asserted formula" proved="true">
+       <proof prover="1"><result status="valid" time="0.05" steps="140"/></proof>
+       </goal>
+      </transf>
+      </goal>
+     </transf>
+     </goal>
+    </transf>
+    </goal>
+    <goal name="VC propriete5.4.0.1" expl="true case (assertion)" proved="true">
+    <proof prover="1"><result status="valid" time="0.13" steps="337"/></proof>
+    </goal>
+   </transf>
+   </goal>
+   <goal name="VC propriete5.4.1" expl="false case (assertion)" proved="true">
+   <proof prover="1"><result status="valid" time="0.16" steps="456"/></proof>
+   </goal>
+  </transf>
+  </goal>
+  <goal name="VC propriete5.5" expl="assertion" proved="true">
+  <proof prover="1"><result status="valid" time="0.13" steps="510"/></proof>
+  </goal>
+  <goal name="VC propriete5.6" expl="assertion" proved="true">
+  <proof prover="1"><result status="valid" time="0.02" steps="56"/></proof>
+  </goal>
+  <goal name="VC propriete5.7" expl="assertion" proved="true">
+  <proof prover="1"><result status="valid" time="0.14" steps="394"/></proof>
+  </goal>
+  <goal name="VC propriete5.8" expl="assertion" proved="true">
+  <proof prover="1"><result status="valid" time="0.02" steps="54"/></proof>
+  </goal>
+  <goal name="VC propriete5.9" expl="assertion" proved="true">
+  <proof prover="1"><result status="valid" time="0.11" steps="433"/></proof>
+  </goal>
+  <goal name="VC propriete5.10" expl="assertion" proved="true">
+  <proof prover="1"><result status="valid" time="0.01" steps="56"/></proof>
+  </goal>
+  <goal name="VC propriete5.11" expl="assertion" proved="true">
+  <proof prover="1"><result status="valid" time="0.27" steps="570"/></proof>
+  </goal>
+  <goal name="VC propriete5.12" expl="assertion" proved="true">
+  <proof prover="1"><result status="valid" time="0.40" steps="568"/></proof>
+  </goal>
+  <goal name="VC propriete5.13" expl="assertion" proved="true">
+  <proof prover="1"><result status="valid" time="0.27" steps="376"/></proof>
+  </goal>
+  <goal name="VC propriete5.14" expl="assertion" proved="true">
+  <proof prover="1"><result status="valid" time="0.02" steps="62"/></proof>
+  </goal>
+  <goal name="VC propriete5.15" expl="assertion" proved="true">
+  <proof prover="1"><result status="valid" time="0.07" steps="180"/></proof>
+  </goal>
+  <goal name="VC propriete5.16" expl="assertion" proved="true">
+  <proof prover="1"><result status="valid" time="0.02" steps="60"/></proof>
+  </goal>
+  <goal name="VC propriete5.17" expl="assertion" proved="true">
+  <proof prover="1"><result status="valid" time="0.02" steps="61"/></proof>
+  </goal>
+  <goal name="VC propriete5.18" expl="assertion" proved="true">
+  <proof prover="1"><result status="valid" time="0.15" steps="469"/></proof>
+  </goal>
+  <goal name="VC propriete5.19" expl="assertion" proved="true">
+  <proof prover="1"><result status="valid" time="0.02" steps="63"/></proof>
+  </goal>
+  <goal name="VC propriete5.20" expl="assertion" proved="true">
+  <proof prover="1"><result status="valid" time="0.16" steps="507"/></proof>
+  </goal>
+  <goal name="VC propriete5.21" expl="assertion" proved="true">
+  <proof prover="1"><result status="valid" time="0.07" steps="183"/></proof>
+  </goal>
+  <goal name="VC propriete5.22" expl="assertion" proved="true">
+  <proof prover="1"><result status="valid" time="0.14" steps="457"/></proof>
+  </goal>
+  <goal name="VC propriete5.23" expl="unreachable point" proved="true">
+  <proof prover="1"><result status="valid" time="0.02" steps="70"/></proof>
+  </goal>
+  <goal name="VC propriete5.24" expl="assertion" proved="true">
+  <proof prover="1"><result status="valid" time="0.06" steps="286"/></proof>
+  </goal>
+  <goal name="VC propriete5.25" expl="assertion" proved="true">
+  <proof prover="4"><result status="valid" time="0.81" steps="109011"/></proof>
+  </goal>
+  <goal name="VC propriete5.26" expl="assertion" proved="true">
+  <proof prover="1"><result status="valid" time="0.04" steps="148"/></proof>
+  </goal>
+  <goal name="VC propriete5.27" expl="assertion" proved="true">
+  <proof prover="1" timelimit="10"><result status="valid" time="4.79" steps="13173"/></proof>
+  </goal>
+  <goal name="VC propriete5.28" expl="postcondition" proved="true">
+  <proof prover="1" timelimit="10"><result status="valid" time="0.87" steps="2410"/></proof>
+  </goal>
+ </transf>
+ </goal>
+ <goal name="VC p4aux" expl="VC for p4aux">
+ </goal>
+ <goal name="VC propriete4" expl="VC for propriete4">
+ </goal>
+ <goal name="VC oav_imp_p2_aux" expl="VC for oav_imp_p2_aux" proved="true">
+ <transf name="split_vc" proved="true" >
+  <goal name="VC oav_imp_p2_aux.0" expl="assertion" proved="true">
+  <proof prover="1"><result status="valid" time="0.02" steps="34"/></proof>
+  </goal>
+  <goal name="VC oav_imp_p2_aux.1" expl="assertion" proved="true">
+  <proof prover="1"><result status="valid" time="0.06" steps="84"/></proof>
+  </goal>
+  <goal name="VC oav_imp_p2_aux.2" expl="precondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.02" steps="34"/></proof>
+  </goal>
+  <goal name="VC oav_imp_p2_aux.3" expl="precondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.30" steps="944"/></proof>
+  </goal>
+  <goal name="VC oav_imp_p2_aux.4" expl="unreachable point" proved="true">
+  <transf name="introduce_exists" proved="true" >
+   <goal name="VC oav_imp_p2_aux.4.0" expl="unreachable point" proved="true">
+   <transf name="assert" proved="true" arg1="((seq s)[i1]&#39;&#39;.rang = (seq s)[i2]&#39;&#39;.rang)">
+    <goal name="VC oav_imp_p2_aux.4.0.0" expl="asserted formula" proved="true">
+    <proof prover="1"><result status="valid" time="0.04" steps="105"/></proof>
+    </goal>
+    <goal name="VC oav_imp_p2_aux.4.0.1" expl="unreachable point" proved="true">
+    <transf name="unfold" proved="true" arg1="rang_distincts" arg2="in" arg3="Assert">
+     <goal name="VC oav_imp_p2_aux.4.0.1.0" expl="unreachable point" proved="true">
+     <transf name="unfold" proved="true" arg1="seq_forall_two" arg2="in" arg3="Assert">
+      <goal name="VC oav_imp_p2_aux.4.0.1.0.0" expl="unreachable point" proved="true">
+      <transf name="assert" proved="true" arg1="(forall i3:int, j:int.
+       0 &lt;= i3 /\ i3 &lt; j /\ j &lt; length1 (seq s)[..i + 1] -&gt;
+       (((fun (y0:voeu) (y1:voeu) -&gt; rang_distinct y0 y1)
+         @ (seq s)[..i + 1][i3]&#39;&#39;)
+        @ (seq s)[..i + 1][j]&#39;&#39;))">
+       <goal name="VC oav_imp_p2_aux.4.0.1.0.0.0" expl="asserted formula" proved="true">
+       <proof prover="1"><result status="valid" time="0.02" steps="48"/></proof>
+       </goal>
+       <goal name="VC oav_imp_p2_aux.4.0.1.0.0.1" expl="unreachable point" proved="true">
+       <transf name="instantiate" proved="true" arg1="h" arg2="i1">
+        <goal name="VC oav_imp_p2_aux.4.0.1.0.0.1.0" expl="unreachable point" proved="true">
+        <transf name="instantiate" proved="true" arg1="Hinst" arg2="i2">
+         <goal name="VC oav_imp_p2_aux.4.0.1.0.0.1.0.0" expl="unreachable point" proved="true">
+         <proof prover="1"><result status="valid" time="0.30" steps="865"/></proof>
+         </goal>
+        </transf>
+        </goal>
+       </transf>
+       </goal>
+      </transf>
+      </goal>
+     </transf>
+     </goal>
+    </transf>
+    </goal>
+   </transf>
+   </goal>
+  </transf>
+  </goal>
+  <goal name="VC oav_imp_p2_aux.5" expl="assertion" proved="true">
+  <proof prover="1"><result status="valid" time="0.02" steps="30"/></proof>
+  </goal>
+  <goal name="VC oav_imp_p2_aux.6" expl="postcondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.02" steps="34"/></proof>
+  </goal>
+ </transf>
+ </goal>
+ <goal name="VC oav_imp_p2" expl="VC for oav_imp_p2" proved="true">
+ <proof prover="1"><result status="valid" time="0.03" steps="71"/></proof>
+ </goal>
+ <goal name="VC oav_imp_p3a_aux" expl="VC for oav_imp_p3a_aux" proved="true">
+ <transf name="split_vc" proved="true" >
+  <goal name="VC oav_imp_p3a_aux.0" expl="assertion" proved="true">
+  <proof prover="1"><result status="valid" time="0.02" steps="34"/></proof>
+  </goal>
+  <goal name="VC oav_imp_p3a_aux.1" expl="assertion" proved="true">
+  <proof prover="1"><result status="valid" time="0.30" steps="485"/></proof>
+  </goal>
+  <goal name="VC oav_imp_p3a_aux.2" expl="precondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.33" steps="487789"/></proof>
+  </goal>
+  <goal name="VC oav_imp_p3a_aux.3" expl="precondition" proved="true">
+  <transf name="compute_specified" proved="true" >
+   <goal name="VC oav_imp_p3a_aux.3.0" expl="precondition" proved="true">
+   <proof prover="1" timelimit="10"><result status="valid" time="1.86" steps="3993"/></proof>
+   </goal>
+  </transf>
+  </goal>
+  <goal name="VC oav_imp_p3a_aux.4" expl="unreachable point" proved="true">
+  <transf name="introduce_exists" proved="true" >
+   <goal name="VC oav_imp_p3a_aux.4.0" expl="unreachable point" proved="true">
+   <transf name="assert" proved="true" arg1="(forall i3:int, j:int.
+       0 &lt;= i3 /\ i3 &lt; j /\ j &lt; length1 subs -&gt;
+       (((fun (y0:voeu) (y1:voeu) -&gt; rang_distinct y0 y1) @ subs[i3]&#39;&#39;)
+        @ subs[j]&#39;&#39;))">
+    <goal name="VC oav_imp_p3a_aux.4.0.0" expl="asserted formula" proved="true">
+    <proof prover="1"><result status="valid" time="0.06" steps="210"/></proof>
+    </goal>
+    <goal name="VC oav_imp_p3a_aux.4.0.1" expl="unreachable point" proved="true">
+    <transf name="instantiate" proved="true" arg1="h" arg2="i1">
+     <goal name="VC oav_imp_p3a_aux.4.0.1.0" expl="unreachable point" proved="true">
+     <transf name="instantiate" proved="true" arg1="Hinst" arg2="i2">
+      <goal name="VC oav_imp_p3a_aux.4.0.1.0.0" expl="unreachable point" proved="true">
+      <proof prover="1"><result status="valid" time="0.10" steps="487"/></proof>
+      </goal>
+     </transf>
+     </goal>
+    </transf>
+    </goal>
+   </transf>
+   </goal>
+  </transf>
+  </goal>
+  <goal name="VC oav_imp_p3a_aux.5" expl="assertion" proved="true">
+  <proof prover="1" timelimit="10"><result status="valid" time="1.34" steps="1914"/></proof>
+  </goal>
+  <goal name="VC oav_imp_p3a_aux.6" expl="postcondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.02" steps="34"/></proof>
+  </goal>
+ </transf>
+ </goal>
+ <goal name="VC oav_imp_p3a" expl="VC for oav_imp_p3a" proved="true">
+ <proof prover="1"><result status="valid" time="0.03" steps="73"/></proof>
+ </goal>
+ <goal name="VC p3b_aux" expl="VC for p3b_aux">
+ <transf name="split_vc" >
+  <goal name="VC p3b_aux.0" expl="loop invariant init" proved="true">
+  <proof prover="1"><result status="valid" time="0.08" steps="300"/></proof>
+  </goal>
+  <goal name="VC p3b_aux.1" expl="loop invariant init" proved="true">
+  <proof prover="1"><result status="valid" time="0.02" steps="33"/></proof>
+  </goal>
+  <goal name="VC p3b_aux.2" expl="loop invariant init" proved="true">
+  <transf name="assert" proved="true" arg1="(rang c &lt;= i + 1)">
+   <goal name="VC p3b_aux.2.0" expl="asserted formula" proved="true">
+   <transf name="split_vc" proved="true" >
+    <goal name="VC p3b_aux.2.0.0" expl="asserted formula" proved="true">
+    <proof prover="1"><result status="valid" time="0.02" steps="22"/></proof>
+    </goal>
+   </transf>
+   </goal>
+   <goal name="VC p3b_aux.2.1" expl="loop invariant init" proved="true">
+   <proof prover="1"><result status="valid" time="0.02" steps="36"/></proof>
+   </goal>
+  </transf>
+  <transf name="split_vc" proved="true" >
+   <goal name="VC p3b_aux.2.0" expl="loop invariant init" proved="true">
+   <proof prover="1"><result status="valid" time="0.03" steps="22"/></proof>
+   </goal>
+  </transf>
+  </goal>
+  <goal name="VC p3b_aux.3" expl="assertion" proved="true">
+  <proof prover="4"><result status="valid" time="0.71" steps="100918"/></proof>
+  </goal>
+  <goal name="VC p3b_aux.4" expl="assertion" proved="true">
+  <proof prover="4"><result status="valid" time="0.59" steps="93781"/></proof>
+  </goal>
+  <goal name="VC p3b_aux.5" expl="loop invariant preservation" proved="true">
+  <transf name="split_vc" proved="true" >
+   <goal name="VC p3b_aux.5.0" expl="loop invariant preservation" proved="true">
+   <transf name="rewrite" proved="true" arg1="numof_split" arg2="with" arg3="j">
+    <goal name="VC p3b_aux.5.0.0" expl="loop invariant preservation" proved="true">
+    <proof prover="4"><result status="valid" time="0.96" steps="152580"/></proof>
+    </goal>
+    <goal name="VC p3b_aux.5.0.1" expl="rewrite premises" proved="true">
+    <proof prover="1"><result status="valid" time="0.15" steps="140"/></proof>
+    </goal>
+   </transf>
+   </goal>
+   <goal name="VC p3b_aux.5.1" expl="loop invariant preservation" proved="true">
+   <transf name="rewrite" proved="true" arg1="numof_split" arg2="with" arg3="j">
+    <goal name="VC p3b_aux.5.1.0" expl="loop invariant preservation" proved="true">
+    <proof prover="4"><result status="valid" time="0.97" steps="151966"/></proof>
+    </goal>
+    <goal name="VC p3b_aux.5.1.1" expl="rewrite premises" proved="true">
+    <proof prover="1"><result status="valid" time="0.06" steps="140"/></proof>
+    </goal>
+   </transf>
+   </goal>
+  </transf>
+  </goal>
+  <goal name="VC p3b_aux.6" expl="loop invariant preservation" proved="true">
+  <proof prover="1"><result status="valid" time="0.03" steps="55"/></proof>
+  </goal>
+  <goal name="VC p3b_aux.7" expl="loop invariant preservation">
+  <transf name="split_vc" >
+   <goal name="VC p3b_aux.7.0" expl="loop invariant preservation">
+   <proof prover="1" timelimit="10"><result status="timeout" time="10.00"/></proof>
+   </goal>
+  </transf>
+  </goal>
+  <goal name="VC p3b_aux.8" expl="loop invariant preservation" proved="true">
+  <transf name="split_vc" proved="true" >
+   <goal name="VC p3b_aux.8.0" expl="loop invariant preservation" proved="true">
+   <transf name="rewrite" proved="true" arg1="numof_split" arg2="with" arg3="j">
+    <goal name="VC p3b_aux.8.0.0" expl="loop invariant preservation" proved="true">
+    <proof prover="4"><result status="valid" time="1.17" steps="152679"/></proof>
+    </goal>
+    <goal name="VC p3b_aux.8.0.1" expl="rewrite premises" proved="true">
+    <proof prover="1"><result status="valid" time="0.15" steps="136"/></proof>
+    </goal>
+   </transf>
+   </goal>
+   <goal name="VC p3b_aux.8.1" expl="loop invariant preservation" proved="true">
+   <transf name="rewrite" proved="true" arg1="numof_split" arg2="with" arg3="j">
+    <goal name="VC p3b_aux.8.1.0" expl="loop invariant preservation" proved="true">
+    <proof prover="4"><result status="valid" time="0.95" steps="152987"/></proof>
+    </goal>
+    <goal name="VC p3b_aux.8.1.1" expl="rewrite premises" proved="true">
+    <proof prover="1"><result status="valid" time="0.09" steps="136"/></proof>
+    </goal>
+   </transf>
+   </goal>
+  </transf>
+  </goal>
+  <goal name="VC p3b_aux.9" expl="loop invariant preservation" proved="true">
+  <proof prover="1"><result status="valid" time="0.03" steps="49"/></proof>
+  </goal>
+  <goal name="VC p3b_aux.10" expl="loop invariant preservation" proved="true">
+  <proof prover="0"><result status="valid" time="0.02" steps="7280"/></proof>
+  <proof prover="1"><result status="valid" time="0.02" steps="49"/></proof>
+  <proof prover="2"><result status="valid" time="0.07" steps="33461"/></proof>
+  <transf name="split_vc" proved="true" >
+   <goal name="VC p3b_aux.10.0" expl="loop invariant preservation" proved="true">
+   <proof prover="0"><result status="valid" time="0.02" steps="7260"/></proof>
+   <proof prover="1"><result status="valid" time="0.01" steps="35"/></proof>
+   <proof prover="2"><result status="valid" time="0.08" steps="33354"/></proof>
+   </goal>
+  </transf>
+  </goal>
+  <goal name="VC p3b_aux.11" expl="postcondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.02" steps="37"/></proof>
+  </goal>
+  <goal name="VC p3b_aux.12" expl="postcondition" proved="true">
+  <transf name="split_vc" proved="true" >
+   <goal name="VC p3b_aux.12.0" expl="postcondition" proved="true">
+   <proof prover="1"><result status="valid" time="0.01" steps="24"/></proof>
+   </goal>
+  </transf>
+  </goal>
+  <goal name="VC p3b_aux.13" expl="out of loop bounds" proved="true">
+  <transf name="split_vc" proved="true" >
+   <goal name="VC p3b_aux.13.0" expl="postcondition" proved="true">
+   <proof prover="1"><result status="valid" time="0.02" steps="14"/></proof>
+   </goal>
+   <goal name="VC p3b_aux.13.1" expl="postcondition" proved="true">
+   <proof prover="1"><result status="valid" time="0.02" steps="14"/></proof>
+   </goal>
+  </transf>
+  </goal>
+  <goal name="VC p3b_aux.14" expl="postcondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.02" steps="28"/></proof>
+  </goal>
+  <goal name="VC p3b_aux.15" expl="postcondition" proved="true">
+  <transf name="split_vc" proved="true" >
+   <goal name="VC p3b_aux.15.0" expl="postcondition" proved="true">
+   <proof prover="1"><result status="valid" time="0.03" steps="14"/></proof>
+   </goal>
+  </transf>
+  </goal>
+ </transf>
+ </goal>
+ <goal name="VC p3b" expl="VC for p3b">
+ <proof prover="0"><result status="timeout" time="1.00" steps="798060"/></proof>
+ <proof prover="1"><result status="timeout" time="1.00"/></proof>
+ <proof prover="2"><result status="timeout" time="1.00" steps="146376"/></proof>
+ <transf name="split_vc" >
+  <goal name="VC p3b.0" expl="postcondition">
+  <proof prover="0"><result status="timeout" time="1.00" steps="867641"/></proof>
+  <proof prover="1"><result status="timeout" time="1.00"/></proof>
+  <proof prover="2"><result status="timeout" time="1.00" steps="151660"/></proof>
+  <proof prover="4"><result status="timeout" time="1.00" steps="150494"/></proof>
+  </goal>
+ </transf>
+ </goal>
+ <goal name="VC mk_ordre_appel" expl="VC for mk_ordre_appel" proved="true">
+ <transf name="split_vc" proved="true" >
+  <goal name="VC mk_ordre_appel.0" expl="req - b only" proved="true">
+  <proof prover="1"><result status="valid" time="0.01" steps="22"/></proof>
+  </goal>
+  <goal name="VC mk_ordre_appel.1" expl="req - nb only" proved="true">
+  <proof prover="1"><result status="valid" time="0.02" steps="22"/></proof>
+  </goal>
+  <goal name="VC mk_ordre_appel.2" expl="req - valid t" proved="true">
+  <proof prover="1"><result status="valid" time="0.02" steps="22"/></proof>
+  </goal>
+  <goal name="VC mk_ordre_appel.3" expl="precondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.02" steps="22"/></proof>
+  </goal>
+  <goal name="VC mk_ordre_appel.4" expl="precondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.02" steps="22"/></proof>
+  </goal>
+  <goal name="VC mk_ordre_appel.5" expl="b triés" proved="true">
+  <proof prover="1"><result status="valid" time="0.02" steps="22"/></proof>
+  </goal>
+  <goal name="VC mk_ordre_appel.6" expl="b triés" proved="true">
+  <proof prover="1"><result status="valid" time="0.01" steps="22"/></proof>
+  </goal>
+  <goal name="VC mk_ordre_appel.7" expl="precondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.02" steps="24"/></proof>
+  </goal>
+  <goal name="VC mk_ordre_appel.8" expl="precondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.02" steps="26"/></proof>
+  </goal>
+  <goal name="VC mk_ordre_appel.9" expl="precondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.02" steps="26"/></proof>
+  </goal>
+  <goal name="VC mk_ordre_appel.10" expl="dummy" proved="true">
+  <proof prover="1"><result status="valid" time="0.02" steps="44"/></proof>
+  </goal>
+  <goal name="VC mk_ordre_appel.11" expl="inv_permut" proved="true">
+  <proof prover="1" timelimit="10"><result status="valid" time="0.15" steps="496"/></proof>
+  </goal>
+  <goal name="VC mk_ordre_appel.12" expl="loop invariant init" proved="true">
+  <proof prover="1"><result status="valid" time="0.03" steps="129"/></proof>
+  </goal>
+  <goal name="VC mk_ordre_appel.13" expl="req - b nonempty" proved="true">
+  <proof prover="1"><result status="valid" time="0.03" steps="69"/></proof>
+  </goal>
+  <goal name="VC mk_ordre_appel.14" expl="req - OK to choose b" proved="true">
+  <proof prover="1"><result status="valid" time="0.02" steps="69"/></proof>
+  </goal>
+  <goal name="VC mk_ordre_appel.15" expl="loop variant decrease" proved="true">
+  <proof prover="1"><result status="valid" time="0.03" steps="87"/></proof>
+  </goal>
+  <goal name="VC mk_ordre_appel.16" expl="dummy" proved="true">
+  <proof prover="1"><result status="valid" time="0.02" steps="85"/></proof>
+  </goal>
+  <goal name="VC mk_ordre_appel.17" expl="inv_permut" proved="true">
+  <proof prover="1" timelimit="10"><result status="valid" time="0.31" steps="1510"/></proof>
+  </goal>
+  <goal name="VC mk_ordre_appel.18" expl="loop invariant preservation" proved="true">
+  <proof prover="1"><result status="valid" time="0.42" steps="1046"/></proof>
+  </goal>
+  <goal name="VC mk_ordre_appel.19" expl="req - b nonempty" proved="true">
+  <proof prover="1"><result status="valid" time="0.03" steps="71"/></proof>
+  </goal>
+  <goal name="VC mk_ordre_appel.20" expl="req - OK to choose b" proved="true">
+  <proof prover="1"><result status="valid" time="0.02" steps="71"/></proof>
+  </goal>
+  <goal name="VC mk_ordre_appel.21" expl="loop variant decrease" proved="true">
+  <proof prover="1"><result status="valid" time="0.03" steps="89"/></proof>
+  </goal>
+  <goal name="VC mk_ordre_appel.22" expl="dummy" proved="true">
+  <proof prover="1"><result status="valid" time="0.02" steps="87"/></proof>
+  </goal>
+  <goal name="VC mk_ordre_appel.23" expl="inv_permut" proved="true">
+  <proof prover="1" timelimit="10"><result status="valid" time="0.22" steps="971"/></proof>
+  </goal>
+  <goal name="VC mk_ordre_appel.24" expl="loop invariant preservation" proved="true">
+  <proof prover="1"><result status="valid" time="0.43" steps="1071"/></proof>
+  </goal>
+  <goal name="VC mk_ordre_appel.25" expl="req - nb nonempty" proved="true">
+  <proof prover="1"><result status="valid" time="0.03" steps="73"/></proof>
+  </goal>
+  <goal name="VC mk_ordre_appel.26" expl="req - OK to choose nb" proved="true">
+  <proof prover="1"><result status="valid" time="0.02" steps="73"/></proof>
+  </goal>
+  <goal name="VC mk_ordre_appel.27" expl="precondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.03" steps="73"/></proof>
+  </goal>
+  <goal name="VC mk_ordre_appel.28" expl="loop variant decrease" proved="true">
+  <proof prover="1"><result status="valid" time="0.03" steps="92"/></proof>
+  </goal>
+  <goal name="VC mk_ordre_appel.29" expl="dummy" proved="true">
+  <proof prover="1"><result status="valid" time="0.02" steps="89"/></proof>
+  </goal>
+  <goal name="VC mk_ordre_appel.30" expl="inv_permut" proved="true">
+  <proof prover="1" timelimit="10"><result status="valid" time="0.24" steps="926"/></proof>
+  </goal>
+  <goal name="VC mk_ordre_appel.31" expl="loop invariant preservation" proved="true">
+  <proof prover="1" timelimit="10"><result status="valid" time="1.87" steps="5407"/></proof>
+  </goal>
+  <goal name="VC mk_ordre_appel.32" expl="precondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.02" steps="71"/></proof>
+  </goal>
+  <goal name="VC mk_ordre_appel.33" expl="precondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.02" steps="71"/></proof>
+  </goal>
+  <goal name="VC mk_ordre_appel.34" expl="precondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.76" steps="2699"/></proof>
+  </goal>
+  <goal name="VC mk_ordre_appel.35" expl="req - b nonempty" proved="true">
+  <proof prover="1"><result status="valid" time="0.03" steps="77"/></proof>
+  </goal>
+  <goal name="VC mk_ordre_appel.36" expl="req - OK to choose b" proved="true">
+  <proof prover="1"><result status="valid" time="0.02" steps="77"/></proof>
+  </goal>
+  <goal name="VC mk_ordre_appel.37" expl="loop variant decrease" proved="true">
+  <proof prover="1" timelimit="10"><result status="valid" time="0.03" steps="95"/></proof>
+  </goal>
+  <goal name="VC mk_ordre_appel.38" expl="dummy" proved="true">
+  <proof prover="1"><result status="valid" time="0.02" steps="93"/></proof>
+  </goal>
+  <goal name="VC mk_ordre_appel.39" expl="inv_permut" proved="true">
+  <proof prover="1" timelimit="10"><result status="valid" time="0.61" steps="1746"/></proof>
+  </goal>
+  <goal name="VC mk_ordre_appel.40" expl="loop invariant preservation" proved="true">
+  <proof prover="1"><result status="valid" time="0.39" steps="1098"/></proof>
+  </goal>
+  <goal name="VC mk_ordre_appel.41" expl="assertion" proved="true">
+  <proof prover="1"><result status="valid" time="0.02" steps="75"/></proof>
+  </goal>
+  <goal name="VC mk_ordre_appel.42" expl="req - nb nonempty" proved="true">
+  <proof prover="1"><result status="valid" time="0.03" steps="77"/></proof>
+  </goal>
+  <goal name="VC mk_ordre_appel.43" expl="req - OK to choose nb" proved="true">
+  <proof prover="1"><result status="valid" time="0.02" steps="77"/></proof>
+  </goal>
+  <goal name="VC mk_ordre_appel.44" expl="precondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.02" steps="79"/></proof>
+  </goal>
+  <goal name="VC mk_ordre_appel.45" expl="loop variant decrease" proved="true">
+  <proof prover="1"><result status="valid" time="0.14" steps="96"/></proof>
+  </goal>
+  <goal name="VC mk_ordre_appel.46" expl="dummy" proved="true">
+  <proof prover="1"><result status="valid" time="0.02" steps="93"/></proof>
+  </goal>
+  <goal name="VC mk_ordre_appel.47" expl="inv_permut" proved="true">
+  <proof prover="1"><result status="valid" time="0.38" steps="1655"/></proof>
+  </goal>
+  <goal name="VC mk_ordre_appel.48" expl="loop invariant preservation" proved="true">
+  <proof prover="1"><result status="valid" time="0.35" steps="1297"/></proof>
+  </goal>
+  <goal name="VC mk_ordre_appel.49" expl="assertion" proved="true">
+  <proof prover="1"><result status="valid" time="0.35" steps="858"/></proof>
+  </goal>
+  <goal name="VC mk_ordre_appel.50" expl="assertion" proved="true">
+  <proof prover="1"><result status="valid" time="0.05" steps="198"/></proof>
+  </goal>
+  <goal name="VC mk_ordre_appel.51" expl="assertion" proved="true">
+  <proof prover="1"><result status="valid" time="0.03" steps="69"/></proof>
+  </goal>
+  <goal name="VC mk_ordre_appel.52" expl="ens - permut" proved="true">
+  <proof prover="1"><result status="valid" time="0.31" steps="585"/></proof>
+  </goal>
+  <goal name="VC mk_ordre_appel.53" expl="ens - prop1" proved="true">
+  <proof prover="1"><result status="valid" time="0.02" steps="69"/></proof>
+  </goal>
+  <goal name="VC mk_ordre_appel.54" expl="postcondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.08" steps="442"/></proof>
+  </goal>
+  <goal name="VC mk_ordre_appel.55" expl="postcondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.08" steps="445"/></proof>
+  </goal>
+  <goal name="VC mk_ordre_appel.56" expl="postcondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.13" steps="454"/></proof>
+  </goal>
+ </transf>
+ </goal>
+ <goal name="VC algo1" expl="VC for algo1" proved="true">
+ <transf name="split_vc" proved="true" >
+  <goal name="VC algo1.0" expl="assertion" proved="true">
+  <proof prover="1"><result status="valid" time="0.03" steps="59"/></proof>
+  </goal>
+  <goal name="VC algo1.1" expl="assertion" proved="true">
+  <proof prover="1"><result status="valid" time="0.02" steps="88"/></proof>
+  </goal>
+  <goal name="VC algo1.2" expl="precondition" proved="true">
+  <proof prover="1" timelimit="10"><result status="valid" time="0.02" steps="72"/></proof>
+  </goal>
+  <goal name="VC algo1.3" expl="assertion" proved="true">
+  <proof prover="1"><result status="valid" time="0.02" steps="34"/></proof>
+  </goal>
+  <goal name="VC algo1.4" expl="assertion" proved="true">
+  <proof prover="1"><result status="valid" time="0.02" steps="36"/></proof>
+  </goal>
+  <goal name="VC algo1.5" expl="assertion" proved="true">
+  <proof prover="1"><result status="valid" time="0.02" steps="38"/></proof>
+  </goal>
+  <goal name="VC algo1.6" expl="assertion" proved="true">
+  <proof prover="1"><result status="valid" time="0.04" steps="110"/></proof>
+  </goal>
+  <goal name="VC algo1.7" expl="assertion" proved="true">
+  <proof prover="1"><result status="valid" time="0.04" steps="114"/></proof>
+  </goal>
+  <goal name="VC algo1.8" expl="assertion" proved="true">
+  <proof prover="1"><result status="valid" time="0.15" steps="269"/></proof>
+  </goal>
+  <goal name="VC algo1.9" expl="req - valid taux" proved="true">
+  <proof prover="1"><result status="valid" time="0.03" steps="45"/></proof>
+  </goal>
+  <goal name="VC algo1.10" expl="req - b only" proved="true">
+  <proof prover="1"><result status="valid" time="0.02" steps="48"/></proof>
+  </goal>
+  <goal name="VC algo1.11" expl="req - nb only" proved="true">
+  <proof prover="1"><result status="valid" time="0.02" steps="48"/></proof>
+  </goal>
+  <goal name="VC algo1.12" expl="req - b sorted" proved="true">
+  <proof prover="1"><result status="valid" time="0.02" steps="48"/></proof>
+  </goal>
+  <goal name="VC algo1.13" expl="req - b sorted" proved="true">
+  <proof prover="1" timelimit="10"><result status="valid" time="0.02" steps="48"/></proof>
+  </goal>
+  <goal name="VC algo1.14" expl="precondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.01" steps="48"/></proof>
+  </goal>
+  <goal name="VC algo1.15" expl="precondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.02" steps="48"/></proof>
+  </goal>
+  <goal name="VC algo1.16" expl="precondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.02" steps="49"/></proof>
+  </goal>
+  <goal name="VC algo1.17" expl="ens_permut" proved="true">
+  <proof prover="1"><result status="valid" time="0.03" steps="147"/></proof>
+  </goal>
+  <goal name="VC algo1.18" expl="ens_prop1" proved="true">
+  <proof prover="1"><result status="valid" time="0.02" steps="52"/></proof>
+  </goal>
+  <goal name="VC algo1.19" expl="postcondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.02" steps="52"/></proof>
+  </goal>
+  <goal name="VC algo1.20" expl="postcondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.02" steps="54"/></proof>
+  </goal>
+ </transf>
+ </goal>
+</theory>
+</file>
+</why3session>

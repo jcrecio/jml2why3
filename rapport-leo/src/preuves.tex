@@ -1,0 +1,26 @@
+\section{Preuves et implémentation de référence}
+  On a utilisé Why3, un outil pour la vérification déductive de programmes~\cite{Filliatre13}. L'algorithme avec taux de boursiers a été implémenté en WhyML et c'est sur cette implémentation qu'ont été réalisées les preuves.
+  \subsection{Propriétés génériques}
+    Avant toute chose, on souhaite vérifier un ensemble de propriétés que tout programme se doit de respecter.
+  \subsubsection{Typage}
+    Notre programme, tout comme sa spécification, est bien typé, sans quoi il serait rejeté par le \emph{type checker} de Why3. L'intérêt du typage est présenté dans~\cite{Milner78}. En comparaison d'un langage comme OCaml, Why3 impose quelques restrictions supplémentaires comme le contrôle statique des alias --- voir~\cite{Gondelman16} ---, mais cet algorithme ne s'y heurte pas, contrairement au second algorithme avec taux de boursiers et de résidents.
+    \subsubsection{Terminaison}
+      On dit qu'un programme termine sur une entrée s'il finit par s'arrêter et qu'il ne tourne pas indéfiniment. On souhaite montrer la terminaison pour l'ensemble des entrées du programme. Seules quelques constructions du langage peuvent produire un programme qui ne termine pas: boucles \texttt{while} et fonctions récursives. Lorsque l'on utilise une telle construction, il suffit généralement d'exhiber un terme dont la valeur décroit et de montrer que l'on va finir par s'arrêter. Par exemple, dans la boucle \texttt{while} qui ajoute un candidat à l'ordre d'appel, on répète le corps de la boucle tant que la taille de l'ordre d'appel est strictement inférieure au nombre initial de candidats dans le classement pédagogique. Il suffit de fournir le \emph{variant}:
+      \[\texttt{nb initial de candidats}~-~\texttt{taille de l'ordre d'appel}\]
+pour prouver la terminaison de la boucle.
+      On a montré que l'ensemble du programme termine.
+    \subsubsection{Sûreté}
+      Une autre propriété que l'on souhaite montrer est la sûreté. On veut par exemple montrer que lorsque l'on accède au $i^\texttt{ème}$ élément d'un tableau, $0 \leq i < n$ avec $n$ la taille du tableau. Un tel accès ayant généralement lieu au sein d'une boucle, il suffit de maintenir un invariant sur l'indice auquel on accède et de le prouver.
+      On a montré la sûreté de l'ensemble du programme.
+  \subsection{Preuves des propriétés}
+
+    Les propriétés $P_0$, $P_1$, $P_2$ et $P_5$ on été prouvées. Pour $P_3$, seule la partie indiquant qu'un candidat de rang $r$ dans le classement pédagogique aura au mieux le rang $r$ dans l'ordre d'appel a été prouvé. $P_4$ et la seconde partie de $P_3$ ont été énoncées mais ne sont pas prouvées.
+
+    Les diverses preuves menées ont impliqué des techniques variées et intéressantes comme utilisation de code \emph{ghost} --- voir~\cite{Gondelman16_2} --- et de \emph{lemma functions}, ou encore de méthodes évitant d'avoir à prouver l'absence d'\emph{overflow} --- voir~\cite{Clochard15} --- etc. On ne détaillera pas les preuves ici par manque de place, mais quelques points sont intéressants à souligner.
+
+    Tout d'abord, on avait au départ décidé de maintenir divers invariants à l'intérieur même des fonctions de l'algorithme. Cependant, en procédant ainsi, on créait de la redondance: un même invariant pouvait demander d'être ajouté en précondition et en postcondition de nombreuses fonctions, ce qui était fastidieux au vu du nombre d'invariants. On a alors décidé de créer un type contenant la majorité des variables utilisées par l'algorithme et de donner des invariants à ce type directement. Ainsi, on doit toujours prouver leur préservation, mais sans avoir à les spécifier plusieurs fois. La définition du type et de quelques-uns des invariants est donnée en annexe~\ref{type_invariant}.
+
+    D'autre part, pour faciliter les preuves, plusieurs modifications ont été apportées à la bibliothèque standard de Why3. On peut notamment mentionner la réécriture des modules de file et de permutation, ainsi que l'ajout de divers lemmes, sur les séquences notamment.
+
+  \subsection{Production de code exécutable}
+    Il est possible de générer du code dans un autre langage à partir de l'implémentation WhyML, on appelle cela l'\emph{extraction}, ce mécanisme est brièvement décrit dans~\cite{Filliatre18}. On a extrait notre code vers OCaml. En compilant le code OCaml extrait, on obtient ainsi une implémentation de référence, que l'on peut exécuter avec des données anonymisées et comparer ainsi les résultats obtenus.

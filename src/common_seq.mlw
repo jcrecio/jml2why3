@@ -1,0 +1,92 @@
+module Common_seq
+
+use seq.Seq
+use seq.FreeMonoid
+use int.NumOf
+use int.Int
+use int.Sum
+
+function seq_forall (p: 'a -> bool) (s: seq 'a) : bool =
+  forall i. 0 <= i < length s -> p s[i]
+
+function seq_fornone (p: 'a -> bool) (s: seq 'a) : bool =
+  forall i. 0 <= i < length s -> not p s[i]
+
+function seq_forall_two (p: 'a -> 'a -> bool) (s: seq 'a) : bool =
+  forall i j. 0 <= i < j < length s -> p s[i] s[j]
+
+function seq_numof (p: 'a -> bool) (s: seq 'a) : int =
+  numof (fun i -> p s[i]) 0 (length s)
+
+lemma seq_forall_numof:
+  forall p: 'a -> bool, s: seq 'a.
+  seq_forall p s <-> seq_numof p s = length s
+
+lemma not_seq_forall_numof:
+  forall p: 'a -> bool, s: seq 'a.
+  (not seq_forall p s) <-> seq_numof p s < length s
+
+lemma seq_fornone_numof:
+  forall p: 'a -> bool, s: seq 'a.
+  seq_fornone p s <-> seq_numof p s = 0
+
+lemma not_seq_fornone_numof:
+  forall p: 'a -> bool, s: seq 'a.
+  (not seq_fornone p s) <-> seq_numof p s > 0
+
+(*
+let lemma forall_imp_len_eq_numof (p: 'a -> bool) (s: seq 'a)
+  requires  { forall k. 0 <= k < length s -> p s[k] }
+  ensures { seq_numof s p = length s }
+= ()
+
+let rec lemma len_eq_numof_imp_forall (p: 'a -> bool) (s: seq 'a)
+  requires { seq_numof s p = length s }
+  ensures  { forall k. 0 <= k < length s -> p s[k] }
+  variant { length s }
+= if length s > 0 then len_eq_numof_imp_forall p s[1..]
+
+let lemma forall_imp_len_eq_numof_zero (p: 'a -> bool) (s: seq 'a)
+  requires  { forall k. 0 <= k < length s -> not p s[k] }
+  ensures { seq_numof s p = 0 }
+= ()
+
+let rec lemma len_eq_numof_imp_forall_zero (p: 'a -> bool) (s: seq 'a)
+  requires { seq_numof s p = 0 }
+  ensures  { forall k. 0 <= k < length s -> not p s[k] }
+  variant { length s }
+= if length s > 0 then len_eq_numof_imp_forall_zero p s[1..]
+*)
+
+lemma numof_cons:
+  forall s: seq 'a, p: 'a -> bool, x: 'a.
+    (seq_numof p (cons x s) =
+      if p x then 1 + seq_numof p s
+      else seq_numof p s
+    ) by (cons x s == (cons x empty) ++ s)
+
+lemma numof_snoc:
+  forall s: seq 'a, p: 'a -> bool, x: 'a.
+    (seq_numof p (snoc s x) =
+      if p x then 1 + seq_numof p s
+      else seq_numof p s
+    )
+
+lemma numof_tail:
+  forall s: seq 'a, p: 'a -> bool.
+    length s > 0 ->
+    (seq_numof p s[1..] =
+      if p s[0] then seq_numof p s - 1
+      else seq_numof p s
+    ) by (s == cons s[0] s[1..])
+
+lemma numof_app:
+  forall s1: seq 'a, s2: seq 'a, p: 'a -> bool.
+    seq_numof p (s1 ++ s2) = seq_numof p s1 + seq_numof p s2
+
+lemma numof_split:
+  forall s: seq 'a, k: int, p: 'a -> bool.
+    0 <= k <= length s ->
+    seq_numof p s = seq_numof p s[..k] + seq_numof p s[k..]
+
+end

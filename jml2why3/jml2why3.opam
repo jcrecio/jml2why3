@@ -1,0 +1,29 @@
+opam-version: "2.0"
+name: "jml2why3"
+version: "0.1"
+synopsis: "OpenJML to Why3, aka Krakatoa3"
+description: """
+"""
+maintainer: "Benedikt Becker <benedikt.becker@lri.fr>"
+authors: "Benedikt Becker <benedikt.becker@inria.fr>"
+homepage: "<none>"
+bug-reports: "<none>"
+
+pin-depends: [
+  ["why3.dev" "git+https://gitlab.inria.fr/why3/why3.git#master"]
+]
+
+depends: [
+  "ocaml"
+  "ocamlfind"
+  "yojson"
+  "ppx_tools"
+  "ppx_deriving"
+  "why3" {= "dev"}
+  "alt-ergo" {test}
+]
+
+build: [
+  [make]
+]
+# install: [make "install"]

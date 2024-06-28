@@ -1,0 +1,420 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE why3session PUBLIC "-//Why3//proof session v5//EN"
+"http://why3.lri.fr/why3session.dtd">
+<why3session shape_version="8">
+<prover id="0" name="Z3" version="4.8.4" timelimit="1" steplimit="0" memlimit="1000"/>
+<prover id="1" name="Alt-Ergo" version="2.3.0" timelimit="1" steplimit="0" memlimit="1000"/>
+<prover id="2" name="CVC4" version="1.6" timelimit="1" steplimit="0" memlimit="1000"/>
+<file>
+<path name=".."/><path name="algo2.mlw"/>
+<theory name="Top">
+ <goal name="VC ordre_appel_valide" expl="VC for ordre_appel_valide">
+ <proof prover="0"><result status="timeout" time="1.00" steps="2189966"/></proof>
+ <proof prover="1"><result status="timeout" time="1.00"/></proof>
+ <proof prover="2"><result status="timeout" time="1.00" steps="647121"/></proof>
+ </goal>
+ <goal name="VC creer_ordre_appel_valide" expl="VC for creer_ordre_appel_valide" proved="true">
+ <proof prover="2"><result status="valid" time="0.08" steps="26388"/></proof>
+ </goal>
+ <goal name="VC reste_b" expl="VC for reste_b" proved="true">
+ <proof prover="2"><result status="valid" time="0.05" steps="18857"/></proof>
+ </goal>
+ <goal name="VC reste_r" expl="VC for reste_r" proved="true">
+ <proof prover="2"><result status="valid" time="0.08" steps="18910"/></proof>
+ </goal>
+ <goal name="VC taux_b_est_contraignant" expl="VC for taux_b_est_contraignant" proved="true">
+ <proof prover="2"><result status="valid" time="0.05" steps="18963"/></proof>
+ </goal>
+ <goal name="VC taux_r_est_contraignant" expl="VC for taux_r_est_contraignant" proved="true">
+ <proof prover="2"><result status="valid" time="0.09" steps="18964"/></proof>
+ </goal>
+ <goal name="P.Refl" proved="true">
+ <proof prover="2"><result status="valid" time="0.09" steps="21485"/></proof>
+ </goal>
+ <goal name="P.Trans" proved="true">
+ <proof prover="2"><result status="valid" time="0.08" steps="21668"/></proof>
+ </goal>
+ <goal name="P.Total" proved="true">
+ <proof prover="2"><result status="valid" time="0.12" steps="21657"/></proof>
+ </goal>
+ <goal name="VC transfer_one_if_not_empty_and_pred" expl="VC for transfer_one_if_not_empty_and_pred">
+ <proof prover="0"><result status="timeout" time="1.00" steps="1115332"/></proof>
+ <proof prover="1"><result status="timeout" time="1.00"/></proof>
+ <proof prover="2"><result status="timeout" time="1.00" steps="166827"/></proof>
+ <transf name="split_vc" >
+  <goal name="VC transfer_one_if_not_empty_and_pred.0" expl="precondition" proved="true">
+  <proof prover="2"><result status="valid" time="0.06" steps="23856"/></proof>
+  </goal>
+  <goal name="VC transfer_one_if_not_empty_and_pred.1" expl="postcondition">
+  <proof prover="0"><result status="timeout" time="1.00" steps="636130"/></proof>
+  <proof prover="1"><result status="timeout" time="1.00"/></proof>
+  <proof prover="2"><result status="timeout" time="1.00" steps="121542"/></proof>
+  </goal>
+  <goal name="VC transfer_one_if_not_empty_and_pred.2" expl="postcondition">
+  <proof prover="0"><result status="timeout" time="1.00" steps="909848"/></proof>
+  <proof prover="1"><result status="timeout" time="1.00"/></proof>
+  <proof prover="2"><result status="timeout" time="1.00" steps="122574"/></proof>
+  </goal>
+  <goal name="VC transfer_one_if_not_empty_and_pred.3" expl="postcondition" proved="true">
+  <proof prover="2"><result status="valid" time="0.09" steps="24291"/></proof>
+  </goal>
+  <goal name="VC transfer_one_if_not_empty_and_pred.4" expl="postcondition" proved="true">
+  <proof prover="2"><result status="valid" time="0.11" steps="29854"/></proof>
+  </goal>
+  <goal name="VC transfer_one_if_not_empty_and_pred.5" expl="postcondition" proved="true">
+  <transf name="case" proved="true" arg1="(p &lt;&gt; empty)">
+   <goal name="VC transfer_one_if_not_empty_and_pred.5.0" expl="true case (postcondition)" proved="true">
+   <proof prover="2"><result status="valid" time="0.07" steps="29450"/></proof>
+   </goal>
+   <goal name="VC transfer_one_if_not_empty_and_pred.5.1" expl="false case (postcondition)" proved="true">
+   <proof prover="2"><result status="valid" time="0.07" steps="29450"/></proof>
+   </goal>
+  </transf>
+  </goal>
+  <goal name="VC transfer_one_if_not_empty_and_pred.6" expl="postcondition" proved="true">
+  <proof prover="2"><result status="valid" time="0.05" steps="24087"/></proof>
+  </goal>
+  <goal name="VC transfer_one_if_not_empty_and_pred.7" expl="postcondition" proved="true">
+  <proof prover="2"><result status="valid" time="0.07" steps="29843"/></proof>
+  </goal>
+  <goal name="VC transfer_one_if_not_empty_and_pred.8" expl="postcondition" proved="true">
+  <proof prover="2"><result status="valid" time="0.07" steps="29439"/></proof>
+  </goal>
+  <goal name="VC transfer_one_if_not_empty_and_pred.9" expl="postcondition" proved="true">
+  <proof prover="2"><result status="valid" time="0.09" steps="24083"/></proof>
+  </goal>
+ </transf>
+ </goal>
+ <goal name="VC choisir_br" expl="VC for choisir_br">
+ <proof prover="0"><result status="timeout" time="1.00" steps="1262443"/></proof>
+ <proof prover="1"><result status="timeout" time="1.00"/></proof>
+ <proof prover="2"><result status="timeout" time="1.00" steps="177000"/></proof>
+ <transf name="split_vc" >
+  <goal name="VC choisir_br.0" expl="precondition" proved="true">
+  <proof prover="2"><result status="valid" time="0.06" steps="24058"/></proof>
+  </goal>
+  <goal name="VC choisir_br.1" expl="type invariant" proved="true">
+  <proof prover="2"><result status="valid" time="0.25" steps="46029"/></proof>
+  </goal>
+  <goal name="VC choisir_br.2" expl="type invariant" proved="true">
+  <proof prover="2"><result status="valid" time="0.10" steps="27792"/></proof>
+  </goal>
+  <goal name="VC choisir_br.3" expl="type invariant" proved="true">
+  <proof prover="2"><result status="valid" time="0.11" steps="27856"/></proof>
+  </goal>
+  <goal name="VC choisir_br.4" expl="type invariant" proved="true">
+  <proof prover="2"><result status="valid" time="0.10" steps="27920"/></proof>
+  </goal>
+  <goal name="VC choisir_br.5" expl="type invariant">
+  <proof prover="0"><result status="timeout" time="1.00" steps="1778711"/></proof>
+  <proof prover="1"><result status="timeout" time="1.00"/></proof>
+  <proof prover="2"><result status="timeout" time="1.00" steps="386418"/></proof>
+  <transf name="split_vc" >
+   <goal name="VC choisir_br.5.0" expl="type invariant">
+   <proof prover="0"><result status="timeout" time="1.00" steps="1736824"/></proof>
+   <proof prover="1"><result status="timeout" time="1.00"/></proof>
+   <proof prover="2"><result status="timeout" time="1.00" steps="125194"/></proof>
+   <transf name="case" arg1="(length1 (seq oa_ordre_appel) + 1 &gt;= nb_voeux oa1)">
+    <goal name="VC choisir_br.5.0.0" expl="true case (type invariant)">
+    <proof prover="0"><result status="timeout" time="1.00" steps="1773069"/></proof>
+    <proof prover="1"><result status="timeout" time="1.00"/></proof>
+    <proof prover="2"><result status="timeout" time="1.00" steps="386483"/></proof>
+    </goal>
+    <goal name="VC choisir_br.5.0.1" expl="false case (type invariant)">
+    <proof prover="0"><result status="timeout" time="1.00" steps="1773343"/></proof>
+    <proof prover="1"><result status="timeout" time="1.00"/></proof>
+    <proof prover="2"><result status="timeout" time="1.00" steps="386477"/></proof>
+    </goal>
+   </transf>
+   </goal>
+  </transf>
+  </goal>
+  <goal name="VC choisir_br.6" expl="postcondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.02" steps="60"/></proof>
+  </goal>
+ </transf>
+ </goal>
+ <goal name="VC choisir_bnr" expl="VC for choisir_bnr">
+ <proof prover="0"><result status="timeout" time="1.00" steps="1392986"/></proof>
+ <proof prover="1"><result status="timeout" time="1.00"/></proof>
+ <proof prover="2"><result status="timeout" time="1.00" steps="175570"/></proof>
+ <transf name="split_vc" >
+  <goal name="VC choisir_bnr.0" expl="precondition" proved="true">
+  <proof prover="2"><result status="valid" time="0.06" steps="24058"/></proof>
+  </goal>
+  <goal name="VC choisir_bnr.1" expl="type invariant" proved="true">
+  <proof prover="2"><result status="valid" time="0.08" steps="27759"/></proof>
+  </goal>
+  <goal name="VC choisir_bnr.2" expl="type invariant" proved="true">
+  <proof prover="1"><result status="valid" time="0.24" steps="1160"/></proof>
+  </goal>
+  <goal name="VC choisir_bnr.3" expl="type invariant" proved="true">
+  <proof prover="2"><result status="valid" time="0.10" steps="27856"/></proof>
+  </goal>
+  <goal name="VC choisir_bnr.4" expl="type invariant" proved="true">
+  <proof prover="2"><result status="valid" time="0.08" steps="27920"/></proof>
+  </goal>
+  <goal name="VC choisir_bnr.5" expl="type invariant">
+  <proof prover="0"><result status="timeout" time="1.00" steps="1606078"/></proof>
+  <proof prover="1"><result status="timeout" time="1.00"/></proof>
+  <proof prover="2"><result status="timeout" time="1.00" steps="386444"/></proof>
+  <transf name="split_vc" >
+   <goal name="VC choisir_bnr.5.0" expl="type invariant">
+   <proof prover="0"><result status="timeout" time="1.00" steps="1719805"/></proof>
+   <proof prover="1"><result status="timeout" time="1.00"/></proof>
+   <proof prover="2"><result status="timeout" time="1.00" steps="386477"/></proof>
+   </goal>
+  </transf>
+  </goal>
+  <goal name="VC choisir_bnr.6" expl="postcondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.01" steps="60"/></proof>
+  </goal>
+ </transf>
+ </goal>
+ <goal name="VC choisir_nbr" expl="VC for choisir_nbr">
+ <proof prover="0"><result status="timeout" time="1.00" steps="1396204"/></proof>
+ <proof prover="1"><result status="timeout" time="1.00"/></proof>
+ <proof prover="2"><result status="timeout" time="1.00" steps="176773"/></proof>
+ <transf name="split_vc" >
+  <goal name="VC choisir_nbr.0" expl="precondition" proved="true">
+  <proof prover="2"><result status="valid" time="0.06" steps="24058"/></proof>
+  </goal>
+  <goal name="VC choisir_nbr.1" expl="type invariant" proved="true">
+  <proof prover="2"><result status="valid" time="0.07" steps="27759"/></proof>
+  </goal>
+  <goal name="VC choisir_nbr.2" expl="type invariant" proved="true">
+  <proof prover="2"><result status="valid" time="0.07" steps="27823"/></proof>
+  </goal>
+  <goal name="VC choisir_nbr.3" expl="type invariant" proved="true">
+  <proof prover="1"><result status="valid" time="0.32" steps="1172"/></proof>
+  </goal>
+  <goal name="VC choisir_nbr.4" expl="type invariant" proved="true">
+  <proof prover="2"><result status="valid" time="0.08" steps="27920"/></proof>
+  </goal>
+  <goal name="VC choisir_nbr.5" expl="type invariant">
+  <proof prover="0"><result status="timeout" time="1.00" steps="1424573"/></proof>
+  <proof prover="1"><result status="timeout" time="1.00"/></proof>
+  <proof prover="2"><result status="timeout" time="1.00" steps="386444"/></proof>
+  <transf name="split_vc" >
+   <goal name="VC choisir_nbr.5.0" expl="type invariant">
+   <proof prover="0"><result status="timeout" time="1.00" steps="1693272"/></proof>
+   <proof prover="1"><result status="timeout" time="1.00"/></proof>
+   <proof prover="2"><result status="timeout" time="1.00" steps="386477"/></proof>
+   </goal>
+  </transf>
+  </goal>
+  <goal name="VC choisir_nbr.6" expl="postcondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.02" steps="60"/></proof>
+  </goal>
+ </transf>
+ </goal>
+ <goal name="VC choisir_nbnr" expl="VC for choisir_nbnr">
+ <proof prover="0"><result status="timeout" time="1.00" steps="1534648"/></proof>
+ <proof prover="1"><result status="timeout" time="1.00"/></proof>
+ <proof prover="2"><result status="timeout" time="1.00" steps="185421"/></proof>
+ <transf name="split_vc" >
+  <goal name="VC choisir_nbnr.0" expl="precondition" proved="true">
+  <proof prover="2"><result status="valid" time="0.06" steps="24058"/></proof>
+  </goal>
+  <goal name="VC choisir_nbnr.1" expl="type invariant" proved="true">
+  <proof prover="2"><result status="valid" time="0.08" steps="27759"/></proof>
+  </goal>
+  <goal name="VC choisir_nbnr.2" expl="type invariant" proved="true">
+  <proof prover="2"><result status="valid" time="0.08" steps="27823"/></proof>
+  </goal>
+  <goal name="VC choisir_nbnr.3" expl="type invariant" proved="true">
+  <proof prover="2"><result status="valid" time="0.10" steps="27887"/></proof>
+  </goal>
+  <goal name="VC choisir_nbnr.4" expl="type invariant" proved="true">
+  <proof prover="1"><result status="valid" time="0.16" steps="1190"/></proof>
+  </goal>
+  <goal name="VC choisir_nbnr.5" expl="type invariant">
+  <proof prover="0"><result status="timeout" time="1.00" steps="1370568"/></proof>
+  <proof prover="1"><result status="timeout" time="1.00"/></proof>
+  <proof prover="2"><result status="timeout" time="1.00" steps="375033"/></proof>
+  <transf name="split_vc" >
+   <goal name="VC choisir_nbnr.5.0" expl="type invariant">
+   <proof prover="0"><result status="timeout" time="1.00" steps="1263431"/></proof>
+   <proof prover="1"><result status="timeout" time="1.00"/></proof>
+   <proof prover="2"><result status="timeout" time="1.00" steps="375070"/></proof>
+   </goal>
+  </transf>
+  </goal>
+  <goal name="VC choisir_nbnr.6" expl="postcondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.02" steps="60"/></proof>
+  </goal>
+ </transf>
+ </goal>
+ <goal name="VC mk_eligibles" expl="VC for mk_eligibles">
+ <proof prover="0"><result status="timeout" time="1.00" steps="1157354"/></proof>
+ <proof prover="1"><result status="timeout" time="1.00"/></proof>
+ <proof prover="2"><result status="timeout" time="1.00" steps="156116"/></proof>
+ <transf name="split_vc" >
+  <goal name="VC mk_eligibles.0" expl="precondition" proved="true">
+  <proof prover="2"><result status="valid" time="0.06" steps="24113"/></proof>
+  </goal>
+  <goal name="VC mk_eligibles.1" expl="precondition" proved="true">
+  <proof prover="2"><result status="valid" time="0.05" steps="24356"/></proof>
+  </goal>
+  <goal name="VC mk_eligibles.2" expl="precondition" proved="true">
+  <proof prover="2"><result status="valid" time="0.05" steps="24569"/></proof>
+  </goal>
+  <goal name="VC mk_eligibles.3" expl="precondition" proved="true">
+  <proof prover="2"><result status="valid" time="0.05" steps="24782"/></proof>
+  </goal>
+  <goal name="VC mk_eligibles.4" expl="postcondition">
+  <proof prover="0"><result status="timeout" time="1.00" steps="1208483"/></proof>
+  <proof prover="1"><result status="timeout" time="1.00"/></proof>
+  <proof prover="2"><result status="timeout" time="1.00" steps="132677"/></proof>
+  <transf name="split_vc" >
+   <goal name="VC mk_eligibles.4.0" expl="postcondition">
+   <proof prover="0"><result status="timeout" time="1.00" steps="1086774"/></proof>
+   <proof prover="1"><result status="timeout" time="1.00"/></proof>
+   <proof prover="2"><result status="timeout" time="1.00" steps="132480"/></proof>
+   </goal>
+  </transf>
+  </goal>
+ </transf>
+ </goal>
+ <goal name="VC get_meilleur_c" expl="VC for get_meilleur_c">
+ <proof prover="0"><result status="timeout" time="1.00" steps="1366737"/></proof>
+ <proof prover="1"><result status="timeout" time="1.00"/></proof>
+ <proof prover="2"><result status="timeout" time="1.00" steps="184543"/></proof>
+ <transf name="split_vc" >
+  <goal name="VC get_meilleur_c.0" expl="precondition" proved="true">
+  <proof prover="2"><result status="valid" time="0.13" steps="36782"/></proof>
+  </goal>
+  <goal name="VC get_meilleur_c.1" expl="precondition">
+  <proof prover="0"><result status="timeout" time="1.00" steps="2387906"/></proof>
+  <proof prover="1"><result status="timeout" time="1.00"/></proof>
+  <proof prover="2"><result status="timeout" time="1.00" steps="137865"/></proof>
+  <transf name="split_vc" >
+   <goal name="VC get_meilleur_c.1.0" expl="precondition">
+   <proof prover="0"><result status="timeout" time="1.00" steps="2409836"/></proof>
+   <proof prover="1"><result status="timeout" time="1.00"/></proof>
+   <proof prover="2"><result status="timeout" time="1.00" steps="305615"/></proof>
+   </goal>
+  </transf>
+  </goal>
+  <goal name="VC get_meilleur_c.2" expl="postcondition">
+  <proof prover="0"><result status="timeout" time="1.00" steps="1268890"/></proof>
+  <proof prover="1"><result status="timeout" time="1.00"/></proof>
+  <proof prover="2"><result status="timeout" time="1.00" steps="167397"/></proof>
+  <transf name="split_vc" >
+   <goal name="VC get_meilleur_c.2.0" expl="postcondition">
+   <proof prover="0"><result status="timeout" time="1.00" steps="1579763"/></proof>
+   <proof prover="1"><result status="timeout" time="1.00"/></proof>
+   <proof prover="2"><result status="timeout" time="1.00" steps="172200"/></proof>
+   </goal>
+   <goal name="VC get_meilleur_c.2.1" expl="postcondition">
+   <proof prover="0"><result status="timeout" time="1.00" steps="1762264"/></proof>
+   <proof prover="1"><result status="timeout" time="1.00"/></proof>
+   <proof prover="2"><result status="timeout" time="1.00" steps="167637"/></proof>
+   </goal>
+  </transf>
+  </goal>
+ </transf>
+ </goal>
+ <goal name="VC mk_ordre_appel" expl="VC for mk_ordre_appel" proved="true">
+ <proof prover="1"><result status="valid" time="1.05" steps="3098"/></proof>
+ </goal>
+ <goal name="VC algo2" expl="VC for algo2">
+ <proof prover="0"><result status="timeout" time="1.00" steps="2245286"/></proof>
+ <proof prover="1"><result status="timeout" time="1.00"/></proof>
+ <proof prover="2"><result status="timeout" time="1.00" steps="191727"/></proof>
+ <transf name="split_vc" >
+  <goal name="VC algo2.0" expl="precondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.02" steps="47"/></proof>
+  </goal>
+  <goal name="VC algo2.1" expl="assertion" proved="true">
+  <proof prover="2"><result status="valid" time="0.37" steps="28836"/></proof>
+  </goal>
+  <goal name="VC algo2.2" expl="assertion" proved="true">
+  <proof prover="2"><result status="valid" time="0.28" steps="28845"/></proof>
+  </goal>
+  <goal name="VC algo2.3" expl="precondition" proved="true">
+  <proof prover="2"><result status="valid" time="0.05" steps="27323"/></proof>
+  </goal>
+  <goal name="VC algo2.4" expl="assertion" proved="true">
+  <proof prover="2"><result status="valid" time="0.10" steps="29268"/></proof>
+  </goal>
+  <goal name="VC algo2.5" expl="assertion" proved="true">
+  <proof prover="2"><result status="valid" time="0.08" steps="29277"/></proof>
+  </goal>
+  <goal name="VC algo2.6" expl="assertion" proved="true">
+  <proof prover="2"><result status="valid" time="0.15" steps="29506"/></proof>
+  </goal>
+  <goal name="VC algo2.7" expl="assertion" proved="true">
+  <proof prover="1"><result status="valid" time="0.01" steps="60"/></proof>
+  </goal>
+  <goal name="VC algo2.8" expl="assertion" proved="true">
+  <proof prover="2"><result status="valid" time="0.08" steps="29308"/></proof>
+  </goal>
+  <goal name="VC algo2.9" expl="assertion" proved="true">
+  <proof prover="2"><result status="valid" time="0.09" steps="29317"/></proof>
+  </goal>
+  <goal name="VC algo2.10" expl="precondition" proved="true">
+  <proof prover="2"><result status="valid" time="0.07" steps="27730"/></proof>
+  </goal>
+  <goal name="VC algo2.11" expl="assertion">
+  <proof prover="0"><result status="timeout" time="1.00" steps="729632"/></proof>
+  <proof prover="1"><result status="timeout" time="1.00"/></proof>
+  <proof prover="2"><result status="timeout" time="1.00" steps="207586"/></proof>
+  <transf name="split_vc" >
+   <goal name="VC algo2.11.0" expl="assertion">
+   <proof prover="0"><result status="timeout" time="1.00" steps="731290"/></proof>
+   <proof prover="1"><result status="timeout" time="1.00"/></proof>
+   <proof prover="2"><result status="timeout" time="1.00" steps="203439"/></proof>
+   </goal>
+  </transf>
+  </goal>
+  <goal name="VC algo2.12" expl="assertion">
+  <proof prover="0"><result status="timeout" time="1.00" steps="744920"/></proof>
+  <proof prover="1"><result status="timeout" time="1.00"/></proof>
+  <proof prover="2"><result status="timeout" time="1.00" steps="198553"/></proof>
+  <transf name="split_vc" >
+   <goal name="VC algo2.12.0" expl="assertion">
+   <proof prover="0"><result status="timeout" time="1.00" steps="745022"/></proof>
+   <proof prover="1"><result status="timeout" time="1.00"/></proof>
+   <proof prover="2"><result status="timeout" time="1.00" steps="226330"/></proof>
+   </goal>
+  </transf>
+  </goal>
+  <goal name="VC algo2.13" expl="precondition" proved="true">
+  <proof prover="2"><result status="valid" time="0.09" steps="28105"/></proof>
+  </goal>
+  <goal name="VC algo2.14" expl="precondition" proved="true">
+  <proof prover="2"><result status="valid" time="0.08" steps="28108"/></proof>
+  </goal>
+  <goal name="VC algo2.15" expl="precondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.08" steps="5594"/></proof>
+  <proof prover="1"><result status="valid" time="0.09" steps="86"/></proof>
+  <proof prover="2"><result status="valid" time="0.41" steps="28111"/></proof>
+  <transf name="split_vc" proved="true" >
+   <goal name="VC algo2.15.0" expl="precondition" proved="true">
+   <proof prover="0"><result status="valid" time="0.07" steps="5584"/></proof>
+   <proof prover="1"><result status="valid" time="0.09" steps="80"/></proof>
+   <proof prover="2"><result status="valid" time="0.40" steps="28063"/></proof>
+   </goal>
+  </transf>
+  </goal>
+  <goal name="VC algo2.16" expl="precondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.05" steps="5596"/></proof>
+  <proof prover="1"><result status="valid" time="0.08" steps="86"/></proof>
+  <proof prover="2"><result status="valid" time="0.08" steps="28114"/></proof>
+  <transf name="split_vc" proved="true" >
+   <goal name="VC algo2.16.0" expl="precondition" proved="true">
+   <proof prover="0"><result status="valid" time="0.06" steps="5586"/></proof>
+   <proof prover="1"><result status="valid" time="0.08" steps="80"/></proof>
+   <proof prover="2"><result status="valid" time="0.29" steps="28066"/></proof>
+   </goal>
+  </transf>
+  </goal>
+  <goal name="VC algo2.17" expl="postcondition" proved="true">
+  <proof prover="2"><result status="valid" time="0.11" steps="28385"/></proof>
+  </goal>
+ </transf>
+ </goal>
+</theory>
+</file>
+</why3session>

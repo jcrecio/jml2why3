@@ -1,0 +1,30 @@
+module Common_arr
+
+use seq.Seq
+use seq.Occ as Socc
+use common_seq.Common_seq
+use array.Array
+use map.Occ
+use int.Int
+use queue.Queue as Q
+
+function array_occ_ind (a: array 'a) (k: 'a) (m: int) (n: int) : int =
+  occ k a.elts m n
+
+function array_occ (a: array 'a) (k: 'a) : int =
+  array_occ_ind a k 0 (length a)
+
+let queue_of_array (a: array 'a) : Q.t 'a =
+  ensures { Seq.length result = length a }
+  ensures { forall i. 0 <= i < length a -> Seq.([]) result i = a[i] }
+  ensures { forall k. array_occ a k = Socc.occ_all k result }
+  let q = Q.create () in
+  for i = 0 to length a - 1 do
+    invariant { Seq.length q = i }
+    invariant { forall j. 0 <= j < i -> Seq.([]) q j = a[j] }
+    invariant { forall k. array_occ_ind a k 0 i = Socc.occ_all k q }
+    Q.push a[i] q
+  done;
+  q
+
+end

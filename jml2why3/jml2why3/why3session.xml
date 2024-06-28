@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE why3session PUBLIC "-//Why3//proof session v5//EN"
+"http://why3.lri.fr/why3session.dtd">
+<why3session shape_version="8">
+<prover id="0" name="Alt-Ergo" version="2.3.0" timelimit="1" steplimit="0" memlimit="1000"/>
+<prover id="1" name="CVC4" version="1.6" timelimit="1" steplimit="0" memlimit="1000"/>
+<prover id="2" name="Z3" version="4.6.0" timelimit="1" steplimit="0" memlimit="1000"/>
+<file format="whyml" proved="true">
+<path name=".."/><path name="jml2why3.mlw"/>
+<theory name="Nullable" proved="true">
+ <goal name="is_null&#39;vc" expl="VC for is_null" proved="true">
+ <proof prover="1"><result status="valid" time="0.05" steps="1986"/></proof>
+ </goal>
+ <goal name="is_non_null&#39;vc" expl="VC for is_non_null" proved="true">
+ <proof prover="1"><result status="valid" time="0.04" steps="2259"/></proof>
+ </goal>
+ <goal name="not_null_is_non_null" proved="true">
+ <proof prover="2"><result status="valid" time="0.23" steps="492795"/></proof>
+ </goal>
+ <goal name="is_null_or_non_null" proved="true">
+ <proof prover="1"><result status="valid" time="0.02" steps="2158"/></proof>
+ </goal>
+ <goal name="get_non_null&#39;vc" expl="VC for get_non_null" proved="true">
+ <proof prover="1"><result status="valid" time="0.02" steps="3969"/></proof>
+ </goal>
+ <goal name="map&#39;vc" expl="VC for map" proved="true">
+ <proof prover="1"><result status="valid" time="0.03" steps="6133"/></proof>
+ </goal>
+ <goal name="map_nullable_keeps_nullable" proved="true">
+ <proof prover="1"><result status="valid" time="0.03" steps="11288"/></proof>
+ </goal>
+</theory>
+<theory name="LinkedList" proved="true">
+ <goal name="linked_list&#39;vc" expl="VC for linked_list" proved="true">
+ <proof prover="1" timelimit="5"><result status="valid" time="0.06" steps="13774"/></proof>
+ </goal>
+ <goal name="is_empty&#39;vc" expl="VC for is_empty" proved="true">
+ <proof prover="0" timelimit="5"><result status="valid" time="0.09" steps="469"/></proof>
+ <proof prover="1" timelimit="5"><result status="timeout" time="5.00" steps="1496792"/></proof>
+ </goal>
+ <goal name="empty&#39;vc" expl="VC for empty" proved="true">
+ <proof prover="1" timelimit="5"><result status="valid" time="0.04" steps="14883"/></proof>
+ </goal>
+ <goal name="add&#39;vc" expl="VC for add" proved="true">
+ <proof prover="1" timelimit="5"><result status="valid" time="0.06" steps="18227"/></proof>
+ </goal>
+ <goal name="get&#39;vc" expl="VC for get" proved="true">
+ <proof prover="1" timelimit="5"><result status="valid" time="0.05" steps="10140"/></proof>
+ </goal>
+</theory>
+<theory name="Queue" proved="true">
+ <goal name="nullable_push&#39;vc" expl="VC for nullable_push" proved="true">
+ <proof prover="1"><result status="valid" time="0.05" steps="16894"/></proof>
+ </goal>
+ <goal name="nullable_peek&#39;vc" expl="VC for nullable_peek" proved="true">
+ <proof prover="1"><result status="valid" time="0.04" steps="18348"/></proof>
+ </goal>
+ <goal name="nullable_pop&#39;vc" expl="VC for nullable_pop" proved="true">
+ <proof prover="1"><result status="valid" time="0.05" steps="18936"/></proof>
+ </goal>
+</theory>
+<theory name="Utils" proved="true">
+ <goal name="biff&#39;vc" expl="VC for biff" proved="true">
+ <proof prover="1"><result status="valid" time="0.03" steps="11686"/></proof>
+ </goal>
+ <goal name="peano_to_int32&#39;vc" expl="VC for peano_to_int32" proved="true">
+ <proof prover="1"><result status="valid" time="0.02" steps="12943"/></proof>
+ </goal>
+ <goal name="int32exists&#39;vc" expl="VC for int32exists" proved="true">
+ <proof prover="1"><result status="valid" time="0.03" steps="11637"/></proof>
+ </goal>
+ <goal name="aux1" proved="true">
+ <proof prover="0"><result status="valid" time="0.01" steps="10"/></proof>
+ </goal>
+ <goal name="aux2" proved="true">
+ <proof prover="0"><result status="valid" time="0.01" steps="16"/></proof>
+ </goal>
+ <goal name="non_zero_length_seq" proved="true">
+ <proof prover="1"><result status="valid" time="0.05" steps="18825"/></proof>
+ </goal>
+ <goal name="pop_non_empty_stack_decreases_length" proved="true">
+ <proof prover="1"><result status="valid" time="0.07" steps="23350"/></proof>
+ </goal>
+ <goal name="shift_seq_equal" proved="true">
+ <proof prover="1"><result status="valid" time="0.12" steps="22521"/></proof>
+ </goal>
+ <goal name="shift_seq_length" proved="true">
+ <proof prover="1"><result status="valid" time="0.10" steps="23494"/></proof>
+ </goal>
+ <goal name="in_range_rest" proved="true">
+ <proof prover="1"><result status="valid" time="0.29" steps="30314"/></proof>
+ </goal>
+ <goal name="occ_array_non_negative" proved="true">
+ <proof prover="1"><result status="valid" time="0.08" steps="21567"/></proof>
+ </goal>
+ <goal name="occ_array_zero&#39;vc" expl="VC for occ_array_zero" proved="true">
+ <proof prover="1"><result status="valid" time="0.26" steps="37940"/></proof>
+ </goal>
+ <goal name="l3" proved="true">
+ <transf name="split_vc" proved="true" >
+  <goal name="l3.0" proved="true">
+  <transf name="unfold" proved="true" arg1="occ_array">
+   <goal name="l3.0.0" proved="true">
+   <transf name="unfold" proved="true" arg1="([])">
+    <goal name="l3.0.0.0" proved="true">
+    <proof prover="0"><result status="valid" time="0.88" steps="938"/></proof>
+    </goal>
+   </transf>
+   </goal>
+  </transf>
+  </goal>
+ </transf>
+ </goal>
+ <goal name="l4" proved="true">
+ <transf name="split_vc" proved="true" >
+  <goal name="l4.0" proved="true">
+  <transf name="unfold" proved="true" arg1="occ_array">
+   <goal name="l4.0.0" proved="true">
+   <transf name="unfold" proved="true" arg1="([])">
+    <goal name="l4.0.0.0" proved="true">
+    <proof prover="0" timelimit="5"><result status="valid" time="4.29" steps="3606"/></proof>
+    </goal>
+   </transf>
+   </goal>
+  </transf>
+  </goal>
+ </transf>
+ </goal>
+ <goal name="occ_non_negative" proved="true">
+ <proof prover="1"><result status="valid" time="0.10" steps="21936"/></proof>
+ </goal>
+ <goal name="l1" proved="true">
+ <proof prover="1"><result status="valid" time="0.12" steps="28344"/></proof>
+ </goal>
+ <goal name="l2" proved="true">
+ <proof prover="1"><result status="valid" time="0.11" steps="28547"/></proof>
+ </goal>
+ <goal name="l5" proved="true">
+ <transf name="split_vc" proved="true" >
+  <goal name="l5.0" proved="true">
+  <transf name="instantiate" proved="true" arg1="numof_strictly_increasing" arg2="(fun (i1:int) -&gt; get1 s i1 = x),0,0,i,s.length1">
+   <goal name="l5.0.0" proved="true">
+   <proof prover="0" timelimit="29"><result status="valid" time="10.95" steps="5716"/></proof>
+   </goal>
+  </transf>
+  </goal>
+ </transf>
+ </goal>
+</theory>
+</file>
+</why3session>

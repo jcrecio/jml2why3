@@ -1,0 +1,31 @@
+(library
+  (name algo1)
+  (modules algo1)
+  (wrapped false)
+  (libraries zarith))
+
+(library
+  (name common)
+  (modules common)
+  (wrapped false)
+  (libraries zarith algo1))
+
+(executable
+  (name random_input)
+  (modules random_input)
+  (libraries algo1 common))
+
+(executable
+  (name given_input)
+  (modules given_input)
+  (libraries algo1 common))
+
+(executable
+  (name get_taux)
+  (modules get_taux)
+  (libraries common))
+
+(executable
+  (name get_oa)
+  (modules get_oa)
+  (libraries common))

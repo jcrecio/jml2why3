@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE why3session PUBLIC "-//Why3//proof session v5//EN"
+"http://why3.lri.fr/why3session.dtd">
+<why3session shape_version="8">
+<prover id="0" name="Z3" version="4.8.4" timelimit="10" steplimit="0" memlimit="1000"/>
+<prover id="1" name="Alt-Ergo" version="2.3.0" timelimit="1" steplimit="0" memlimit="1000"/>
+<prover id="2" name="Eprover" version="2.0" timelimit="10" steplimit="0" memlimit="1000"/>
+<prover id="3" name="CVC4" version="1.7" timelimit="1" steplimit="0" memlimit="1000"/>
+<prover id="4" name="CVC4" version="1.6" timelimit="10" steplimit="0" memlimit="1000"/>
+<file>
+<path name=".."/><path name="common_seq.mlw"/>
+<theory name="Common_seq">
+ <goal name="seq_forall_numof">
+ <proof prover="0" timelimit="1"><result status="timeout" time="1.00" steps="1803982"/></proof>
+ <proof prover="1"><result status="timeout" time="1.00"/></proof>
+ <proof prover="4" timelimit="1"><result status="timeout" time="1.00" steps="157499"/></proof>
+ <transf name="split_vc" >
+  <goal name="seq_forall_numof.0" proved="true">
+  <proof prover="1"><result status="valid" time="0.20" steps="163"/></proof>
+  </goal>
+  <goal name="seq_forall_numof.1">
+  <proof prover="0"><result status="timeout" time="10.00" steps="6520037"/></proof>
+  <proof prover="1" timelimit="10"><result status="timeout" time="10.00"/></proof>
+  <proof prover="2"><result status="timeout" time="10.00"/></proof>
+  <proof prover="4"><result status="timeout" time="10.00" steps="624117"/></proof>
+  </goal>
+ </transf>
+ </goal>
+ <goal name="not_seq_forall_numof" proved="true">
+ <proof prover="1"><result status="valid" time="0.01" steps="49"/></proof>
+ </goal>
+ <goal name="seq_fornone_numof">
+ <transf name="split_vc" >
+  <goal name="seq_fornone_numof.0" proved="true">
+  <proof prover="3"><result status="valid" time="0.14" steps="29997"/></proof>
+  </goal>
+  <goal name="seq_fornone_numof.1">
+  <proof prover="0"><result status="timeout" time="10.00" steps="3923441"/></proof>
+  <proof prover="1" timelimit="10"><result status="timeout" time="10.00"/></proof>
+  <proof prover="2"><result status="timeout" time="10.00"/></proof>
+  <proof prover="4"><result status="timeout" time="10.00" steps="655638"/></proof>
+  </goal>
+ </transf>
+ </goal>
+ <goal name="not_seq_fornone_numof" proved="true">
+ <proof prover="1"><result status="valid" time="0.02" steps="60"/></proof>
+ </goal>
+ <goal name="numof_cons">
+ <transf name="split_vc" >
+  <goal name="numof_cons.0" proved="true">
+  <proof prover="1"><result status="valid" time="0.02" steps="66"/></proof>
+  </goal>
+  <goal name="numof_cons.1">
+  <proof prover="0"><result status="timeout" time="10.00" steps="8177597"/></proof>
+  <proof prover="1" timelimit="10"><result status="timeout" time="10.00"/></proof>
+  <proof prover="4"><result status="timeout" time="10.00" steps="489767"/></proof>
+  </goal>
+ </transf>
+ </goal>
+ <goal name="numof_snoc">
+ <proof prover="0" timelimit="1"><result status="timeout" time="1.00" steps="1486878"/></proof>
+ <proof prover="1"><result status="timeout" time="1.00"/></proof>
+ <proof prover="4" timelimit="1"><result status="timeout" time="1.00" steps="136908"/></proof>
+ <transf name="split_vc" >
+  <goal name="numof_snoc.0">
+  <proof prover="0"><result status="timeout" time="10.00" steps="7140130"/></proof>
+  <proof prover="1" timelimit="10"><result status="timeout" time="10.00"/></proof>
+  <proof prover="2"><result status="timeout" time="10.00"/></proof>
+  <proof prover="4"><result status="timeout" time="10.00" steps="507421"/></proof>
+  </goal>
+ </transf>
+ </goal>
+ <goal name="numof_tail" proved="true">
+ <proof prover="1"><result status="valid" time="0.02" steps="84"/></proof>
+ </goal>
+ <goal name="numof_app">
+ <proof prover="0" timelimit="1"><result status="timeout" time="1.00" steps="1243980"/></proof>
+ <proof prover="1"><result status="timeout" time="1.00"/></proof>
+ <proof prover="4" timelimit="1"><result status="timeout" time="1.00" steps="114085"/></proof>
+ <transf name="split_vc" >
+  <goal name="numof_app.0">
+  <proof prover="0"><result status="timeout" time="10.00" steps="3119174"/></proof>
+  <proof prover="1" timelimit="10"><result status="timeout" time="10.00"/></proof>
+  <proof prover="2"><result status="timeout" time="10.00"/></proof>
+  <proof prover="4"><result status="timeout" time="10.00" steps="539087"/></proof>
+  </goal>
+ </transf>
+ </goal>
+ <goal name="numof_split" proved="true">
+ <proof prover="1"><result status="valid" time="0.02" steps="38"/></proof>
+ </goal>
+</theory>
+</file>
+</why3session>

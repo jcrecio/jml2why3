@@ -1,0 +1,6 @@
+*.java.json
+*.java.json.mlw
+openjml-*.jar
+.merlin
+_build/
+_opam/

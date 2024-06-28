@@ -1,0 +1,610 @@
+use int.Int
+use int.NumOf
+use int.Sum
+
+use queue.Queue as Q
+
+use seq.Seq
+use seq.FreeMonoid
+use seq.Occ
+
+use common.Common
+use common_seq.Common_seq
+
+predicate rang_nb_high_ok (c: voeu) (r: int) (taux_b: int) =
+  (* on multiplie par 100 - taux pour éviter une division par zéro et les flottants *)
+
+(*
+  r <= c.rang * (1 + taux_b / (100 - taux_b))
+  r <= c.rang + c.rang * taux_b / (100 - taux_b)
+  r * (100 - taux) <= c.rang * (100 - taux) + c.rang * taux_b
+  r * (100 - taux) <= c.rang * 100 - (c.rang * taux) + c.rang * taux
+  r * (100 - taux) <= c.rang * 100
+*)
+
+  r * (100 - taux_b) <= c.rang * 100
+
+function nombre_boursiers (s: seq voeu) : int
+  = seq_numof est_boursier s
+
+lemma nombre_boursiers_snoc:
+  forall s x i. 0 <= i <= length s ->
+  nombre_boursiers s[..i] = nombre_boursiers (snoc s x)[..i]
+
+type ordre_appel_valide = {
+  ordre_appel: Q.t voeu;
+  boursiers: Q.t voeu;
+  non_boursiers: Q.t voeu;
+  taux_b: int;
+  nb_voeux: int;
+  nb_b_total: int;
+  mutable nb_b_appeles: int;
+} invariant { [@expl:taux b ok] 0 <= taux_b <= 100 }
+  invariant { [@expl:nb voeux positif] nb_voeux >= 0 }
+  invariant { [@expl:b seulement] boursiers_seulement boursiers }
+  invariant { [@expl:nb seulement] non_boursiers_seulement non_boursiers }
+  invariant { [@expl:b triés] sorted boursiers }
+  invariant { [@expl:nb triés] sorted non_boursiers }
+  invariant { [@expl:nb v ok] length boursiers + length non_boursiers + length ordre_appel = nb_voeux }
+  invariant { [@expl:reste b taux ok] length boursiers > 0 -> taux_ok taux_b nb_b_appeles (length ordre_appel) }
+  invariant { [@expl:s'il n'y a plus de boursiers, on les a tous appelés] length boursiers = 0 <-> nombre_boursiers ordre_appel = nb_b_total }
+  invariant { [@expl:s'il y a tous les boursiers dans un préfixe, il n'en reste plus à appeler]
+    forall i. 0 <= i <= length ordre_appel ->
+    (nombre_boursiers ordre_appel[..i] = nb_b_total -> length boursiers = 0)}
+  invariant { [@expl:nb b appeles correct] nombre_boursiers ordre_appel = nb_b_appeles }
+  invariant { [@expl:total nb b constant] nombre_boursiers ordre_appel + nombre_boursiers boursiers = nb_b_total }
+  invariant { [@expl:taux ok or no more b] taux_ok taux_b nb_b_appeles (length ordre_appel) \/ length boursiers = 0 }
+  invariant { [@expl:all taken on prefix imply no b left]
+    forall i. 0 <= i <= length ordre_appel ->
+    nombre_boursiers ordre_appel[..i] = nb_b_total -> length boursiers = 0
+  }
+  invariant { [@expl:no b left eq all taken]
+    length boursiers = 0 <-> nombre_boursiers ordre_appel = nb_b_total
+  }
+  invariant { [@expl:taux ok or all taken]
+    forall i. 0 <= i <= length ordre_appel ->
+    let nb_b_local = nombre_boursiers ordre_appel[..i] in
+    taux_ok taux_b nb_b_local i \/ nb_b_local = nb_b_total }
+  invariant { rang_c_valide boursiers nb_voeux }
+  invariant { rang_c_valide non_boursiers nb_voeux }
+  invariant { rang_c_valide ordre_appel nb_voeux }
+  invariant { rang_distincts (non_boursiers ++ boursiers ++ ordre_appel) }
+  invariant {
+    forall i. 0 <= i < length ordre_appel ->
+    let candidat = ordre_appel[i] in
+    est_boursier candidat ->
+    boursiers <> empty ->
+    voeu_lt candidat boursiers[0]
+  }
+  invariant {
+    forall i. 0 <= i < length ordre_appel ->
+    let candidat = ordre_appel[i] in
+    (not est_boursier candidat) ->
+    non_boursiers <> empty ->
+    voeu_lt candidat non_boursiers[0]
+  }
+  invariant {
+    forall i. 0 <= i < length ordre_appel ->
+    let candidat = ordre_appel[i] in
+    (not est_boursier candidat) ->
+    boursiers <> empty ->
+    voeu_lt candidat boursiers[0]
+  }
+  invariant {
+    forall i. 0 <= i < length ordre_appel ->
+    let candidat = ordre_appel[i] in
+    (est_boursier candidat) ->
+    non_boursiers <> empty ->
+    voeu_lt candidat non_boursiers[0] \/
+    let nb_b_local = nombre_boursiers ordre_appel[..i] in
+    not (taux_ok taux_b nb_b_local (i + 1)) }
+    (* rang_distinct non_boursiers[0] candidat } *)
+  invariant {
+    forall i1 i2. 0 <= i1 < i2 < length ordre_appel ->
+    let c1 = ordre_appel[i1] in
+    let c2 = ordre_appel[i2] in
+    est_boursier c1 /\ est_boursier c2 -> voeu_lt c1 c2 }
+  invariant {
+    forall i1 i2. 0 <= i1 < i2 < length ordre_appel ->
+    let c1 = ordre_appel[i1] in
+    let c2 = ordre_appel[i2] in
+    ((not est_boursier c1) && (not est_boursier c2)) -> voeu_lt c1 c2 }
+  invariant {
+    forall i1 i2. 0 <= i1 < i2 < length ordre_appel ->
+    let c1 = ordre_appel[i1] in
+    let c2 = ordre_appel[i2] in
+    ((not est_boursier c1) && est_boursier c2) -> voeu_lt c1 c2 }
+  invariant {
+    forall i1 i2. 0 <= i1 < i2 < length ordre_appel ->
+    let c1 = ordre_appel[i1] in
+    let c2 = ordre_appel[i2] in
+    (est_boursier c1 && (not est_boursier c2)) ->
+    let nb_b_local = nombre_boursiers ordre_appel[..i1] in
+    voeu_lt c1 c2 \/ not (taux_ok taux_b nb_b_local (i1 + 1))
+  }
+  by {
+    ordre_appel = Q.create ();
+    boursiers = Q.create ();
+    non_boursiers = Q.create ();
+    taux_b = 0;
+    nb_voeux = 0;
+    nb_b_appeles = 0;
+    nb_b_total = 0;
+  }
+
+let function reste_b oa =
+  not Q.is_empty oa.boursiers
+
+let function reste_nb oa =
+  not Q.is_empty oa.non_boursiers
+
+predicate taux_b_est_contraignant (oa: ordre_appel_valide) =
+  reste_b oa && not (taux_ok oa.taux_b oa.nb_b_appeles (1 + length oa.ordre_appel))
+
+let taux_b_est_contraignant_f (oa: ordre_appel_valide)
+  ensures { result = taux_b_est_contraignant oa }
+=
+  reste_b oa && not (taux_ok oa.taux_b oa.nb_b_appeles (1 + Peano.to_int (Q.length oa.ordre_appel)))
+
+let function meilleur_candidat_est_b oa : bool
+  requires { [@expl:req - b nonempty] reste_b oa }
+  requires { [@expl:req - nb nonempty] reste_nb oa }
+  requires { rang_distinct oa.boursiers[0] oa.non_boursiers[0] }
+  ensures { result -> voeu_lt oa.boursiers[0] oa.non_boursiers[0] }
+  ensures { (not result) -> voeu_lt oa.non_boursiers[0] oa.boursiers[0] }
+=
+  let c_nb = Q.safe_peek oa.non_boursiers in
+  let c_b = Q.safe_peek oa.boursiers in
+  if voeu_lt c_b c_nb then true
+  else if voeu_lt c_nb c_b then false
+  else absurd
+
+let creer_ordre_appel_valide b nb taux =
+  requires { [@expl:req - b only] boursiers_seulement b }
+  requires { [@expl:req - nb only] non_boursiers_seulement nb }
+  requires { [@expl:req - valid t] 0 <= taux <= 100 }
+  requires { rang_c_valide b (length b + length nb) }
+  requires { rang_c_valide nb (length b + length nb) }
+  requires { [@expl:b triés] sorted b }
+  requires { [@expl:b triés] sorted nb }
+  requires { rang_distincts b }
+  requires { rang_distincts nb }
+  requires { rang_distincts (b ++ nb) }
+  ensures { result.boursiers == b}
+  ensures { result.non_boursiers == nb }
+  ensures { result.ordre_appel == empty }
+  ensures { result.taux_b = taux }
+  {
+    ordre_appel = Q.create ();
+    boursiers = b;
+    non_boursiers = nb;
+    taux_b = taux;
+    nb_voeux = Peano.to_int (Q.length b) + Peano.to_int (Q.length nb);
+    nb_b_appeles = 0;
+    nb_b_total = Peano.to_int (Q.length b);
+  }
+
+let ghost t_ok (oa: ordre_appel_valide)
+  ensures {
+    (* TODO: without [i] *)
+    forall i [i] . 0 <= i <= length oa.ordre_appel ->
+    let nb_b_local = nombre_boursiers oa.ordre_appel[..i] in
+    taux_ok oa.taux_b nb_b_local i \/ nb_b_local = oa.nb_b_total }
+= ()
+
+let lemma t_okb (oa: ordre_appel_valide) (b: voeu)
+  requires { est_boursier b }
+  ensures {
+    let s = snoc oa.ordre_appel b in
+    forall i. 0 <= i <= length oa.ordre_appel ->
+    let nb_b_local = nombre_boursiers s[..i] in
+    taux_ok oa.taux_b nb_b_local i \/ nb_b_local = oa.nb_b_total }
+= t_ok oa
+
+let choisir_boursier (oa: ordre_appel_valide) : unit
+  requires { [@expl:req - b nonempty] oa.boursiers <> empty }
+  requires { [@expl:req - OK to choose b]
+        taux_b_est_contraignant oa
+    \/ (not taux_b_est_contraignant oa && not reste_nb oa)
+    \/ (not taux_b_est_contraignant oa && reste_nb oa && meilleur_candidat_est_b oa) }
+  ensures { oa.boursiers == (old oa.boursiers)[1..] }
+  ensures { oa.ordre_appel == snoc (old oa.ordre_appel) (old oa.boursiers)[0] }
+=
+    t_okb (pure {old oa}) (pure {oa.boursiers[0]});
+    let v = Q.safe_pop oa.boursiers in
+    oa.nb_b_appeles <- oa.nb_b_appeles + 1;
+    Q.push v oa.ordre_appel
+
+let lemma t_oknb (oa: ordre_appel_valide) (b: voeu)
+  requires { not (est_boursier b) }
+  ensures {
+    let s = snoc oa.ordre_appel b in
+    forall i. 0 <= i <= length oa.ordre_appel ->
+    let nb_b_local = nombre_boursiers s[..i] in
+    taux_ok oa.taux_b nb_b_local i \/ nb_b_local = oa.nb_b_total }
+= t_ok oa
+
+let choisir_non_boursier (oa: ordre_appel_valide) : unit
+  requires { [@expl:req - nb nonempty] oa.non_boursiers <> empty }
+  requires { [@expl:req - OK to choose nb] (not reste_b oa)
+    \/ (not taux_b_est_contraignant oa && reste_b oa && not meilleur_candidat_est_b oa)}
+  requires { reste_b oa -> oa.non_boursiers[0].rang < oa.boursiers[0].rang }
+  ensures { oa.non_boursiers == (old oa.non_boursiers)[1..] }
+  ensures { oa.ordre_appel == snoc (old oa.ordre_appel) (old oa.non_boursiers)[0] }
+  ensures { length oa.boursiers > 0 -> taux_ok oa.taux_b oa.nb_b_appeles (length oa.ordre_appel) }
+  =
+    t_oknb (pure {old oa}) (pure {oa.non_boursiers[0]});
+    let v = Q.safe_pop oa.non_boursiers in
+    Q.push v oa.ordre_appel
+
+(* Propriété 1:
+  Pour tout k,
+    au moins ⌈g.taux % × k⌉ des candidats {C_1, ..., C_k} sont boursiers ;
+    ou sinon, aucun candidat parmi {C_{k + 1}, ..., C_n} n’est boursier. *)
+(* Attention ! Pour nous les indices commencent à 0. *)
+
+predicate propriete1 (taux: int) (c: seq voeu) =
+  forall k. 0 <= k < length c ->
+    taux_ok taux (nombre_boursiers c[..k]) k \/
+    (* Il n'y a plus de boursiers après k. *)
+    non_boursiers_seulement c[k..]
+
+(* Propriété 2:
+  Un candidat boursier qui a le rang r dans le classement pédagogique:
+  - n’est jamais doublé par personne
+  - aura donc un rang inférieur ou égal à r dans l’ordre d’appel *)
+
+predicate propriete2 (ordre_appel: Q.t voeu) =
+  forall r. 0 <= r < length ordre_appel ->
+    let c = ordre_appel[r] in
+    (* on ajoute 1 à r parce que les rangs commencent à 1 *)
+    let r = r + 1 in
+    est_boursier c -> r <= c.rang
+
+(* Propriété 3:
+  Un candidat non boursier qui a le rang r dans le classement pédagogique:
+  - ne double jamais personne
+  - aura un rang compris entre r et r(1 + qB ∕(100 - qB)) dans l’ordre d’appel *)
+
+predicate propriete3_a (ordre_appel: Q.t voeu) =
+  forall r. 0 <= r < length ordre_appel ->
+    let c = ordre_appel[r] in
+    let r = r + 1 in
+    (not est_boursier c) -> r >= c.rang
+
+predicate propriete3_b (ordre_appel: Q.t voeu) (taux_b: int) =
+  forall r. 0 <= r < length ordre_appel ->
+    let c = ordre_appel[r] in
+    let r = r + 1 in
+    (not est_boursier c) ->
+    rang_nb_high_ok c r taux_b
+
+predicate propriete3 (ordre_appel: Q.t voeu) (taux_b: int) =
+  propriete3_a ordre_appel /\ propriete3_b ordre_appel taux_b
+
+(*********************)
+
+  (* Propriété 5:
+    Si l’on munit l’ensemble des sélections ordonnées de candidats de l’ordre lexicographique induit par les classements, alors l’ordre d’appel est le maximum parmi toutes les sélections qui garantissent la première propriété. *)
+
+use permutation.Permutation
+
+predicate permut_seq (p: permutation) (s1 s2: seq 'a) =
+  length s1 = length s2 = p.n /\
+  forall i. 0 <= i < p.n -> s1[i] = s2[p i]
+
+predicate lt_if_b (c1: voeu) (c2: voeu) =
+  est_boursier c2 -> voeu_lt c1 c2
+
+lemma nb_b_last:
+  forall s: seq voeu, i: int, k: int.
+  0 < i < length s - 1 ->
+  nombre_boursiers s[..i] = k ->
+  (est_boursier s[i] ->
+  nombre_boursiers s[..i + 1] = k + 1)
+  /\
+  (not est_boursier s[i] ->
+  nombre_boursiers s[..i + 1] = k)
+
+let lemma propriete5 (oa: ordre_appel_valide) (s: seq voeu) (p: permutation) (i: int)
+  requires { oa.boursiers = oa.non_boursiers = empty }
+  requires { permut_seq p oa.ordre_appel s }
+  requires { propriete1 oa.taux_b oa.ordre_appel }
+  requires { propriete1 oa.taux_b s }
+  requires { 0 <= i < p.n }
+  requires { forall j. 0 <= j < i -> oa.ordre_appel[j] = s[j] }
+  requires { oa.ordre_appel[i] <> s[i] }
+  requires { nombre_boursiers s = nombre_boursiers oa.ordre_appel.Q.seq = oa.nb_b_total }
+           (* TODO: can be deduced from the permutation hypothesis *)
+  requires { p.n = oa.nb_voeux }
+  ensures  { voeu_lt oa.ordre_appel[i] s[i] }
+= let cl = oa.ordre_appel.Q.seq in
+  let prefixe = cl[..i] in
+  let suffixe = cl[i..] in
+  let c = cl[i] in
+  assert { prefixe == s[..i] };
+  let bp = nombre_boursiers prefixe in
+  let bs = oa.nb_b_total - bp in
+  assert { bp = nombre_boursiers s[..i] };
+  let k = p.inv i in
+  assert { i < k < length cl };
+  (* taux contraignant (donc il reste des boursiers ) *)
+  if bp < oa.nb_b_total && not (taux_ok oa.taux_b bp (1 + i)) then begin
+    assert { taux_ok oa.taux_b (nombre_boursiers cl[..i + 1]) (i + 1) };
+    assert { not est_boursier c -> not est_boursier cl[i] };
+    assert { not est_boursier c -> (nombre_boursiers cl[..i + 1]) = bp };
+    assert { est_boursier c };
+    (* assert { seq_forall (lt_if_b c) cl[i + 1..] }; (* doesn't work, we have to use the one below... *)*)
+    assert { forall k. i + 1 <= k < length cl -> lt_if_b c cl[k] };
+
+    assert { nombre_boursiers s[..i] = bp };
+    assert { not est_boursier s[i] -> nombre_boursiers s[..i + 1] = bp };
+    if est_boursier s[i] then begin
+      (* assert { est_boursier s[..i + 1][i] }; *)
+      assert { nombre_boursiers s[..i + 1] = bp + 1 };
+      assert { taux_ok oa.taux_b (nombre_boursiers s[..i + 1]) (1 + i) };
+      assert { est_boursier s[i] };
+      assert { voeu_lt cl[i] cl[k] }
+    end else begin
+      assert { not taux_ok oa.taux_b (nombre_boursiers s[..i + 1]) (i + 1) };
+      assert { not est_boursier s[i] };
+      assert { not est_boursier s[..i + 1][i] };
+      assert { bs > 0 };
+      assert { bs = nombre_boursiers s[i..] = nombre_boursiers s[i + 1..] };
+      assert { not non_boursiers_seulement s[i + 1..] };
+      assert { not propriete1 oa.taux_b s };
+      absurd
+    end
+  (* il ne reste plus de boursiers *)
+  end else if bp = oa.nb_b_total then begin
+    assert { nombre_boursiers cl[i..] = 0 };
+    assert { not est_boursier c };
+    assert { non_boursiers_seulement suffixe };
+    ()
+  (* il reste des boursiers, mais taux pas contraignant *)
+  end else begin
+    assert { forall j. i < j < length cl -> voeu_lt c cl[j] }
+  end
+
+(* Propriété 4: Comparé au classement pédagogique, l’ordre d’appel
+   minimise le nombre d’inversions (distance de Kendall-tau), parmi
+   ceux qui garantissent la première propriété. *)
+
+predicate inversion (s: seq voeu) (i j: int) =
+  voeu_lt s[j] s[i]
+
+function inversions_for (s: seq voeu) (i: int) : int =
+  numof (inversion s i) (i + 1) (length s)
+
+function nb_inversions (s: seq voeu) : int =
+  sum (inversions_for s) 0 (length s)
+
+let lemma p4aux (oa: ordre_appel_valide) (d': seq voeu) (p': permutation)
+  (k: int)
+  requires { oa.boursiers = oa.non_boursiers = empty }
+  requires { permut_seq p' oa.ordre_appel d' }
+  requires { propriete1 oa.taux_b oa.ordre_appel }
+  requires { propriete1 oa.taux_b d' }
+  requires { 0 <= k < p'.n }
+  requires { forall j. 0 <= j < k -> oa.ordre_appel[j] = d'[j] }
+  requires { oa.ordre_appel[k] <> d'[k] }
+  requires { forall s p. permut_seq p oa.ordre_appel s ->
+             propriete1 oa.taux_b s -> nb_inversions d' <= nb_inversions s }
+  ensures  { false }
+= let d = oa.ordre_appel in
+  ()
+
+let lemma propriete4 (oa: ordre_appel_valide) (s: seq voeu) (p: permutation)
+  requires { oa.boursiers = oa.non_boursiers = empty }
+  requires { permut_seq p oa.ordre_appel s }
+  requires { propriete1 oa.taux_b oa.ordre_appel }
+  requires { propriete1 oa.taux_b s }
+  ensures  { nb_inversions oa.ordre_appel <= nb_inversions s }
+= ()
+
+(*******************)
+
+use pigeon.Pigeonhole
+
+predicate dummy (oa: ordre_appel_valide) = 42 > 34
+
+let ghost function rang_pigeon_a (s: Q.t voeu) (k: int) =
+  (pure { s[k] }).rang - 1
+
+let lemma oav_imp_p2_aux (oa: ordre_appel_valide) (i: int)
+  requires { oa.boursiers = empty }
+  requires { oa.non_boursiers = empty }
+  requires { 0 <= i < length oa.ordre_appel }
+  ensures {
+    let c = oa.ordre_appel[i] in
+    let r = i + 1 in
+    est_boursier c -> c.rang >= r
+  }
+=
+  let s = pure { oa.ordre_appel } in
+  let c = pure { s[i] } in
+  if est_boursier c then begin
+    assert { forall k. 0 <= k < i ->
+      let c1 = s[k] in
+      voeu_lt c1 c
+    };
+
+    if i + 1 > c.rang then begin
+      assert { rang_distincts s[..i + 1] };
+      pigeonhole (i + 1) c.rang (rang_pigeon_a s);
+      absurd;
+    end ;
+
+    assert { c.rang >= i + 1 };
+  end
+
+let lemma oav_imp_p2 (oa: ordre_appel_valide)
+  requires { oa.boursiers = empty }
+  requires { oa.non_boursiers = empty }
+  ensures { propriete2 oa.ordre_appel }
+= ()
+
+let lemma oav_imp_p3a_aux (oa: ordre_appel_valide) (i: int)
+  requires { oa.boursiers = empty }
+  requires { oa.non_boursiers = empty }
+  requires { 0 <= i < length oa.ordre_appel }
+  ensures {
+    let c = oa.ordre_appel[i] in
+    let r = i + 1 in
+    (not (est_boursier c)) -> c.rang <= r
+  }
+=
+  let s = pure { oa.ordre_appel } in
+  let c = pure { s[i] } in
+  if not (est_boursier c) then begin
+    assert { forall k. i < k < length oa.ordre_appel ->
+      let c1 = s[k] in
+      voeu_lt c c1
+    };
+
+      let l = Peano.to_int (Q.length oa.ordre_appel) in
+
+      if i < l - 1 && c.rang > i + 1 then begin
+        let subs = pure { s[i + 1..] } in
+        assert { rang_distincts subs };
+        pigeonhole (l - i - 1) (l - c.rang) (fun k -> subs[k].rang - 1 - c.rang);
+        absurd;
+      end;
+
+      assert { i + 1 >= c.rang };
+    end
+
+let lemma oav_imp_p3a (oa: ordre_appel_valide)
+  requires { oa.boursiers = empty }
+  requires { oa.non_boursiers = empty }
+  ensures { propriete3_a oa.ordre_appel }
+= ()
+
+use ref.Refint
+
+let lemma p3b_aux (oa: ordre_appel_valide) (i: int)
+  requires { oa.boursiers = empty }
+  requires { oa.non_boursiers = empty }
+    requires { 0 <= i < length oa.ordre_appel }
+    ensures {
+      let c = oa.ordre_appel[i] in
+      (not est_boursier c) ->
+      let x = seq_numof (voeu_lt c) oa.ordre_appel[..i] in
+      100 * x < oa.taux_b * i + 100 }
+    ensures {
+      let c = oa.ordre_appel[i] in
+      (not est_boursier c) ->
+      let x = seq_numof (voeu_lt c) oa.ordre_appel[..i] in
+      c.rang + x <= i + 1 }
+    (* ensures {
+      let c = oa.ordre_appel[i] in
+      (not est_boursier c) ->
+      rang_nb_high_ok c (i + 1) oa.taux_b
+    } *)
+=
+  let s = oa.ordre_appel.Q.seq in
+  let c = s[i] in
+  if not est_boursier c then begin
+  let ref x = 0 in
+  for j = 0 to i - 1 do
+    invariant { x = seq_numof (voeu_lt c) s[..j] <= nombre_boursiers s[..j] }
+    invariant { 100 * x < oa.taux_b * j + 100 }
+    (* invariant { not est_boursier s[j] -> s[j].rang + (seq_numof (voeu_lt s[j]) s[..j]) <= j + 1 } *)
+    invariant { c.rang + x <= i + 1 }
+    (* invariant { (j + 1) * (100 - oa.taux_b) <= c.rang * 100 } *)
+    if voeu_lt c s[j] then begin
+      assert { est_boursier s[j] };
+      incr x;
+      assert { not (taux_ok oa.taux_b (nombre_boursiers s[..j]) (j + 1)) };
+      (* assert { c.rang + x <= j + 1 }; *)
+    end else begin
+      ()
+    end
+  done
+  end
+
+let lemma p3b (oa: ordre_appel_valide)
+  requires { oa.boursiers = empty }
+  requires { oa.non_boursiers = empty }
+  ensures { propriete3_b oa.ordre_appel oa.taux_b }
+=
+  ()
+
+let mk_ordre_appel (b: Q.t voeu) (nb: Q.t voeu) (taux: int) : (Q.t voeu)
+
+  requires { [@expl:req - valid taux] 0 <= taux <= 100 }
+  requires { [@expl:req - b only] boursiers_seulement b }
+  requires { [@expl:req - nb only] non_boursiers_seulement nb }
+  requires { [@expl:req - b sorted] sorted b }
+  requires { [@expl:req - b sorted] sorted nb }
+  requires { rang_distincts (b ++ nb) }
+  requires { rang_c_valide b (length b + length nb) }
+  requires { rang_c_valide nb (length b + length nb) }
+  ensures  { [@expl:ens - permut] forall k. occ_all k (old b) + occ_all k (old nb) = occ_all k result }
+  ensures  { [@expl:ens - prop1] propriete1 taux result }
+  ensures { propriete2 result }
+  ensures { propriete3_a result }
+  ensures { propriete3_b result taux }
+
+=
+
+  let oa = creer_ordre_appel_valide b nb taux in
+
+  while Peano.to_int (Q.length oa.ordre_appel) < oa.nb_voeux do
+    invariant { [@expl:dummy] dummy oa }
+    invariant { [@expl:inv_permut]
+      forall k. occ_all k (old b) + occ_all k (old nb)
+              = occ_all k oa.boursiers + occ_all k oa.non_boursiers + occ_all k oa.ordre_appel
+    }
+    invariant { propriete1 oa.taux_b oa.ordre_appel }
+    variant { oa.nb_voeux - length oa.ordre_appel }
+
+    if taux_b_est_contraignant_f oa then
+      choisir_boursier oa
+    else if not reste_nb oa then
+      choisir_boursier oa
+    else if not reste_b oa then
+      choisir_non_boursier oa
+    else if meilleur_candidat_est_b oa then
+      choisir_boursier oa
+    else begin
+      assert { voeu_lt oa.non_boursiers[0] oa.boursiers[0] };
+      choisir_non_boursier oa
+    end
+  done;
+
+  assert { forall k. occ_all k oa.boursiers + occ_all k oa.non_boursiers = 0 };
+
+  assert { rang_distincts oa.ordre_appel };
+  assert { rang_c_valide oa.ordre_appel oa.nb_voeux };
+
+  oa.ordre_appel
+
+use array.Array
+
+use common_arr.Common_arr
+
+let algo1 (g: groupe_classement) : (Q.t voeu)
+  requires { forall k. 0 <= k < Array.length g.voeux -> (Array.([]) g.voeux k).rang = k + 1 }
+  ensures  { [@expl:ens_permut] forall k. array_occ g.voeux k = occ_all k result }
+  ensures  { [@expl:ens_prop1]  propriete1 g.taux_boursiers result }
+  ensures { propriete2 result }
+  ensures { propriete3 result g.taux_boursiers }
+=
+  let voeux = queue_of_array g.voeux in
+
+  assert { rang_distincts voeux };
+  assert { rang_c_valide voeux (Array.length g.voeux) };
+
+  let boursiers, non_boursiers = diviser_groupe voeux est_boursier in
+
+  assert { rang_distincts (boursiers ++ non_boursiers) };
+
+  assert { boursiers_seulement boursiers };
+  assert { non_boursiers_seulement non_boursiers };
+
+  assert { rang_c_valide boursiers (Array.length g.voeux) };
+  assert { rang_c_valide non_boursiers (Array.length g.voeux) };
+  assert { rang_c_valide (boursiers ++ non_boursiers) (Array.length g.voeux) };
+
+  mk_ordre_appel boursiers non_boursiers g.taux_boursiers

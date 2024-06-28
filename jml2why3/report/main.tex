@@ -1,0 +1,1285 @@
+% -*- fill-column: 80 -*-
+\documentclass[a4paper]{report}
+
+\setlength{\footskip}{2cm}
+\setlength{\headheight}{2cm}
+\usepackage[lmargin=2.5cm,rmargin=2.5cm,tmargin=3.5cm,bmargin=1.5cm,includefoot]{geometry}
+\usepackage{lastpage}%% to get the total number of pages
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[sc]{mathpazo}\linespread{1.05}
+\usepackage[scaled=.8]{beramono}
+\usepackage[english,french]{babel}
+\usepackage[pdftex,allcolors=blue,colorlinks=true,pdfstartview=FitH]{hyperref}
+\usepackage{amsmath}
+\usepackage{hyperref} \hypersetup{final}
+\usepackage{url}
+\usepackage{booktabs}
+% cleveref is not clever enough to work with french babel
+% \usepackage{cleveref}
+\newcommand{\cref}[1]{Section~\ref{#1}}
+\newcommand{\aref}[1]{Appendix~\ref{#1}}
+\usepackage[final]{listings}
+\usepackage{xcolor}
+
+\newcommand{\concat}{\ensuremath{+\!\!\!+}}
+
+\definecolor{mygray}{rgb}{0.95,0.95,0.95}
+\lstset{
+  basicstyle=\small\ttfamily,
+  breaklines=true,
+  backgroundcolor=\color{mygray},
+  xleftmargin=1ex,
+  framexleftmargin=1ex,
+  numbersep=5pt,
+  numberstyle=\tiny,
+  morecomment=[l][\small\rmfamily\itshape]{//},
+  morecomment=[s]{(*}{*)},
+  morekeywords={let,val,exception,requires,ensures,try,with,end,function,final,class_invariant,pure,model,class,type,predicate},
+  keywordstyle=\ttfamily,
+  showspaces=false,
+  showstringspaces=false,
+  mathescape=true,
+  breaklines=true,
+  literate=%
+  {…}{{$\ldots$}}1
+  {‹}{{$\langle$}}1
+  {›}{{$\rangle$}}1
+  {++}{{$\concat$}}2
+  {≘}{{$\overset{\scriptscriptstyle\wedge}{=}$}}1
+  {'a}{{$\alpha{}$}}2
+  {->}{{$\ \rightarrow\ $}}2
+  {<-}{{$\ \leftarrow\ $}}2
+  {<=}{{$\ \leq\ $}}2
+  {>=}{{$\ \geq\ $}}2
+  {<>}{{$\ \neq\ $}}2
+  {<->}{{$\ \leftrightarrow\ $}}3
+  {...}{{$\ldots{}$}}3
+  {|adapt_nullable}{{$|\mathit{adapt\mhyph{}nullable}$ }}{15}
+  {|nullable}{{$|\mathit{nullable}$ }}{9}
+  {|nonnull}{{$|\mathit{nonnull}$ }}{6}
+  {é}{{\'e}}1{ê}{{\^e}}1{à}{{\`a}}1{è}{{\`e}}1{ù}{{\`u}}1
+}
+\usepackage{todonotes} %% FIXME: only for draft; or [obeyDraft]
+% \reversemarginpar
+\presetkeys{todonotes}{size=\scriptsize}{}
+
+\usepackage{tikz}
+\input tikz
+
+%\usepackage{titlesec}
+%\newcommand\sectionbreak{\ifnum\value{section}>0\clearpage\fi}
+
+\mathchardef\mhyph="2D % Define a "math hyphen"
+
+\DeclareUnicodeCharacter{207C0}{\guilsinglleft}
+\DeclareUnicodeCharacter{207C0}{\guilsinglleft}
+\DeclareUnicodeCharacter{2192}{$\rightarrow$}
+
+\newcommand{\jmlwhyheading}[1]{\emph{#1:}}
+\newcommand{\jmlwhycomment}[1]{\hfill{\footnotesize--- \emph{#1}}}
+\newcommand{\jmlwhy}{\texorpdfstring{Jml\textsubscript{2}Why\textsuperscript{3}}{Jml2Why3}}
+
+\title{Rapport d'avancement sur la vérification formelle des algorithmes de ParcourSup}
+
+\author{Benedikt Becker\and Jean-Christophe Filliâtre \and Claude Marché\\
+  ~\\
+  Université Paris-Saclay\\
+  Laboratoire de Recherche en Informatique\\
+  UMR 8623 du CNRS et de l'Université Paris-Sud\\
+  Inria Saclay-Île-de-France
+}
+
+\date{\today}
+
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhfoffset[re]{4cm}
+\lhead{Vérification formelle des algorithmes de ParcourSup}
+\chead{}
+\rhead{Becker, Filliâtre et Marché}
+
+\lfoot{\today}
+\cfoot{}
+\rfoot{\thepage/\pageref{LastPage}}
+
+\begin{document}
+\sloppy
+\maketitle
+
+\tableofcontents
+
+\chapter{Introduction, résumé des résultats obtenus}
+
+
+ParcourSup~\cite{parcoursup} est le système informatique national
+français utilisé pour l'orientation des nouveaux bacheliers dans les
+établissements d'enseignement supérieur. Ce système utilise des
+algorithmes spécifiques pour établir des classements des candidats
+pour chaque établissement auxquels ils postulent. Ces classements sont
+produits en fonction des v{\oe}ux des candidats, du classement de
+leurs dossiers par les établissements, ceci en tenant compte de
+contraintes générales sur des taux de boursiers et des taux de
+non-résidents.
+
+Les propriétés attendues des algorithmes en question sont documentées
+par un document en français~\cite{parcoursup-specifications}. Ces
+algorithmes sont implantés en langage Java, et leur code
+source~\cite{parcoursup-source} est disponible sous une licence libre
+et ouverte.
+
+\section{Généralités sur l'approche par preuve formelle}
+
+Entre mars et décembre 2019, nous nous sommes intéressés à étudier la
+possibilité de \emph{prouver formellement} que le code Java respecte
+les spécifications.
+
+Notre équipe de recherche\footnote{au laboratoire
+  LRI, sous la tutelle commune de l'Université Paris-Sud, du CNRS et
+  de l'Inria} est spécialisée dans les techniques de preuves formelles
+de programmes, et en particulier développe et distribue
+l'environnement Why3~\cite{bobot14sttt}. Cet environnement est conçu
+de manière générique, ou modulaire, de façon à tirer partie, en aval,
+d'un maximum d'outils de preuve automatique du monde entier, et, en
+amont, de servir de langage intermédiaire pour prouver des codes
+sources écrits en langage C, Java, Ada, via des environnements tiers
+comme Frama-C, Krakatoa et Ada/SPARK~\cite{kosmatov16isola}.
+
+Le choix de l'environnement de preuve pour prouver les algorithmes de ParcourSup
+pourrait naturellement se tourner vers notre \emph{front-end}
+Krakatoa~\cite{marche04jlap,marche09ws} de Why3, dédié à Java, mais celui-ci est
+assez ancien: il ne supporte que la version 1.4 de Java (le code Java de
+ParcoursSup nécessite la version 8), et n'est pas vraiment maintenu faute de
+suffisamment d'utilisateurs. D'autres environnements de preuve similaires
+existent dans le monde, comme KeY~\cite{KeYBook2016} et
+VeriFast~\cite{jacobs11nfm}. Sauf erreur de notre part, ces outils ne supportent
+pas encore la version 8 de Java.
+Le candidat le plus prometteur est
+OpenJML~\cite{cok14}, qui lui supporte la version 8 de Java.
+
+Par ailleurs, notre expérience en preuve de programmes nous conduit à
+penser que pour prouver le code de ParcourSup, il est préférable de
+commencer à considérer une abstraction du code Java, écrite
+directement dans le langage intermédiaire de Why3, afin de se
+focaliser dès le départ sur l'écriture des spécifications formelles
+nécessaires, puis de la recherche des invariants à insérer dans le
+code.
+
+\section{Résumé de la démarche et des travaux effectués}
+
+Notre démarche a consisté à poursuivre plusieurs pistes qui sont résumées
+ci-après. Chaque piste est ensuite décrite plus en détails dans les sections
+suivantes, plus techniques, de ce document. Pour des raisons pratiques,
+certaines de ces sections sont rédigées en anglais.
+\begin{enumerate}
+\item Dans un premier temps, nous avons écrit en Why3 une version simplifiée du
+  code de ParcourSup, à un seul taux, c'est-à-dire en considérant
+  uniquement le critère des boursiers mais pas le critère des non-résidents. Ce
+  travail a fait l'objet d'un stage de Magistère (de Léo Andrès, mai-juillet
+  2019). Un large sous-ensemble des propriétés demandées dans la spécification
+  ont été prouvées. Ce travail fait l'objet d'un rapport de stage
+  spécifique~\cite{andres19rr}. Les
+  résultats sont résumés dans la section~\ref{sec:untaux} ci-après.
+\item Dans un second temps, nous avons tenté d'analyser le code Java tel quel,
+  c'est-à-dire sans spécifications formelles, avec OpenJML. Même sans
+  spécifications formelles, il y a des obligations de preuve à prouver car il
+  faut démontrer que le code ne peut pas faire \emph{d'erreurs à l'exécution}:
+  divisions par zéro, débordement d'opérations arithmétiques sur les entiers
+  signés 32 bits de Java, débordement des bornes des tableaux, déréférenciation
+  de pointeur nul. Cette analyse est détaillée en
+  section~\ref{sec:openjml}. Nous présentons les résultats obtenus et les
+  limitations identifiées.
+\item Afin de contourner des contraintes et des limitations d'OpenJML, nous
+  avons alors choisi de concevoir et d'implémenter une nouvelle chaîne
+  d'outils. Afin de bénéficier du support à jour de Java 8 fourni par OpenJML,
+  nous n'avons pas repris l'ancien Krakatoa mais nous avons:
+  \begin{itemize}
+  \item conçu un patch à OpenJML pour lui demander de restituer le résultat de son analyse syntaxique et de son typage dans une structure de données enregistrée dans un fichier au format JSON ;
+  \item défini un nouveau logiciel \jmlwhy\ qui lit le fichier JSON en question et traduit le code Java, ainsi que les spécification formelles, en un code Why3 équivalent ;
+  \item enfin nous réutilisons l'API de Why3 pour générer les obligations de
+    preuve et interroger les prouveurs externes, ainsi que l'interface graphique
+    de Why3 pour compléter les preuves de manière interactive quand c'est
+    nécessaire.
+  \end{itemize}
+  Le prototype  \jmlwhy\ est décrit en
+  section~\ref{sec:jml2why3}. Les expérimentations avec cet outil sur le code de
+  ParcourSup sont décrites dans la même section. Les résultats et les
+  limitations de cette approche sont ensuite présentés.
+\item Concernant les limitations de l'approche par \jmlwhy, sur les questions
+  \emph{d'ownership} et \emph{d'emprunt}, une petite expérience a été conduite pour évaluer
+  l'intérêt que pourrait apporter le langage de programmation Rust à la place de
+  Java. Ceci est détaillé en section~\ref{sec:rust}.
+% \item Enfin, la dernière étape a été un retour vers une utilisation directe de
+%   Why3, cette fois pour un algorithme à deux taux. Ceci est présenté en
+%   section~\todo{Section removed, safety and permutation of the Java program
+%     verified with Jml2Why3 -> Claude}.
+\end{enumerate}
+
+\section{Conclusions}
+\label{sec:conclusions}
+
+Les conclusions obtenues sont résumées par les points suivants:
+\begin{itemize}
+\item L'analyse avec Why3 d'un algorithme à un taux a permis de
+  valider plusieurs des propriétés énoncées dans le document de
+  spécification~\cite[page 7]{parcoursup-specifications}, à savoir,
+  que l'ordre d'appel est bien une permutation du
+  classement pédagogique, que
+  le taux de boursiers est bien respecté (P1), qu'un candidat boursier
+  n'est jamais doublé par personne (P2), qu'un candidat non boursier
+  ne double jamais personne (P3), et que l’ordre d’appel est le minimum
+  selon l’ordre lexicographique induit par les classements (P5).
+\item L'analyse du code Java (à deux taux, disponible en ligne~\cite{parcoursup-source}) avec OpenJML a identifié des risques d'erreurs à
+  l'exécution dues à des dépassement de capacité dans les calculs
+  arithmétiques. Nous avons déterminé que les erreurs ne sont plus possibles si
+  on assure que le nombre de candidats est inférieur à $21.474.636$. Plus de 20
+  millions est une limite suffisamment large en pratique, donc il n'y a pas de
+  risque urgent à corriger. On note néanmoins que cette limite n'était pas
+  identifiée auparavant.
+
+  L'analyse avec OpenJML s'est également montrée délicate sur une occurrence
+  particulière d'une déréférenciation de pointeur (il faut montrer que celui-ci
+  n'est pas le pointeur \texttt{null} à ce point de programme).  La preuve de
+  non-nullité a pu être obtenue formellement, avec un nombre significatif
+  d'indications intermédiaires, qui n'ont néanmoins pas été une surprise car le
+  code était commenté à ce sujet, la difficulté était connue.  Notons que, afin
+  de réussir cette analyse, nous avons dû modifier légèrement le code Java. Le
+  code initial était correct, mais au-delà des capacités d'OpenJML.
+
+  La preuve du comportement fonctionnel du code Java (propriétés décrites dans
+  le document de spécification en francais) n'a pas pu être faite à cause de
+  limitations d'OpenJML décrites en section~\ref{sec:openjml}.
+
+\item Ensuite l'utilisation de notre prototype \jmlwhy\ nous a permis d'aller
+  plus loin dans la preuve de propriétés fonctionnelles du code Java. Non
+  seulement nous avons pu obtenir de nouveau les preuves d'absence de
+  débordement
+  arithmétique et d'absence de déréférenciation de pointeur nul, mais nous avons
+  pu établir formellement la propriété que l'ordre d'appel final est bien une
+  permutation (donc une bijection) de la liste de v{\oe}ux initiale: en
+  particulier, aucun v{\oe}u n'est perdu en route par le code
+  Java. Par
+  manque de temps nous nous sommes arrêtés à la tentative de preuve de
+  propriétés attendues de cette permutation, par exemple qu'un boursier
+  non-résident n'est jamais doublé par personne.
+\end{itemize}
+
+\section{Perspectives}
+
+Les travaux effectués, même si ceux-ci n'ont pas atteint l'objectif ultime d'une
+preuve formelle complète du code Java original, nous ont convaincu d'une manière
+très forte que, hormis le petit risque de débordement arithmétique dû à un
+nombre potentiellement trop élevé de candidats, le code Java de ParcourSup qui implémente les
+algorithmes d'interclassement s'exécutera toujours sans erreurs et que les
+propriétés informelles, mais mathématiquement très précises, du
+document de spécification~\cite{parcoursup-specifications} sont satisfaites.
+
+À ce stade, il s'agit de s'interroger sur les leçons apprises par nos travaux et
+d'en déduire des recommandations s'il s'agit de continuer à faire des preuves
+formelles sur les logiciels utilisés par les organismes publics de la république
+française.
+
+La recommandation principale concerne le choix du langage de programmation. Le
+choix du langage Java est sans doute justifié par des questions
+d'interopérabilité, par exemple avec les systèmes de gestion de bases de
+données. Ce choix s'avère par contre particulièrement inapproprié si l'on vise
+une preuve formelle du code implémentant les algorithmes : le langage Java est
+un langage qui autorise des mutations mémoires et du partage en mémoire de
+données mutables, traits de programmation qu'il est notoirement difficile de
+supporter par la preuve formelle. Même un langage plus récent comme Rust, qui
+apporte pourtant déjà beaucoup sur la sûreté des manipulations en place de la
+mémoire, reste encore de nos jours difficile à traiter par les approches et
+outils de l'état de l'art de la preuve formelle.  Par ailleurs, le choix de JML
+comme langage de spécification apparaît comme peu satisfaisant. En effet, ce
+langage ne permet pas de définir facilement des concepts mathématiques avancés
+(une permutation, un ordre lexicographique, etc.). Pour cette raison, poursuivre
+le travail sur \jmlwhy\ est peu prometteur.
+
+Si l'on vise à obtenir des
+preuves formelles des implémentations des algorithmes, qui puissent être
+obtenues avec le minimum de moyens humains et qui soient relativement aisées de
+mettre à jour lorsque le code lui-même est mis à jour, il nous semble
+indispensable de choisir un langage de programmation, ou au minimum un style de
+programmation, qui :
+\begin{enumerate}
+\item au niveau du modèle d'exécution, imposerait des contraintes fortes sur les
+  modifications en place de la mémoire ;
+\item au niveau des spécifications, serait nativement équipé d'un langage formel
+  pour ces spécifications.
+\end{enumerate}
+On imagine plusieurs pistes possibles pour aller dans cette direction:
+\begin{enumerate}
+\item Utiliser un environnement dédié pour le développement de code formellement
+  prouvé : Coq, Why3, F$\star$, voire même l'atelier B qui
+  est utilisé couramment dans le domaine du logiciel critique dans le
+  ferroviaire. Ces environnements disposent typiquement d'un mécanisme
+  \emph{d'extraction} de code vers des langages comme OCaml, C ou Ada. C'est
+  ainsi par exemple que le compilateur C prouvé CompCert~\cite{boldo14jar} est
+  développé : il est développé et prouvé en Coq, puis extrait vers OCaml ; ou
+  bien le code critique de la ligne 14 du métro parisien, développé en B puis
+  extrait vers Ada.  Il faut remarquer par ailleurs que Why3 propose une
+  extraction vers OCaml et C, et il serait d'un coût (humain) raisonnable de
+  rajouter une extraction vers Java, comme ce qui a été fait pour le langage
+  C~\cite{rieuhelft17vstte}.
+\item Une piste similaire serait de coder en Ada/Spark, qui travaille
+  directement sur du code Ada standard, car Ada/Spark est justement conçu pour
+  limiter le langage Ada~\cite{adacore18guide,kosmatov16isola} de manière à ce
+  que les preuves soit raisonnablement faisables (dans le sens : avec un maximum
+  d'automatisation).  Ou bien, dans le même ordre d'idée d'utiliser un langage
+  comme Dafny~\cite{leino14fide} qui est un langage qui se compile vers la JVM
+  (mais qui par contre est peu contraignant sur les mutations mémoires). Par
+  contre dans les deux cas les langages de spécification fournis ont des défauts
+  similaires à ceux de JML (peu adapté à la définition de concepts très
+  mathematiques).
+\item On peut aussi imaginer d'ajouter à Why3 un «~micro-front-end~» pour Java,
+  similaire aux front-ends micro-python et micro-C déjà existants. Il s'agirait
+  alors de coder dans un fragment très restreint de Java, qui serait quasiment
+  un fragment purement fonctionnel. Un autre manière de voir cette piste serait
+  de proposer de développer le code en Why3 mais avec une syntaxe compatible
+  avec Java. Pour le dire en une phrase, le langage micro-Java serait un Java où
+  il serait interdit de mettre des objets mutables à l'intérieur d'un conteneur
+  quelconque (y compris un tableau ou un autre objet). Par ailleurs, tous les
+  objets seraient «~non-nullable~» (cf section~\ref{sec:jml2why3}) par défaut.
+\item Concevoir et utiliser un langage spécifique au domaine, comme ce qui a été
+  fait par exemple pour une implémentation du code des
+  impôts~\cite{merigoux20jfla}, qui travaille sur le langage dédié M.
+\end{enumerate}
+En conclusion, il nous semble que si l'on souhaite poursuivre un travail de
+vérification formelle du code de Parcoursup, il faut commencer par remettre en
+cause le choix de coder en Java d'une part et de vérifier le code a posteriori
+d'autre part. Il vaut mieux dès le départ écrire un code dans un langage ou un
+style adapté à la preuve formelle, et penser aux preuves qui devront être faites
+dès le choix des structures de données.
+
+% \begin{quote}\itshape\todo[inline]{CM: ce qui suit sont des notes brutes de la réunion à Bordeaux. Je propose
+%   de simplement les effacer ce document, sauf si vous y voyiez un interet.}  Une
+% recommandation annexe concerne les risques d'erreurs. Les bugs les plus
+% problématiques ont très peu de chance de se situer au niveau des algorithmes
+% eux-mêmes, ceux-ci sont relativement simples et qui plus est conçus par des
+% personnes hautement compétentes. Du fait de la relative simplicité de ces
+% algorithmes, les campagnes de tests standards sont à même de découvrir des bugs
+% très rapidement et donc à coût très faible.
+
+% En guise d'ultime de conclusion: que faudrait-il faire pour obtenir un code de
+% ParcourSup formellemtn prouvé :
+% \begin{itemize}
+% \item Combien faudrait-il de ressources pour prouver le code de ParcourSup ?
+% xx personne/an d'ingénieur et meme xx personne/an de chercheur.
+% \item prevoir des le debut du projet. Est-ce que ca vaut le coup pour un
+% projet comme parcoursup.
+% \end{itemize}
+% Exemple: rendre public un nouveau code pour Galaxie. La verif a l'execution est
+% deja un minimum, et c'est fait dans parcoursup.
+% \end{quote}
+
+
+\chapter{Détails des travaux réalisés}
+
+\section{Preuve avec Why3 d'un algorithme simplifié à un seul taux}
+\label{sec:untaux}
+
+Dans le cadre d'un stage de magistère de M1 à l'Université Paris-Sud,
+Léo Andrès a travaillé sur la vérification d'un algorithme de
+Parcoursup avec l'outil Why3 entre le 1er mai et le 31 juillet 2019.
+Ce travail avait deux objectifs principaux : dégager les invariants
+nécessaires à une vérification déductive des algorithmes de
+Parcoursup ; étudier le degré d'automatisation d'une telle preuve.
+Le stage de Léo Andrès a été encadré par Jean-Christophe Filliâtre.
+Le travail de Léo Andrès a donné lieu a un rapport, en français,
+librement disponible en ligne~\cite{andres19rr}.
+
+Les quatre premières semaines du stage de Léo Andrès ont été
+consacrées à la maîtrise de l'outil Why3, une plate-forme de
+vérification déductive développée au LRI, notamment par Claude Marché
+et Jean-Christophe Filliâtre. Cet apprentissage s'est fait sur des
+programmes conceptuellement plus simples que les algorithmes de
+Parcoursup.  Les huit semaines suivantes (juin--juillet) ont été
+consacrées à la vérification avec Why3 de l'algorithme le plus simple
+de Parcoursup, à savoir l'algorithme de calcul de l’ordre d’appel dans
+un groupe soumis au seul taux minimum boursiers~\cite[page
+7]{parcoursup-specifications}.
+
+La première tâche a consisté à implémenter l'algorithme dans le langage de
+l'outil Why3, qui s'apparente à un fragment du langage OCaml. Cette
+implémentation s'est en partie inspirée du code Java de
+Parcoursup~\cite{parcoursup-source}, avec l'idée que les invariants puissent
+être repris plus tard pour une vérification du code Java (même si
+l'implémentation Java réalise un algorithme plus complexe, à deux taux). Une
+fois le code écrit, sa sûreté d'exécution a été prouvée : absence d'accès en
+dehors des bornes de tableaux, absence de tentative de retrait dans une file
+vide, terminaison des boucles, etc.
+Dans cette implémentation, l'arithmétique est de précision arbitraire. On n'a
+donc pas à vérifier l'absence de débordement arithmétique dans les calculs.
+
+Dans un second temps, une preuve de correction fonctionnelle a été menée, visant
+à établir que le code vérifie bien les cinq propriétés énoncées dans le document
+public décrivant les algorithmes de Parcoursup pour l'algorithme à un seul
+taux~\cite[page 7, propriétés 1--5]{parcoursup-specifications}.  Une majorité de
+ces preuves ont pu être menées à terme pendant le stage. Plus précisément, il a
+été vérifié que l'ordre d'appel est bien une permutation du classement
+pédagogique, que le taux de boursiers est bien respecté (P1), qu'un candidat
+boursier n'est jamais doublé par personne (P2), qu'un candidat non boursier ne
+double jamais personne (P3), et que l’ordre d’appel est le minimum selon l’ordre
+lexicographique induit par les classements (P5).  Seules la seconde partie de la
+propriété P3 (un candidat non-boursier aura au pire le rang
+$r\times(1+q_b/(100-q_b)$) et la propriété P4 (l'ordre d'appel est la
+permutation qui minimise le nombre d'inversions parmi celles qui vérifient P1)
+n'ont pu être vérifiées, par manque de temps.  Les preuves se sont en effet
+avérées relativement difficiles, les démonstrateurs automatiques utilisés par
+l'outil Why3 étant souvent incapables de décharger les obligations de preuve. Il
+faut faire alors un travail de preuve interactive, long et fastidieux.
+
+Pendant le stage, une implémentation de référence de l'algorithme à un taux a
+été obtenue par traduction automatique du code Why3 vers le langage OCaml (un
+mécanisme fourni par l'outil Why3). Le code ainsi obtenu a pu être testé sur des
+données anonymisées de Parcoursup.
+
+Une description plus détaillée du travail de Léo Andrès se
+trouve dans son rapport de stage~\cite{andres19rr}.
+
+\selectlanguage{english}
+
+\section{Analysis of ParcourSup with two constraints using OpenJML}
+\label{sec:openjml}
+
+\subsection{Original Java implementation}
+\label{sec:parcoursup-original}
+
+The main method of the Java implementation of ParcourSup is called
+\texttt{calculerOrdreAppel}. This method creates a permutation of a list of
+wishes (\texttt{voeuxClasses}), where each wish is characterised by its rank
+(\texttt{rang}) and its status as stipendiary and resident. The method returns a
+permutation of the input wishes considering their ranks and two constraints on
+the portions of wishes that represent stipendiaries and residents. The Java
+implementation of ParcourSup is available in a public git repository
+\cite{parcoursup-source}. Version \emph{\'Evolutions 2019} (Git commit
+\texttt{7be9a08}) of the code is shown in \aref{app:parcoursup-original}.
+
+In the first part of method \texttt{calculerOrdreAppel}, the input wishes are
+ordered by rank and classified by their status as stipendiary and resident into
+one of four queues. As a result, the four queues contain wishes that are sorted
+by their rank and that are homogeneous according to their status (lines 45-72):
+stipendiary and resident, stipendiary and non-resident, non-stipendiary and
+resident, and non-stipendiary and non-resident. In the second part of the
+method, eligible candidates are selected in a loop as the heads of the queues,
+when their status respect the constraints on the portion of stipendiary and
+resident candidates (\texttt{eligibles}, lines 86-106). The best candidate is
+selected as the eligible candidate with the best rank (\texttt{meilleur}, lines
+111-129). The best candidate is then removed from its queue, and appended to the
+result permutation.
+
+\subsection{Adapted implementation}
+\label{sec:parcoursup-adapted}
+
+In the original implementation, the four queues are stored in a hash map with
+four elements, mapping candidate statuses to the queues of wishes. This allows a
+concise selection of the right queue for insertion (lines 116-125) and removal
+(lines 150-152) of wishes. However, it hinders the static analysis or automated
+verification fundamentally due to a possible aliasing for the (mutable) queues
+in the hash map.
+
+We adapted the Java implementation by representing the four homogeneous queues
+by four individual variables (\texttt{BR}, \texttt{BnR}, \texttt{nBR}, and
+\texttt{nBnR}, see \aref{app:parcoursup-adapted}). This requires a more explicit
+selection of queues for categorising the wishes (lines 63-78), for selecting the
+best candidate (lines 132-147), and for removing it (lines 152-163). It allows
+stating the homogeneity of the queues on the queues directly (lines 53-56 and
+92-95), which is fundamental to proving the safety and other properties of the
+algorithm. %
+The JML annotations in the adapted implementation are explained in
+\cref{sec:parcoursup-openjml}.
+% The adapted algorithm contains further JML annotation that allow for proving the
+% safety of the algorithm, including a pre-condition on the number of input wishes
+% (line 31-32) to prevent an integer-overflow in the computation of the
+% constraints (lines 122, 127).
+
+\subsection{OpenJML}
+
+OpenJML \cite{cok14,openjml-website} is a program verification tool for Java
+programs that allows for checking specifications of programs annotated in the
+Java Modelling Language (JML).
+
+\paragraph{Installation of OpenJML}
+
+A graphical user interface for OpenJML is available as a plugin for the Eclipse
+IDE. The installation instructions are available online
+\cite{openjml-installation-documentation}. After installing Eclipse using the
+standard installer \emph{Oomph}, running the plugin as of version 0.8.41 may
+fail due to unresolved file paths. To use the plugin, Eclipse should be
+installed from a package in the \texttt{tar.gz} format available online
+\cite{eclipse-installation-packages}.
+
+% Instructions to compile OpenJML from source are available at
+% \url{https://github.com/OpenJML/OpenJML/wiki/OpenJML-Development-Environment-Setup}.
+
+\subsection{Array-based implementation}
+\label{sec:parcoursup-arrays}
+
+The Java implementation of the ParcourSup algorithm uses standard containers
+such as \lstinline{java.util.List} or \lstinline{java.util.Queue}, which are
+supported by OpenJML. However, their use imposes a number of difficulties to the
+verification using OpenJML. First, the JML specification of the interfaces of
+the containers is not complete for Java 8, or the specification uses JML
+features that are not supported by OpenJML (e.g., the use of \lstinline{\num_of}
+in the specification of \lstinline{java.util.Arrays.sort()}). Second, we
+encountered difficulties to maintain class invariants concerning ownership over
+for-loops that modify multiple containers (see file \texttt{openjml/Test.java}).
+Third, the verification of programs using standard containers is more complex
+for OpenJML than equivalent programs using plain arrays. For these reasons, we
+replaced the containers in the adapted ParcourSup by arrays, without changing
+the program behaviour (shown in \aref{app:parcoursup-arrays}):
+
+\begin{enumerate}
+\item The input wishes and the resulting permutation of wishes are represented
+  as an arrays of wishes.
+\item The input wishes are required to be sorted by their rank (instead of
+  sorting the input wishes in the method).
+\item Each queue is represented by an array with start index and end index of
+  valid values.
+\end{enumerate}
+
+\subsection{Verification results}
+\label{sec:parcoursup-openjml}
+
+\paragraph{Arithmetic safety}
+
+All numbers in the original implementation (\aref{app:parcoursup-original}) are
+represented as standard Java integers, i.e.\ 32-bit signed integers which range
+from $-2^{31}$ to $2^{31}-1$. We identified a possible arithmetic overflow in
+the (original, adapted, and array-based) ParcourSup implementation: To compute
+the rate constraint on stipendiaries (and residents), the number of assigned
+stipendiaries (and residents) is multiplied by 100 (lines 102-110). When the
+number of assigned wishes with a given status becomes larger than the maximum
+standard integer divided by hundred, the integer number exceets the valid
+integer range.
+
+The arithmetic overflow can be prevented by limiting the number of input wishes
+\texttt{voeuClasse} to less than $(2^{31}-1) / 100 = 21,474,836$, to ensure that
+the numbers in the calculation of the rate constraints stay in the valid range
+of 32-bit signed integers.
+
+\paragraph{Null-pointer safety}
+
+The verification of null-pointer safety in the ParcourSup algorithm is more
+complex: The second loop determines the resulting order of candidates, and the
+best candidate (\texttt{meilleur}) is defined as the best-ranking stipendiary
+that is not resident (lines 116-129 in the original implementation in
+\aref{app:parcoursup-original}). Verifying that there is actually a stipendiary
+left and that variable has a non-null value after the assignment requires
+comprehensive reasoning over the second loop in the implementation to deduce the
+following properties:
+\begin{enumerate}
+\item The candidates in the queues \texttt{BR}, \texttt{BnR}, \texttt{nBR}, and
+  \texttt{nBnR} are homogeneous in their status as stipendiary and resident.
+\item At least one wish is left in one of the queues.
+\item The constraint on stipendiaries implies that either queue \texttt{BR} or
+  queue \texttt{BnR} are non-empty.
+\item The constraint on residents implies that either queue \texttt{BR} or queue
+  \texttt{nBR} are non-empty.
+\item After determining the best candidate, it is the head element of one of the
+  four queues.
+\end{enumerate}
+
+Properties 1.\ and 2.\ are established and maintained by invariants on both
+loops. Properties 3.\ and 4.\ are asserted after the definition of the
+constraints. Property 5.\ is asserted after determining the best candidate (line
+149 in the original implementation).
+
+The adapted and array-based implementations (\aref{app:parcoursup-adapted} and
+\aref{app:parcoursup-arrays}) contain the JML annotations to ensure arithmetic
+safety and null-pointer safety. The annotations in the array-based
+implementation were verified using OpenJML. The verification was carried out
+using the command %
+\lstinline{java -jar openjml.jar -esc -progress GroupeClassement__everything_arrays.java}, %
+and took one hour and 26 minutes on standard laptop hardware. Running OpenJML on
+the adapted implementation did not terminate within a day.
+
+\subsection{Limitations of OpenJML for ParcourSup}
+
+While proving the safety of the array-based implementation of ParcourSup we
+encountered a number of limitations that impede the use of OpenJML for verifying
+the functional properties of the ParcourSup implementation.
+
+Places that are modified by loops in Java must be specified with JML annotations
+\lstinline{\loop_modifies}. However, the correctness of these annotations are
+not checked by OpenJML, and their incompleteness may introduce inconsistencies,
+invalidating further proofs. By contrast, Why3 infers loop modifications
+generally, simplifying annotations and improving consistency.
+
+The specifications of the standard API of Java uses JML features that are not
+supported by OpenJML, for example \lstinline{\num_of}, preventing the
+verification of programs that use such API calls. The specification of other
+parts of the Java API are not well suited to discharging verification conditions
+to automated provers. By contrast, Why3's API, is designed with automatic
+verification in mind. For example, a queue is modelled by a sequences in Why3,
+which in turn is just characterised by a length and a function from indices to
+values.
+
+Modifying multiple containers in a loop introduces verification conditions about
+loop invariants concerning the ownership of objects that are unclear to resolve.
+These loop invariants are easily verified in programs with loops that modify
+only a single mutable collection.
+
+OpenJML verifies a program by generating verification conditions for each method
+and discharging them to a single automated prover, Z3. In Why3, by contrast, the
+verification conditions can be transformed using manual transformations (e.g.,
+splitting, application of hypotheses, etc.), and verification conditions can be
+discharged to a number of different automated provers, including Z3, CVC4,
+Alt-Ergo, and Eprover. Manual transformations and the utilisation of different
+provers exploiting their different strengths can simplify the verification of
+complex properties considerably.
+
+\section{\jmlwhy: a prototype tool to convert Java/JML to Why3}
+\label{sec:jml2why3}
+
+\jmlwhy{} is a prototype tool to convert Java programs with JML annotations to
+programs in the Why3 language, in order to use Why3's generation of verification
+conditions (VCs), its facility to manually apply transformations to the VCs, and
+its interaction with automatic provers to verify properties of the Java/JML
+program. The pipeline of \jmlwhy{} is illustrated in Figure~\ref{fig:pipeline}.
+
+\begin{figure}[tb]
+  \centering
+  \input pipeline.tikz
+  \caption{Pipeline for the verification of Java/JML programs using \jmlwhy{}.}
+  \label{fig:pipeline}
+\end{figure}
+
+First, the source code of the Java/JML program is parsed and typed using
+OpenJML. We added an option to OpenJML to serialise the typed abstract syntax
+tree (AST) to a file in JSON format. The JSON formatting is performed using the
+Jackson library. However, typed AST is represented in OpenJML in a complex class
+hierarchy and cannot be serialised as JSON directly, due to potential cycles in
+the typing information. We used the Java library Jackson JSOG for the JSON
+serialisation of the potentially cyclic typed AST. Jackson JSOG assigns a unique
+identifier to every element, and references to identifiers are used to break
+loops in the representation. Our modification to OpenJML, which adds the new
+command line flag \texttt{-tojson} to serialize the type AST as a JSON file, is
+available in a merge request to OpenJML \cite{openjml-tojson-pr}.
+
+Then the typed AST is reconstructed in \jmlwhy{} and converted to a
+proof-equivalent Why3 program. \jmlwhy{} is implemented in OCaml, and the typed
+AST is represented as an algebraic data type. To allow for representing of and
+simple pattern matching on the (potentially cyclic) typed AST, each element of
+type \lstinline{'a} is wrapped by type \lstinline{'a obj}, which contains the
+unique identifier of the element and defers the deserialisation of the actual
+element lazily (see Figure~\ref{fig:typedast}). \jmlwhy's conversion process
+creates the untyped AST of a Why3 program using Why3's internal API,
+\texttt{Why3.Ptree}. We contributed a pretty printer of the untyped AST to Why3
+to serialize an untyped AST to Why3 source code. Details of the conversion
+process are given in Section~\ref{sec:jmlwhy-conversion}.
+
+\begin{figure}[b]
+\begin{lstlisting}
+type 'a obj = 'a Lazy.t * (identifier * position option)
+
+(* Subclasses of com.sun.tools.javac.tree.JCTree.JCExpression *)
+and expr' =
+  | Ident of {name: string; typ: typ; sym: symbol}
+  | ArrayAccess of {indexed: expr; index: expr; typ: typ}
+  | MethodInvocation of {typeargs: expr list; meth: expr option; args: expr list; typ: typ; kind: jml_clause_kind option}
+  | Assign of {lhs: expr; rhs: expr; typ: typ}
+  | ...
+and expr = expr' obj
+\end{lstlisting}
+  \caption{Example of a algebraic data type to represent the typed AST of the
+    Java/JML program, and the wrapping in \lstinline{'a obj} to deal with cycles
+    in the type AST.}
+  \label{fig:typedast}
+\end{figure}
+
+Finally, Why3 is used to generate VSs for the program created by \jmlwhy, to
+simplify the VCs by manual transformations, and to apply automatic theorem
+provers to their verification.
+
+\paragraph{Compilation of \jmlwhy}
+
+\jmlwhy{} requires at least version 4.08 of OCaml and can be compiled using the
+following commands:
+\begin{lstlisting}[mathescape=false]
+$ opam --version
+2.0.2
+
+$ opam switch 4.08.0  # at least 4.08
+$ eval $(opam env)
+$ opam install --deps-only .
+$ make
+
+# To run the proofs
+$ why3 config --detect
+At least Alt-Ergo (2.3.0), CVC4 (1.6), Z3 (4.6.0).
+$ make test
+\end{lstlisting}
+
+\subsection{\jmlwhy's conversion of Java/JML to Why3}
+\label{sec:jmlwhy-conversion}
+
+\jmlwhy{} supports a procedural subset of the Java language that can be mapped
+to Why3 fairly easily. However, a number of aspects of the conversion require
+special consideration, and are detailed in the following.
+
+In the following, a \emph{place} refers to a variable, parameter, or field.
+Values are accessible from places in the current scope by fields, method calls,
+array indices, which can be composed to \emph{paths}. Java distinguishes between
+\emph{primitive types} such as \texttt{int} and \texttt{boolean}, and
+\emph{class types} with objects as values.
+% Default values of primitive types are included in their domain (e.g.\ the
+% default value of type \lstinline{int} is \lstinline{0}), but the default value
+% of the class types, \lstinline{null}, lies outside their domain\todo{Is this
+% quite right?}.
+\emph{Arrays} can hold either elements of primitive types or class types. Other
+\emph{containers}, for example queues, can only hold elements of class types.
+Values of primitive types are converted to corresponding values of class types
+when needed, and vice versa, for example between \texttt{int} and
+\texttt{java.lang.Integer}.
+
+We use the syntax \lstinline{‹$x$›} to designate the conversion of the
+identifier, type, expression, or term $x$ in Java/JML to Why3. The operation is
+described in \cref{sec:conversion}.
+
+\paragraph{Classes}
+\label{sec:conversion-classes}
+
+Java/JML classes define fields, invariants, constructors, and methods. A
+definition of a class $C$ is converted by \jmlwhy{} into a number of Why3
+definitions.
+
+\begin{lstlisting}
+class $C$ {
+  final $t$ f; ... // Class field
+
+  // Class invariant $i_1$
+  class_invariant $i_1$; ...
+
+  // Method with preconditions $p_1$ and postconditions $p_2$, body $\mathit{ss}$, and return type $t_1$
+  requires $p_1$; ...
+  ensures $p_2$; ...
+  $t_1$ m($t_2$ x, ...) { $\mathit{ss}$ }
+
+  // Pure model method with term $t$ as body
+  ensures \result = $t$;
+  pure model $t_1$ f($t_2$ x)
+
+  // Pure model method with term $t$ as body
+  requires $t_1$; ...
+  ensures \result = $t_2$;
+  pure model boolean p($t_3$ x)
+}
+\end{lstlisting}
+
+Currently, all class fields are required to be \lstinline{final} for \jmlwhy.
+The class is represented in Why3 by a record type $C$ with immutable fields
+corresponding to the Java class fields:
+
+\begin{lstlisting}
+type ‹$C$› = {f: ‹$t$›; ...}
+\end{lstlisting}
+
+Each class invariants $i_1$ is converted into a predicate $C'\mathit{inv}_1$
+with an argument representing an instance of $C$. Notice that such an invariant
+cannot refer to anything ``outside'' the object \lstinline{this}.
+
+\begin{lstlisting}
+predicate $C'\mathit{inv}_1$ (this: ‹$C$›) = ‹$i_1$›
+...
+\end{lstlisting}
+
+\jmlwhy{} distinguishes normal class methods from pure model methods. A normal
+class method $m$ possesses a method body and is not marked by JML keywords
+\lstinline{pure} and \lstinline{model}. A program method is converted into two
+Why3 definitions: A program value without implementation %
+\lstinline{val $C'm$}%
+, and a value with implementation \lstinline{let $C'm\mhyph\mathit{impl}$}. %$
+The two definitions have the same type signature and contract: The first
+argument is the instance on which the method was called and has type
+\lstinline{‹$C$›}. The other arguments and the return type correspond to the
+arguments and return type of the method definition. The contracts are comprised
+of the JML pre-conditions and post-conditions, the invariants on
+\lstinline{this} as pre-condition and post-condition, and the invariant on the
+result if its type is a user-defined class:
+\begin{lstlisting}
+val $C'm$ (this: ‹$C$›) (x: ‹$t_2$›) ... : ‹$t_1$›
+  requires { $C'\mathit{inv}_1$(this) } ...
+  requires { ‹$p_1$› } ...
+  ensures { ‹$p_2$› } ...
+  ensures { $C'\mathit{inv}_1$(this) } ...
+  ensures { $t_1'\mathit{inv}_1$(result) } // If $t_1$ is custom class
+\end{lstlisting}
+
+The program definition $C'm\mhyph\mathit{impl}$ contains the method body
+together with some boiler-plate code to translate Java's return statement to
+Why3 exceptions and to bind non-final arguments to references to make them
+assignable (see \cref{sec:mutability}). The method implementation is used to
+verify that the method body corresponds to its contract. The Why3 annotation
+\lstinline{[vc:sp]} changes the generation of VCs to avoid an exponential
+explosion of the number of generated verification conditions.
+\begin{lstlisting}
+let $C'm\mhyph{}impl$ $(\texttt{this}: C)$ ($x$: ‹$t_2$›) ... : ‹$t_1$›
+  requires { $C'\mathit{inv}_1$(this) } ...
+  requires { $p_1$ } ...
+  ensures { $p_2$ } ...
+  ensures { $C'\mathit{inv}_1$(this) } ...
+  ensures { $t_1'\mathit{inv}_1$(result) } // If $t_1$ is custom class
+= [vc:sp]
+  exception Return' $t_2$ in
+  let $x$ = ref $x$ in ... // Redefine non-final arguments as references
+  try ‹$\mathit{ss}$› with Return' r -> r end
+\end{lstlisting}
+
+Pure model methods are declared with JML keywords \lstinline{pure model} and
+have no body. They are instead defined by a single postcondition that specifies
+the result by an equality with \lstinline{\result}. Pure model methods of other types than
+\lstinline{boolean} are converted to logical functions:
+\begin{lstlisting}
+function $C'f$ (this: ‹$C$›) (x: ‹$t_2$›) : ‹$t_1$› = ‹$t$›
+\end{lstlisting}
+
+A pure model method $p$ with with return type \lstinline{boolean} is converted
+to a Why3 predicate. Preconditions of a boolean pure model method are considered
+as preconditions in the generated predicate.
+\begin{lstlisting}
+predicate $C'p$ (this: ‹$C$›) (x: ‹$t_3$›) = ‹$t_1$› -> ‹$t_2$›
+\end{lstlisting}
+
+The translation of pure model methods is included before the definition of
+invariants and methods to allow for using them in method contracts and
+invariants.
+
+Class inheritance is currently unsupported.
+
+\paragraph{Contracts and terms}
+
+JML preconditions, postconditions, and loop invariants are translated directly to their
+counterparts in Why3. Mutation annotations in loops (\lstinline{loop_modifies}) are
+ignored since they are inferred in Why3.
+
+\paragraph{Nullability}
+Places and methods of class types are \emph{nullable}, when they are allowed to
+contain the value \texttt{null}. Places are not nullable by default in JML, and
+nullability is defined by the JML annotation \lstinline{@nullable}. The
+nullability of Java expressions and places can be determined statically from the
+annotations on the involved definitions. Since the value \lstinline{null} lies
+outside the domain of the Why3 record types representing the classes,
+nullability is represented by the type system using an option-like type in
+module \lstinline{jml2why3.Nullable}:
+\begin{lstlisting}
+type nullable 'a = Null | NonNull 'a
+\end{lstlisting}
+
+Consequently, the nullability of an expression has to be adjusted for every
+assignment to a place with mismatching nullability. Non-nullable values are
+wrapped by \lstinline{NonNull : 'a -> nullable 'a} when assigned to nullable
+assignment targets. Nullable values are asserted to be different than
+\lstinline{Null} and their value is extracted using a partial, axiomatized
+function \lstinline{Nullable.get_non_null}, when assigned in non-nullable
+places:
+
+\begin{lstlisting}
+function get_non_null (n:nullable 'a) : 'a
+
+axiom get_non_null__spec1: forall n, x: 'a.
+  n <> Null -> get_non_null n = x -> n = NonNull x
+axiom get_non_null__spec2: forall n, x: 'a.
+  n = NonNull x -> get_non_null n = x
+\end{lstlisting}
+
+\paragraph{Mutability}
+\label{sec:mutability}
+
+Java allows the mutation of any accessible non-final place (variables,
+parameters, fields, container contents). Mutability in Why3, however, is
+restricted to places with statically known paths (e.g., record fields),
+precluding for example the mutation of fields of array elements (e.g.,
+\lstinline{a[i].f <- x}).
+
+In \jmlwhy{}, mutation is reduced to mutable variables and containers such as
+arrays and collections. For example, non-final Java variables are converted to
+Why3 references to allow for reassigning their values. Non-final method
+parameters are kept as-it in the function signatures but wrapped as references
+in the method implementation. This has two consequences: All fields of
+custom-defined classes must be final. And values with mutable content have to be
+stored in final places (e.g., arrays, queues, objects with mutable fields, and
+\texttt{this}).
+
+This prevents the sharing of mutable places via aliasing. For example, the
+following Java program is invalid for \jmlwhy{} because the value
+\lstinline{ll.get(0)} has the alias \lstinline{ll.get(1)}.
+\begin{lstlisting}
+List<List<String>> l = new LinkedList<>();
+l.add(new LinkedList<>());
+l.add(ll.get(0));
+l.get(0).add("Hello");
+assert l.get(0).get(0).equals("Hello") && l.get(1).get(0).equals("Hello");
+\end{lstlisting}
+
+% % This is not really valid anymore because we banned mutable custom objects from Jml2Why3
+% \jmlwhy{} currently assumes linear semantics: ownership moves with assignment
+% and cannot be borrowed as, for example, in Rust with its affine semantics.
+% Specifically, re-propagation of mutated state after expiry of borrowed values
+% is missing. These properties are not checked and must be manually verified by
+% the user. The correctness properties of the ParcourSup algorithm
+% (\cref{sec:parcoursup-adapted}), however, cannot be fully expressed in linear
+% semantics, because the properties relate the input with the result, but the
+% ownership of the input is lost at the end of the method.
+
+\paragraph{Physical equality}
+
+Tests for physical equality are required to specify that the result of the
+method is a permutation of \texttt{voeuxClasses} in the adapted implementation
+(\cref{sec:parcoursup-adapted}). The conversion of physical (in-)equality in
+Java (by operator \lstinline{==} on values of class types) to Why3 is not
+possible directly, since there is no notion of physical equality in Why3. On top
+of that, when comparing values at different points in the program (for example
+using \lstinline{\old(x)}), physical equality does not imply logical equality.
+Physical equality is instead implemented in \jmlwhy{} by adding to each class
+record a field that contains the address of the object as an abstract type.
+Tests for physical (in-)equality between objects of user-defined classes are
+converted to tests of (in-)equality between the values of the address fields.
+
+Currently, physical equality cannot be used together with the allocation of new
+objects: The address of a newly created object is supplied by the Why3 function
+\lstinline{jml2why3.Address.fresh}. However, the \emph{freshness} of the
+resulting address, i.e., that the result is different than \emph{any other}
+currently existing address, cannot be easily specified since it has to refer to
+a global state of addresses that exist so far.
+
+\paragraph{Integers}
+Standard Java integers are signed 32-bit and range from $-2^{31}$ to $2^{31}-1$.
+They are converted to the corresponding type \texttt{mach.int.Int32.int32} in
+Why3. The absence of arithmetic overflows in operations on this type is ensured
+by the preconditions of the operands.
+
+\paragraph{Arrays}
+Arrays in the Java program are converted to the Why3's corresponding 32-bit
+array type \lstinline{mach.array.Array32.array}, which is comprised of an
+immutable, 32-bit length, and a mutable ghost mapping of indices to array
+elements. An array with elements of primitive type $t$ is directly converted to
+an array \lstinline{Array32.array ‹t›} since their default values are included in
+the type (e.g., \texttt{0} for type \texttt{int}). The values of an array of
+elements with an object type $C$ are nullable in Java, and such an array is
+converted to an array with nullable elements in Why3 %
+\lstinline{Array32.array (nullable ‹$C$›)}.
+
+\paragraph{Queues}
+Linked lists (\texttt{java.util.LinkedList}) are a common implementation of Java
+queues (\texttt{java.util.Queue}). This specific usage of linked lists is
+converted to Why3's queue (\texttt{queue.Queue}). The queue methods are
+converted to wrapper functions of Why3's queue functions that operate on
+nullable values. For example, a call to the Java's queue method
+\begin{lstlisting}
+boolean java.util.Queue.add(E e) // throws $\texttt{NullPointerException}$, if the specified element is $\texttt{null}$
+\end{lstlisting}
+is converted to a call to the following wrapper function,
+\begin{lstlisting}
+let nullable_push (v: nullable 'a) (q: t 'a) : writes { q.seq }
+  requires { v <> Null }
+  ensures { match v with NonNull x -> q = snoc (old q) x | Null -> false end }
+= match v with
+  | NonNull x -> Queue.push x q
+  | Null -> absurd
+  end
+\end{lstlisting}
+and \lstinline{Queue.push} is defined in the Why3 standard library as:
+\begin{lstlisting}
+  val push (x: 'a) (q: t 'a) : unit writes {q}
+    ensures { q.elts = old q.elts ++ Cons x Nil }
+\end{lstlisting}
+
+\subsection{Summary of limitations}
+
+The following Java/JML features are not supported. Some of these limitations are
+\emph{unchecked} by the current prototype, hence a misuse may lead to unsound
+proofs.
+\begin{itemize}
+\item Class inheritance (checked)
+\item Mutable fields in user-defined classes (checked)
+\item Clauses \lstinline{modifies} and \lstinline{loop_modifies} are silently
+  ignored (inferred by Why3)
+\item Tests for physical equality exclude allocation of objects, and vice verse (unchecked)
+\item Sharing of mutable places via aliasing is unsupported and
+  usually undetected. See example in section~\ref{sec:mutability}
+  above and the discussion about ownership in Section~\ref{sec:rust}.
+\end{itemize}
+
+A technical limitation of \jmlwhy{} is that JML annotations in the Java program
+cannot be used to define auxiliaries (e.g., lemmas or functions) about the
+models used in the translation, because there is generally no notion of these
+models in JML. For example, Java's queues are translated to Why3's queues and
+the latter are represented by sequences in the logical parts of the program and
+in the proofs. There is no notion of Why3's sequences in JML, which prohibits
+the definitions of auxiliaries on sequences in the Java program. In some cases,
+the auxiliary can be swapped out to a Why3 library (e.g., the \jmlwhy{} library
+\texttt{jml2why3.mlw}). However, when the auxiliary depends on values in the
+current proof context, this may be also cumbersome.
+
+\section{Verification of ParcourSup with two constraints using \jmlwhy}
+
+We used the \jmlwhy{} tool to verify the safety and the permutation property of
+the adapted Java implementation of ParcourSup with two constraints. In both
+cases, we first implemented the algorithm in Why3 to develop the required loop
+invariants and lemmas.
+
+\subsection{Arithmetic and null-pointer safety}
+\label{sec:verification-safety}
+
+\begin{table}[tb]
+  \caption{The use of automatic theorem provers in the verification conditions
+    (VC) as generated using \jmlwhy for the arithmetic and null-pointer safety
+    of the ParcourSup algorithm (\aref{app:parcoursup-adapted}).}
+  \label{tab:verification-safety-why3}
+  \centering
+  \begin{tabular}{lrrrr}
+    \toprule
+    Prover         & VCs & Fastest & Slowest & Average \\
+    \midrule
+    CVC4 1.6       & 102 & 0.03    & 5.37    & 0.50 \\
+    Alt-Ergo 2.3.0 &  13 & 0.02    & 0.97    & 0.26 \\
+    \bottomrule
+  \end{tabular}
+  \caption{The use of different automatic theorem provers in the verification
+    conditions (VC) as generated using \jmlwhy for safety and the permutation
+    property in the ParcourSup algorithm (\aref{app:parcoursup-permutation}).}
+  \label{tab:verification-permutation-why3}
+  \centering
+  \begin{tabular}{lrrrr}
+    \toprule
+    Prover         & VCs & Fastest & Slowest & Average \\
+    \midrule
+    CVC4 1.6       & 192 & 0.05    & 5.66    & 0.64 \\
+    Alt-Ergo 2.3.0 &  46 & 0.14    & 3.40    & 0.62 \\
+    Z3 4.6.0       &  13 & 0.06    & 0.50    & 0.26 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+The arithmetic safety of the adapted ParcourSup algorithm
+(\aref{app:parcoursup-adapted}) was verified using \jmlwhy's pipeline. Why3
+generated 83 verification conditions (VCs) for the translation of method
+\lstinline{GroupeClassement.calculerOrdreAppel}. Almost all VCs were handled
+fully automatically using Why3's strategy \lstinline{Auto level 2} and the
+automatic theorem provers Alt-Ergo 2.3.0 and CVC4 1.6. The application of manual
+transformations was necessary in only in five VCs, to convert logical integers
+from the current verification context to 32-bit integers, to trigger the
+application of (JML-defined) preconditions quantified over 32-bit integers.
+Details on the verification of the final 145 sub-tasks are given in
+\cref{tab:verification-safety-why3}. In all VCs, only the result of the fastest
+prover was retained. The verification of all sub-tasks took 21 seconds using
+three parallel processes.
+
+\subsection{Permutation property}
+\label{sec:parcoursup-permutation}
+
+The adapted ParcourSup implementation (\cref{sec:parcoursup-adapted}) combines
+two functionalities:
+\begin{enumerate}
+\item It creates a permutation of input list of wishes respecting ranks and
+  constraints, and
+\item re-arranges the wishes in the resulting list of wishes.
+% \item it update the \texttt{rangAppel} of each wish.
+\end{enumerate}
+This increases the complexity of the implementation, the complexity of the
+specification of the permutation property, and its the verification.
+
+We verified the permutation property instead in a modified implementation that
+produces an explicit permutation (\aref{app:parcoursup-permutation}). This
+explicit permutation enables a simpler formalisation of the correctness
+properties of the ParcourSup algorithm \cite{parcoursup-specifications}. A
+permutation of a Java array is defined a class with two fields: An array
+\lstinline{map} that maps indices of the permutation to indices of the input
+array of wishes, and an array \lstinline{inv} that maps indices in the input
+array of wishes to indices in the resulting permutation. The invariants of the
+class ensure that \lstinline{map} and \lstinline{inv} describe a permutation
+(Figure~\ref{fig:permutation-class}). For example
+\begin{lstlisting}
+$\mathrm{input}$:            [a,b,c,d,e]     map: [2,1,3,4,0]
+$\mathrm{permutated}$: [c,b,d,e,a]                inv: [4,1,0,2,3]
+\end{lstlisting}
+
+\begin{figure}[tb]
+  \begin{lstlisting}
+class Permutation {
+    public final int[] map, inv;
+
+    /*@ public invariant map.length == inv.length;
+        public invariant (\forall int i; 0 <= i && i < map.length;
+            0 <= map[i] && map[i] < map.length && inv[map[i]] == i);
+        public invariant (\forall int i; 0 <= i && i < map.length;
+            0 <= inv[i] && inv[i] < map.length && map[inv[i]] == i); @*/
+}
+  \end{lstlisting}
+  \caption{Fields and invariants of class \lstinline{Permutation}}
+  \label{fig:permutation-class}
+\end{figure}
+
+For the verification of arithmetic safety and null-pointer safety for method
+\lstinline{GroupeClassement.calculerOrdreAppel} in the permutation-based
+implementation of the ParcourSup algorithm, Why3 generated 164 VCs for the Why3
+translation. The verification of these conditions using automatic provers
+required a substantial amount of manually applied transformations. The resulting
+319 sub-tasks were proven in 59 seconds using three parallel processes using
+CVC4 1.6, Alt-Ergo 2.3.0, and Z3 4.6.0 (see
+\cref{tab:verification-permutation-why3}).
+
+\section{Excursion to ownership and proofs in Rust}
+\label{sec:rust}
+
+An experiment shows that the ParcourSup algorithm can be implemented and
+specified without aliasing using Rust-style ownership (see
+\aref{app:parcoursup-rust}). In the first loop (line 43 ff.), the ownership of
+each of the input wishes is transferred from argument \lstinline{voeux_classes}
+to one of the four queues. The best candidate \lstinline{meilleur} is defined as
+an mutable option of an immutable reference, in order to leave the ownership of
+the head element at the queues while determining the best candidate (lines
+77-92). Only when removing the best candidate from its associated queue, the
+ownership is transferred with the actual modifications from the queue to the
+result order of wishes, \lstinline{ordre_appel} (lines 94-110).
+
+Under the affine semantics as in Rust, it may be impossible to specify the
+result of a function in terms of its arguments with normal post-conditions:
+Ownership of the arguments is often moved to the result, which makes the
+arguments unavailable at the end of the function.
+
+An extension of normal contracts for specifying programs with affine semantics
+has been proposed by the Prusti verifier \cite{astrauskas2019}. Prusti
+implements the verification of normal JML-style contracts for Rust, and adds
+\emph{pledges} to relate values whose ownership is lost at the end of a method
+(e.g., argument $x$) with currently accessible values (e.g., result $y$). For
+example, a pledge %
+\lstinline{after_expiry<$y$>(... $x$ ... before_expiry($y$) ...)} %
+is a logical statement that is checked at the border of validity of the function
+result $x$, when ownership returns to argument $x$.
+
+In the Rust implementation of the ParcourSup algorithm
+(\aref{app:parcoursup-rust}), we use pledges to specify the permutation property
+in a post-condition (lines 28-31). The record field \lstinline{rang_appel} of
+the input wishes is used as index in the resulting ordering of wishes, and the
+record field \lstinline{rang} is used as the index of a wish in the resulting
+order in the array of input wishes. Our attempts to use Prusti to verify the
+specifications of the Rust program, however, were thwarted by Prusti's missing
+support for the Rust libraries used in the program.
+
+\bibliographystyle{plain}
+\bibliography{abbrevs,demons,demons2,demons3,team,crossrefs,local}
+
+\chapter{Annexes}
+
+\section{\jmlwhy conversions}
+\label{sec:conversion}
+
+In this section, we describe in detail the conversion expressions, types, and
+terms in Java/JML to Why3. We use the syntax \lstinline{‹x›} for the conversion
+of a Java element \lstinline{x} to Why3. Two macros are used in the conversion
+to deal with nullable values: \lstinline{x$|\textit{nullable}$} %$
+forces \lstinline{x} to be nullable, i.e.\ it expands to %
+\lstinline{get_non_null x} if \lstinline{x} is not nullable, and \lstinline{x}
+otherwise. Similary, \lstinline{x$|\textit{nonnull}$} %$
+forces \lstinline{x} to be non-null, and expands for nullable expressions to
+\lstinline{NonNull x}.
+
+The conversions are described in the following form:
+
+\noindent\rule{\textwidth}{1pt}\\
+\noindent\jmlwhyheading{Description of syntactic element}\\
+\lstinline^Java pattern^\jmlwhycomment{Condition on Java pattern (optional)}
+\begin{itemize}
+\item \lstinline^Why3 pattern 1^\jmlwhycomment{Conditions for pattern $1$}
+\item \lstinline^Why3 pattern 2^\jmlwhycomment{Conditions for pattern $2$}
+\item \ldots
+\end{itemize}
+\noindent\rule{\textwidth}{1pt}\\
+
+The Why3 program resulting from the conversion makes use of the Why3 library
+\texttt{jml2why3} (\texttt{jml2why3.mlw}). The library provides a number of
+modules:
+\begin{itemize}
+\item \texttt{Nullable}: an option-like type for nullable Java values, and
+  accompanying definitions
+\begin{lstlisting}
+  type nullable 'a = Null | NonNull 'a
+\end{lstlisting}
+\item \texttt{Queue}: redefinition of Why3's queue functions to be closer to \texttt{java.util.Queue}
+\item \texttt{LinkedList}: wrapper of Why3 sequence with an interface closer to java.util.LinkedList
+\begin{lstlisting}
+  type linked_list 'a = { mutable seq : seq (nullable 'a) }
+\end{lstlisting}
+\item \texttt{Address}: an address is an abstract type and the modules defines
+  equality tests to model physical equality
+\item \texttt{Utls}: utility definitions on existing modules
+\end{itemize}
+
+\subsection{Identifiers}
+
+A mapping of Java identifiers of custom classes, methods, variables, and fields
+and to Why3 identifiers and related information is stored in a global
+environment. This environment is populated by analysing the Java definitions,
+and constitutues the basis for translating Java identifiers to Why3.
+
+\input extract
+
+\section{ParcourSup implementations}
+
+\subsection{Original implementation}
+\label{app:parcoursup-original}
+
+As of commit \texttt{7be9a08e} in the Git repository of ParcourSup\cite{parcoursup-source}.
+
+\lstinputlisting[firstline=19,language={},inputencoding=utf8,numbers=left,basicstyle=\scriptsize\ttfamily]%
+{../../src/java/GroupeClassement.java}
+
+\clearpage
+\subsection{Adapted implementation}
+\label{app:parcoursup-adapted}
+
+File \lstinline{jml2why3/examples/GroupeClassement.java}.
+
+\lstinputlisting[language={},inputencoding=utf8,numbers=left,basicstyle=\scriptsize\ttfamily]%
+{../examples/GroupeClassement.java}
+% {../../openjml/GroupeClassement.java}
+
+\clearpage
+\subsection{Arrays-based implementation for OpenJML}
+\label{app:parcoursup-arrays}
+
+File \lstinline{openjml/GroupeClassement__everything_arrays.java}.
+
+\lstinputlisting[firstline=52,language={},inputencoding=utf8,numbers=left,basicstyle=\scriptsize\ttfamily]%
+{../../openjml/GroupeClassement__everything_arrays.java}
+
+\clearpage
+\subsection{Permutation implementation}
+\label{app:parcoursup-permutation}
+
+File \lstinline{jml2why3/examples/GroupeClassement__permutation.java}.
+
+\lstinputlisting[language={},inputencoding=utf8,numbers=left,basicstyle=\scriptsize\ttfamily]%
+{../examples/GroupeClassement__permutation.java}
+
+\clearpage
+\subsection{Rust implementation}
+\label{app:parcoursup-rust}
+
+File \lstinline{rust/src/main.rs}.
+
+\lstinputlisting[language={},numbers=left,basicstyle=\scriptsize\ttfamily]%
+{../../rust/src/main.rs}
+
+\end{document}
+
+
+
+
+
+
+
+%LocalWords:  nullability Parcoursup Andrès Léo Jean-Christophe
+
+%%% Local Variables:
+%%% mode: latex
+%%% mode: accents
+%%% TeX-master: t
+%%% TeX-PDF-mode: t
+%%% mode: flyspell
+%%% ispell-local-dictionary: "francais"
+%%% End:
+%  LocalWords:  Filliâtre

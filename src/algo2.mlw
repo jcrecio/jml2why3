@@ -1,0 +1,245 @@
+use common.Common
+use queue.Queue as Q
+use seq.Seq (* to get the Q coercion.. *)
+use common_seq.Common_seq
+
+use int.Int
+
+type ordre_appel_valide = {
+  ordre_appel: Q.t voeu;
+  br: Q.t voeu;
+  bnr: Q.t voeu;
+  nbr: Q.t voeu;
+  nbnr: Q.t voeu;
+  taux_b: int;
+  taux_r: int;
+  nb_voeux: int;
+  nb_b_total: int;
+  nb_r_total: int;
+  mutable nb_b_appeles: int;
+  mutable nb_r_appeles: int;
+}
+  invariant { boursiers_residents br }
+  invariant { boursiers_non_residents bnr }
+  invariant { non_boursiers_residents nbr }
+  invariant { non_boursiers_non_residents nbnr }
+  invariant { length ordre_appel < nb_voeux -> length br > 0 \/ length bnr > 0 \/ length nbr > 0 \/ length nbnr > 0 }
+
+
+let creer_ordre_appel_valide (br: Q.t voeu) (bnr: Q.t voeu) (nbr: Q.t voeu) (nbnr: Q.t voeu) (taux_b: int) (taux_r: int) : ordre_appel_valide
+
+  requires { boursiers_residents br }
+  requires { boursiers_non_residents bnr }
+  requires { non_boursiers_residents nbr }
+  requires { non_boursiers_non_residents nbnr }
+  ensures { true }
+
+= {
+  ordre_appel = Q.create ();
+  br = br;
+  bnr = bnr;
+  nbr = nbr;
+  nbnr = nbnr;
+  taux_b = taux_b;
+  taux_r = taux_r;
+  nb_voeux = Peano.to_int (Q.length br) + Peano.to_int (Q.length bnr) + Peano.to_int (Q.length nbr) + Peano.to_int (Q.length nbnr);
+  nb_b_appeles = 0;
+  nb_r_appeles = 0;
+  nb_b_total = Peano.to_int (Q.length br) + Peano.to_int (Q.length bnr);
+  nb_r_total = Peano.to_int (Q.length br) + Peano.to_int (Q.length nbr);
+}
+
+
+let function reste_br (oa: ordre_appel_valide) = not Q.is_empty oa.br
+let function reste_bnr (oa: ordre_appel_valide) = not Q.is_empty oa.bnr
+let function reste_nbr (oa: ordre_appel_valide) = not Q.is_empty oa.nbr
+let function reste_nbnr (oa: ordre_appel_valide) = not Q.is_empty oa.nbnr
+
+let function reste_b (oa: ordre_appel_valide) = reste_br oa || reste_bnr oa
+let function reste_r (oa: ordre_appel_valide) = reste_br oa || reste_nbr oa
+
+let function taux_b_est_contraignant (oa: ordre_appel_valide) =
+  reste_b oa && not (taux_ok oa.taux_b oa.nb_b_appeles (1 + Peano.to_int (Q.length oa.ordre_appel)))
+
+let function taux_r_est_contraignant (oa: ordre_appel_valide) =
+  reste_r oa && not (taux_ok oa.taux_r oa.nb_r_appeles (1 + Peano.to_int (Q.length oa.ordre_appel)))
+
+predicate vle (x: voeu) (y: voeu) =
+  x.rang <= y.rang
+
+clone pqueue.Pqueue as P with type elt = voeu, predicate le = vle
+
+use seq.Permut
+
+
+let predicate c_ok (c: voeu) (tb_c: bool) (tr_c: bool) =
+  (est_boursier c || not tb_c ) && (est_resident c || not tr_c)
+
+let transfer_one_if_not_empty_and_pred (q: Q.t voeu) (p: P.t) (tb_c: bool) (tr_c: bool)
+  requires { true }
+  ensures { empty <> q -> c_ok q[0] tb_c tr_c -> permut_all p (cons q[0] (old p)) }
+  ensures { p <> empty -> (old p <> empty && p[0] = (old p)[0] || q <> empty && c_ok q[0] tb_c tr_c && p[0] = q[0]) }
+  ensures { empty = q || not (c_ok q[0] tb_c tr_c) -> p = old p }
+=
+  if not Q.is_empty q then
+    let c = Q.safe_peek q in
+    if c_ok c tb_c tr_c then P.push c p
+
+let choisir_br (oa: ordre_appel_valide) : unit
+  requires { oa.br <> empty }
+  ensures { length oa.ordre_appel = length (old oa).ordre_appel + 1 }
+=
+  Q.push (Q.safe_pop oa.br) oa.ordre_appel;
+  oa.nb_r_appeles <- oa.nb_r_appeles + 1;
+  oa.nb_b_appeles <- oa.nb_b_appeles + 1
+
+let choisir_bnr (oa: ordre_appel_valide) : unit
+  requires { oa.bnr <> empty }
+  ensures { length oa.ordre_appel = length (old oa).ordre_appel + 1 }
+=
+  Q.push (Q.safe_pop oa.bnr) oa.ordre_appel;
+  oa.nb_b_appeles <- oa.nb_b_appeles + 1
+
+let choisir_nbr (oa: ordre_appel_valide) : unit
+  requires { oa.nbr <> empty }
+  ensures { length oa.ordre_appel = length (old oa).ordre_appel + 1 }
+=
+  Q.push (Q.safe_pop oa.nbr) oa.ordre_appel;
+  oa.nb_r_appeles <- oa.nb_r_appeles + 1
+
+let choisir_nbnr (oa: ordre_appel_valide) : unit
+  requires { oa.nbnr <> empty }
+  ensures { length oa.ordre_appel = length (old oa).ordre_appel + 1 }
+=
+  Q.push (Q.safe_pop oa.nbnr) oa.ordre_appel
+
+
+let mk_eligibles (oa: ordre_appel_valide) : P.t
+(*
+  ensures { result <> empty -> est_boursier result[0] && est_resident result[0] -> length oa.br > 0 }
+  ensures { result <> empty -> est_boursier result[0] && not est_resident result[0] -> length oa.bnr > 0 }
+  ensures { result <> empty -> not est_boursier result[0] && est_resident result[0] -> length oa.nbr > 0 }
+  ensures { result <> empty -> not est_boursier result[0] && not est_resident result[0] -> length oa.nbnr > 0 }
+  ensures { result = empty -> oa.bnr <> empty }
+*)
+  ensures { forall i. 0 <= i < length result ->
+    let v = result[i] in
+    v = oa.br[0] && length oa.br > 0 \/
+    v = oa.bnr[0] && length oa.bnr > 0 \/
+    v = oa.nbr[0] && length oa.nbr > 0 \/
+    v = oa.nbnr[0] && length oa.nbnr > 0
+    }
+=
+  let tb_c = taux_b_est_contraignant oa in
+  let tr_c = taux_r_est_contraignant oa in
+
+  let eligibles = P.create () in
+
+
+  transfer_one_if_not_empty_and_pred oa.br eligibles tb_c tr_c;
+  transfer_one_if_not_empty_and_pred oa.bnr eligibles tb_c tr_c;
+  transfer_one_if_not_empty_and_pred oa.nbr eligibles tb_c tr_c;
+  transfer_one_if_not_empty_and_pred oa.nbnr eligibles tb_c tr_c;
+
+  eligibles
+
+predicate meilleur_3c (v: voeu) (q1: Q.t voeu) (q2: Q.t voeu) (q3: Q.t voeu) =
+       (length q1 > 0 -> vle v q1[0])
+    /\ (length q2 > 0 -> vle v q2[0])
+    /\ (length q3 > 0 -> vle v q3[0])
+
+let get_meilleur_c (oa: ordre_appel_valide) : (res: voeu)
+
+    ensures {
+      res = oa.br[0] /\ length oa.br > 0 /\
+        ((taux_b_est_contraignant oa && taux_r_est_contraignant oa) \/ meilleur_3c res oa.bnr oa.nbr oa.nbnr)
+      \/
+      res = oa.bnr[0] /\ length oa.bnr > 0 /\
+        ((taux_b_est_contraignant oa && not taux_r_est_contraignant oa) \/
+         (taux_b_est_contraignant oa && taux_r_est_contraignant oa && length oa.br = 0) \/
+          meilleur_3c res oa.br oa.nbr oa.nbnr)
+      \/
+      res = oa.nbr[0] /\ length oa.nbr > 0 /\
+        ( (taux_r_est_contraignant oa && not taux_b_est_contraignant oa) \/
+          (taux_r_est_contraignant oa && taux_b_est_contraignant oa && length oa.br = 0 && length oa.bnr = 0) \/
+          (meilleur_3c res oa.br oa.bnr oa.nbnr))
+      \/
+      res = oa.nbnr[0] /\ length oa.nbnr > 0 /\
+        ( (length oa.br = 0 && length oa.bnr = 0 && length oa.nbr = 0) \/
+          (not taux_b_est_contraignant oa && not taux_r_est_contraignant oa &&
+            (meilleur_3c res oa.br oa.bnr oa.nbr)))
+
+    }
+  =
+
+  let eligibles = mk_eligibles oa in
+
+  if not P.is_empty eligibles then P.safe_peek eligibles
+  else Q.safe_peek oa.bnr
+
+
+predicate dummy (oa: ordre_appel_valide) = 42 > 32
+
+let mk_ordre_appel (br_: Q.t voeu) (bnr_: Q.t voeu) (nbr_: Q.t voeu) (nbnr_: Q.t voeu) (taux_b: int) (taux_r: int) : Q.t voeu
+  requires { boursiers_residents br_ }
+  requires { boursiers_non_residents bnr_ }
+  requires { non_boursiers_residents nbr_ }
+  requires { non_boursiers_non_residents nbnr_ }
+  ensures { true }
+
+=
+  let oa = creer_ordre_appel_valide br_ bnr_ nbr_ nbnr_ taux_b taux_r in
+
+  while Peano.to_int (Q.length oa.ordre_appel) < oa.nb_voeux do
+
+    variant { oa.nb_voeux - (length oa.ordre_appel) }
+
+    invariant { dummy oa }
+
+    let meilleur_c = get_meilleur_c oa in
+
+    if est_boursier meilleur_c then begin
+      if est_resident meilleur_c then choisir_br oa
+      else choisir_bnr oa
+    end else begin
+      if est_resident meilleur_c then choisir_nbr oa
+      else choisir_nbnr oa
+    end
+
+  done;
+
+  oa.ordre_appel
+
+
+use common_arr.Common_arr
+
+let algo2 (g: groupe_classement) : (Q.t voeu)
+
+  requires { forall k. 0 <= k < Array.length g.voeux -> (Array.([]) g.voeux k).rang = k + 1 }
+  ensures { true }
+
+=
+
+  let voeux = queue_of_array g.voeux in
+
+  let b, nb = diviser_groupe voeux est_boursier in
+
+  assert { boursiers_seulement b };
+  assert { non_boursiers_seulement nb };
+
+  let br, bnr = diviser_groupe b est_resident in
+
+  assert { residents_seulement br };
+  assert { non_residents_seulement bnr };
+  assert { boursiers_seulement br };
+  assert { boursiers_seulement bnr };
+
+  assert { boursiers_residents br };
+  assert { boursiers_non_residents bnr };
+
+  let nbr, nbnr = diviser_groupe nb est_resident in
+
+  assert { non_boursiers_residents nbr };
+  assert {  non_boursiers_non_residents nbnr };
+
+  mk_ordre_appel br bnr nbr nbnr g.taux_boursiers g.taux_residents

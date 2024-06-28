@@ -1,0 +1,22 @@
+image: debian/unstable
+packages:
+  - biber
+  - fonts-linuxlibertine
+  - inkscape
+  - python3-pygments
+  - texlive-extra-utils
+  - texlive-fonts-extra
+  - texlive-lang-french
+  - texlive-xetex
+sources:
+  - https://git.zapashcanon.fr/zapashcanon/internship-report-parcoursup
+secrets:
+  - ec1f49cd-38dc-41d9-89f4-c3b6ecd7bcad # ssh deploy key
+tasks:
+  - build: |
+      cd internship-report-parcoursup
+      make
+      ls main.pdf
+  - deploy: |
+      cd internship-report-parcoursup
+      scp -o StrictHostKeyChecking=no -q main.pdf fs@zapashcanon.fr:/var/www/fs.zapashcanon.fr/pdf/internship-report-parcoursup.pdf

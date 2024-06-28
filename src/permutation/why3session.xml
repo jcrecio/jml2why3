@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE why3session PUBLIC "-//Why3//proof session v5//EN"
+"http://why3.lri.fr/why3session.dtd">
+<why3session shape_version="8">
+<prover id="0" name="Alt-Ergo" version="2.3.0" timelimit="1" steplimit="0" memlimit="1000"/>
+<file proved="true">
+<path name=".."/><path name="permutation.mlw"/>
+<theory name="Permutation" proved="true">
+ <goal name="VC permutation" expl="VC for permutation" proved="true">
+ <proof prover="0"><result status="valid" time="0.00" steps="20"/></proof>
+ </goal>
+ <goal name="VC identity" expl="VC for identity" proved="true">
+ <proof prover="0"><result status="valid" time="0.01" steps="47"/></proof>
+ </goal>
+ <goal name="VC compose" expl="VC for compose" proved="true">
+ <proof prover="0"><result status="valid" time="0.04" steps="412"/></proof>
+ </goal>
+</theory>
+</file>
+</why3session>

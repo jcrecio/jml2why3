@@ -1,0 +1,7 @@
+(executable
+ (name jml2why3_cmd)
+ (public_name jml2why3)
+ (libraries re.str why3 ppx_deriving.std yojson str)
+ (preprocess (pps ppx_deriving.std))
+ (modules why3aux jmlAst jmlFromJson jml2why3 jml2why3_cmd)
+ (flags :standard -w -9 -warn-error -A)) ;

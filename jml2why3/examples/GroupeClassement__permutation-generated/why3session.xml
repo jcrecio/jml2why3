@@ -1,0 +1,1544 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE why3session PUBLIC "-//Why3//proof session v5//EN"
+"http://why3.lri.fr/why3session.dtd">
+<why3session shape_version="8">
+<prover id="0" name="Z3" version="4.6.0" timelimit="5" steplimit="0" memlimit="1000"/>
+<prover id="1" name="Alt-Ergo" version="2.3.0" timelimit="5" steplimit="0" memlimit="1000"/>
+<prover id="2" name="CVC4" version="1.6" timelimit="1" steplimit="0" memlimit="1000"/>
+<file format="whyml">
+<path name=".."/><path name="GroupeClassement__permutation-generated.mlw"/>
+<theory name="GroupeClassement__permutation">
+ <goal name="voeuClasse__init__impl&#39;vc" expl="VC for voeuClasse__init__impl">
+ <proof prover="2" obsolete="true"><result status="valid" time="0.11" steps="26781"/></proof>
+ </goal>
+ <goal name="permutation__init__impl&#39;vc" expl="VC for permutation__init__impl">
+ <proof prover="2" obsolete="true"><result status="valid" time="0.35" steps="54567"/></proof>
+ </goal>
+ <goal name="groupeClassement__init__impl&#39;vc" expl="VC for groupeClassement__init__impl">
+ <proof prover="2" timelimit="5" obsolete="true"><result status="valid" time="0.11" steps="27196"/></proof>
+ </goal>
+ <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc" expl="VC for groupeClassement__calculerOrdreAppel_impl">
+ <transf name="unfold" arg1="non_null_elements">
+  <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0" expl="VC for groupeClassement__calculerOrdreAppel_impl">
+  <transf name="unfold" arg1="groupeClassement__occArray">
+   <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0" expl="VC for groupeClassement__calculerOrdreAppel_impl">
+   <transf name="unfold" arg1="groupeClassement__occQueue">
+    <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0" expl="VC for groupeClassement__calculerOrdreAppel_impl">
+    <transf name="unfold" arg1="groupeClassement__homogenic">
+     <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0" expl="VC for groupeClassement__calculerOrdreAppel_impl">
+     <transf name="unfold" arg1="groupeClassement__inRange">
+      <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0" expl="VC for groupeClassement__calculerOrdreAppel_impl">
+      <transf name="unfold" arg1="([]&#39;)">
+       <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0" expl="VC for groupeClassement__calculerOrdreAppel_impl">
+       <transf name="unfold" arg1="([]&#39;&#39;)">
+        <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0" expl="VC for groupeClassement__calculerOrdreAppel_impl">
+        <transf name="unfold" arg1="groupeClassement__property41a">
+         <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0" expl="VC for groupeClassement__calculerOrdreAppel_impl">
+         <transf name="unfold" arg1="groupeClassement__property41b">
+          <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0" expl="VC for groupeClassement__calculerOrdreAppel_impl">
+          <transf name="split_vc" >
+           <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.0" expl="assertion" proved="true">
+           <proof prover="1"><result status="valid" time="0.04" steps="68"/></proof>
+           </goal>
+           <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.1" expl="loop invariant init" proved="true">
+           <proof prover="2"><result status="valid" time="0.10" steps="30095"/></proof>
+           </goal>
+           <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.2" expl="loop invariant init" proved="true">
+           <proof prover="2"><result status="valid" time="0.06" steps="25378"/></proof>
+           </goal>
+           <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.3" expl="loop invariant init" proved="true">
+           <proof prover="2"><result status="valid" time="0.06" steps="25324"/></proof>
+           </goal>
+           <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.4" expl="loop invariant init" proved="true">
+           <proof prover="2"><result status="valid" time="0.05" steps="25369"/></proof>
+           </goal>
+           <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.5" expl="loop invariant init" proved="true">
+           <proof prover="2"><result status="valid" time="0.14" steps="39094"/></proof>
+           </goal>
+           <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.6" expl="loop invariant init" proved="true">
+           <proof prover="2"><result status="valid" time="0.12" steps="33712"/></proof>
+           </goal>
+           <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.7" expl="loop invariant init" proved="true">
+           <proof prover="2"><result status="valid" time="0.15" steps="40771"/></proof>
+           </goal>
+           <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.8" expl="loop invariant init" proved="true">
+           <proof prover="2"><result status="valid" time="0.14" steps="33760"/></proof>
+           </goal>
+           <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.9" expl="loop invariant init" proved="true">
+           <proof prover="2"><result status="valid" time="0.11" steps="33688"/></proof>
+           </goal>
+           <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.10" expl="loop invariant init" proved="true">
+           <proof prover="2"><result status="valid" time="0.07" steps="32398"/></proof>
+           </goal>
+           <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.11" expl="loop invariant init" proved="true">
+           <proof prover="2"><result status="valid" time="0.15" steps="39346"/></proof>
+           </goal>
+           <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.12" expl="precondition" proved="true">
+           <proof prover="1"><result status="valid" time="0.02" steps="42"/></proof>
+           </goal>
+           <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.13" expl="precondition" proved="true">
+           <proof prover="2"><result status="valid" time="0.06" steps="27329"/></proof>
+           </goal>
+           <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.14" expl="precondition" proved="true">
+           <proof prover="2"><result status="valid" time="0.07" steps="27333"/></proof>
+           </goal>
+           <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.15" expl="precondition" proved="true">
+           <proof prover="2"><result status="valid" time="0.07" steps="27333"/></proof>
+           </goal>
+           <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.16" expl="precondition" proved="true">
+           <proof prover="2"><result status="valid" time="0.06" steps="27337"/></proof>
+           </goal>
+           <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.17" expl="integer overflow" proved="true">
+           <proof prover="2"><result status="valid" time="0.12" steps="33489"/></proof>
+           </goal>
+           <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.18" expl="loop variant decrease" proved="true">
+           <proof prover="2"><result status="valid" time="0.11" steps="29079"/></proof>
+           </goal>
+           <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.19" expl="loop invariant preservation" proved="true">
+           <proof prover="2"><result status="valid" time="0.11" steps="29106"/></proof>
+           </goal>
+           <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.20" expl="loop invariant preservation" proved="true">
+           <proof prover="2"><result status="valid" time="0.07" steps="27694"/></proof>
+           </goal>
+           <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.21" expl="loop invariant preservation" proved="true">
+           <proof prover="2"><result status="valid" time="0.06" steps="27640"/></proof>
+           </goal>
+           <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.22" expl="loop invariant preservation" proved="true">
+           <proof prover="2"><result status="valid" time="0.05" steps="27685"/></proof>
+           </goal>
+           <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.23" expl="loop invariant preservation" proved="true">
+           <proof prover="2" timelimit="5"><result status="valid" time="0.17" steps="43516"/></proof>
+           </goal>
+           <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.24" expl="loop invariant preservation" proved="true">
+           <transf name="split_vc" proved="true" >
+            <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.24.0" expl="loop invariant preservation" proved="true">
+            <proof prover="1"><result status="valid" time="0.10" steps="269"/></proof>
+            </goal>
+            <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.24.1" expl="loop invariant preservation" proved="true">
+            <proof prover="1"><result status="valid" time="0.12" steps="288"/></proof>
+            </goal>
+            <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.24.2" expl="loop invariant preservation" proved="true">
+            <proof prover="2" timelimit="5"><result status="valid" time="3.23" steps="429918"/></proof>
+            </goal>
+            <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.24.3" expl="loop invariant preservation" proved="true">
+            <proof prover="2" timelimit="5"><result status="valid" time="3.93" steps="442869"/></proof>
+            </goal>
+            <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.24.4" expl="loop invariant preservation" proved="true">
+            <proof prover="1"><result status="valid" time="0.12" steps="275"/></proof>
+            </goal>
+            <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.24.5" expl="loop invariant preservation" proved="true">
+            <proof prover="1"><result status="valid" time="0.12" steps="289"/></proof>
+            </goal>
+            <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.24.6" expl="loop invariant preservation" proved="true">
+            <proof prover="1"><result status="valid" time="0.10" steps="234"/></proof>
+            </goal>
+            <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.24.7" expl="loop invariant preservation" proved="true">
+            <proof prover="1"><result status="valid" time="0.09" steps="234"/></proof>
+            </goal>
+           </transf>
+           </goal>
+           <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.25" expl="loop invariant preservation" proved="true">
+           <transf name="split_vc" proved="true" >
+            <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.25.0" expl="loop invariant preservation" proved="true">
+            <proof prover="2" timelimit="5"><result status="valid" time="4.23" steps="476631"/></proof>
+            </goal>
+            <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.25.1" expl="loop invariant preservation" proved="true">
+            <proof prover="2" timelimit="5"><result status="valid" time="4.61" steps="476286"/></proof>
+            </goal>
+            <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.25.2" expl="loop invariant preservation" proved="true">
+            <proof prover="2" timelimit="5"><result status="valid" time="3.79" steps="476030"/></proof>
+            </goal>
+            <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.25.3" expl="loop invariant preservation" proved="true">
+            <proof prover="2" timelimit="5"><result status="valid" time="3.77" steps="475450"/></proof>
+            </goal>
+            <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.25.4" expl="loop invariant preservation" proved="true">
+            <proof prover="1"><result status="valid" time="0.12" steps="336"/></proof>
+            </goal>
+            <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.25.5" expl="loop invariant preservation" proved="true">
+            <proof prover="1"><result status="valid" time="0.11" steps="329"/></proof>
+            </goal>
+            <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.25.6" expl="loop invariant preservation" proved="true">
+            <proof prover="1"><result status="valid" time="0.10" steps="278"/></proof>
+            </goal>
+            <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.25.7" expl="loop invariant preservation" proved="true">
+            <proof prover="1"><result status="valid" time="0.09" steps="271"/></proof>
+            </goal>
+           </transf>
+           </goal>
+           <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.26" expl="loop invariant preservation" proved="true">
+           <proof prover="2"><result status="valid" time="0.17" steps="42309"/></proof>
+           </goal>
+           <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.27" expl="loop invariant preservation" proved="true">
+           <proof prover="2"><result status="valid" time="0.17" steps="42197"/></proof>
+           </goal>
+           <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.28" expl="loop invariant preservation" proved="true">
+           <proof prover="1"><result status="valid" time="1.59" steps="2900"/></proof>
+           </goal>
+           <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.29" expl="loop invariant preservation" proved="true">
+           <proof prover="1"><result status="valid" time="0.43" steps="1172"/></proof>
+           </goal>
+           <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.30" expl="integer overflow" proved="true">
+           <proof prover="2"><result status="valid" time="0.13" steps="32942"/></proof>
+           </goal>
+           <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.31" expl="integer overflow" proved="true">
+           <proof prover="2"><result status="valid" time="0.14" steps="33734"/></proof>
+           </goal>
+           <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.32" expl="array creation size" proved="true">
+           <proof prover="2"><result status="valid" time="0.09" steps="28713"/></proof>
+           </goal>
+           <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.33" expl="array creation size" proved="true">
+           <proof prover="2"><result status="valid" time="0.09" steps="28889"/></proof>
+           </goal>
+           <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.34" expl="loop invariant init" proved="true">
+           <proof prover="2"><result status="valid" time="0.09" steps="29043"/></proof>
+           </goal>
+           <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.35" expl="loop invariant init" proved="true">
+           <proof prover="2"><result status="valid" time="0.11" steps="27678"/></proof>
+           </goal>
+           <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.36" expl="loop invariant init" proved="true">
+           <proof prover="1" timelimit="1"><result status="valid" time="0.04" steps="66"/></proof>
+           <proof prover="2"><result status="valid" time="0.19" steps="46059"/></proof>
+           </goal>
+           <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.37" expl="loop invariant init" proved="true">
+           <proof prover="2"><result status="valid" time="0.07" steps="27737"/></proof>
+           </goal>
+           <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.38" expl="loop invariant init" proved="true">
+           <proof prover="2"><result status="valid" time="0.07" steps="27738"/></proof>
+           </goal>
+           <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.39" expl="loop invariant init" proved="true">
+           <proof prover="2"><result status="valid" time="0.06" steps="28499"/></proof>
+           </goal>
+           <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.40" expl="loop invariant init" proved="true">
+           <proof prover="2"><result status="valid" time="0.06" steps="27750"/></proof>
+           </goal>
+           <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.41" expl="loop invariant init" proved="true">
+           <proof prover="1" timelimit="1"><result status="valid" time="0.37" steps="2003"/></proof>
+           </goal>
+           <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.42" expl="loop invariant init" proved="true">
+           <proof prover="2"><result status="valid" time="0.17" steps="42695"/></proof>
+           </goal>
+           <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.43" expl="loop invariant init" proved="true">
+           <proof prover="2"><result status="valid" time="0.11" steps="34457"/></proof>
+           </goal>
+           <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.44" expl="loop invariant init" proved="true">
+           <proof prover="2"><result status="valid" time="0.18" steps="42091"/></proof>
+           </goal>
+           <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.45" expl="loop invariant init" proved="true">
+           <proof prover="2"><result status="valid" time="0.19" steps="42163"/></proof>
+           </goal>
+           <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.46" expl="loop invariant init" proved="true">
+           <proof prover="2"><result status="valid" time="0.13" steps="36255"/></proof>
+           </goal>
+           <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.47" expl="loop invariant init" proved="true">
+           <proof prover="2"><result status="valid" time="0.19" steps="46112"/></proof>
+           </goal>
+           <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.48" expl="loop invariant init" proved="true">
+           <proof prover="2"><result status="valid" time="0.08" steps="32933"/></proof>
+           </goal>
+           <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.49" expl="loop invariant init" proved="true">
+           <proof prover="2"><result status="valid" time="0.08" steps="33044"/></proof>
+           </goal>
+           <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.50" expl="loop invariant init" proved="true">
+           <proof prover="2"><result status="valid" time="0.26" steps="41036"/></proof>
+           </goal>
+           <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.51" expl="loop invariant init" proved="true">
+           <proof prover="2"><result status="valid" time="0.17" steps="40865"/></proof>
+           </goal>
+           <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.52" expl="loop invariant init" proved="true">
+           <proof prover="2" timelimit="5"><result status="valid" time="0.20" steps="41485"/></proof>
+           </goal>
+           <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.53" expl="integer overflow" proved="true">
+           <proof prover="2"><result status="valid" time="0.19" steps="44260"/></proof>
+           </goal>
+           <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.54" expl="integer overflow" proved="true">
+           <proof prover="2"><result status="valid" time="0.21" steps="45711"/></proof>
+           </goal>
+           <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.55" expl="integer overflow" proved="true">
+           <proof prover="2"><result status="valid" time="0.24" steps="46229"/></proof>
+           </goal>
+           <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.56" expl="integer overflow" proved="true">
+           <proof prover="2"><result status="valid" time="0.26" steps="46856"/></proof>
+           </goal>
+           <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.57" expl="integer overflow" proved="true">
+           <proof prover="2"><result status="valid" time="0.22" steps="47280"/></proof>
+           </goal>
+           <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.58" expl="integer overflow" proved="true">
+           <proof prover="1" timelimit="1"><result status="valid" time="0.32" steps="572"/></proof>
+           </goal>
+           <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.59" expl="integer overflow" proved="true">
+           <proof prover="2"><result status="valid" time="0.20" steps="49144"/></proof>
+           </goal>
+           <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.60" expl="assertion" proved="true">
+           <proof prover="2"><result status="valid" time="0.17" steps="38462"/></proof>
+           </goal>
+           <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.61" expl="integer overflow" proved="true">
+           <proof prover="2"><result status="valid" time="0.22" steps="48929"/></proof>
+           </goal>
+           <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.62" expl="integer overflow" proved="true">
+           <proof prover="1" timelimit="1"><result status="valid" time="0.67" steps="940"/></proof>
+           </goal>
+           <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.63" expl="integer overflow" proved="true">
+           <proof prover="2"><result status="valid" time="0.23" steps="50667"/></proof>
+           </goal>
+           <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.64" expl="assertion" proved="true">
+           <proof prover="2"><result status="valid" time="0.14" steps="38707"/></proof>
+           </goal>
+           <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.65" expl="assertion" proved="true">
+           <proof prover="2"><result status="valid" time="0.37" steps="63455"/></proof>
+           </goal>
+           <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.66" expl="assertion" proved="true">
+           <proof prover="2"><result status="valid" time="0.27" steps="60248"/></proof>
+           </goal>
+           <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.67" expl="precondition" proved="true">
+           <proof prover="1" timelimit="1"><result status="valid" time="0.08" steps="132"/></proof>
+           </goal>
+           <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.68" expl="precondition" proved="true">
+           <proof prover="1"><result status="valid" time="0.17" steps="141"/></proof>
+           </goal>
+           <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.69" expl="precondition" proved="true">
+           <proof prover="1" timelimit="1"><result status="valid" time="0.18" steps="136"/></proof>
+           </goal>
+           <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.70" expl="assertion" proved="true">
+           <proof prover="2"><result status="valid" time="0.30" steps="64197"/></proof>
+           </goal>
+           <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.71" expl="precondition" proved="true">
+           <proof prover="1"><result status="valid" time="0.08" steps="120"/></proof>
+           </goal>
+           <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.72" expl="precondition" proved="true">
+           <proof prover="1"><result status="valid" time="0.15" steps="137"/></proof>
+           </goal>
+           <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.73" expl="precondition" proved="true">
+           <proof prover="2"><result status="valid" time="0.14" steps="37474"/></proof>
+           </goal>
+           <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.74" expl="assertion" proved="true">
+           <proof prover="2"><result status="valid" time="0.37" steps="59271"/></proof>
+           </goal>
+           <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.75" expl="precondition" proved="true">
+           <transf name="split_vc" proved="true" >
+            <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.75.0" expl="precondition" proved="true">
+            <proof prover="2"><result status="valid" time="0.14" steps="37940"/></proof>
+            </goal>
+            <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.75.1" expl="precondition" proved="true">
+            <transf name="split_vc" proved="true" >
+             <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.75.1.0" expl="precondition" proved="true">
+             <proof prover="1" timelimit="1"><result status="valid" time="0.09" steps="124"/></proof>
+             </goal>
+             <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.75.1.1" expl="precondition" proved="true">
+             <transf name="split_vc" proved="true" >
+              <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.75.1.1.0" expl="precondition" proved="true">
+              <proof prover="1" timelimit="1"><result status="valid" time="0.09" steps="132"/></proof>
+              </goal>
+              <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.75.1.1.1" expl="precondition" proved="true">
+              <transf name="split_vc" proved="true" >
+               <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.75.1.1.1.0" expl="precondition" proved="true">
+               <proof prover="1" timelimit="1"><result status="valid" time="0.10" steps="136"/></proof>
+               </goal>
+               <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.75.1.1.1.1" expl="precondition" proved="true">
+               <proof prover="1" timelimit="1"><result status="valid" time="0.10" steps="130"/></proof>
+               </goal>
+              </transf>
+              </goal>
+             </transf>
+             </goal>
+            </transf>
+            </goal>
+           </transf>
+           </goal>
+           <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.76" expl="precondition" proved="true">
+           <proof prover="1" timelimit="1"><result status="valid" time="0.12" steps="140"/></proof>
+           </goal>
+           <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.77" expl="precondition" proved="true">
+           <proof prover="2"><result status="valid" time="0.11" steps="38125"/></proof>
+           </goal>
+           <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.78" expl="assertion" proved="true">
+           <proof prover="2"><result status="valid" time="0.16" steps="41727"/></proof>
+           </goal>
+           <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.79" expl="assertion" proved="true">
+           <proof prover="2"><result status="valid" time="0.18" steps="40082"/></proof>
+           </goal>
+           <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.80" expl="precondition" proved="true">
+           <proof prover="1" timelimit="1"><result status="valid" time="0.25" steps="364"/></proof>
+           </goal>
+           <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.81" expl="assertion" proved="true">
+           <proof prover="2" timelimit="5"><result status="valid" time="1.55" steps="154025"/></proof>
+           </goal>
+           <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.82" expl="assertion" proved="true">
+           <proof prover="2"><result status="valid" time="0.28" steps="64563"/></proof>
+           </goal>
+           <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.83" expl="assertion" proved="true">
+           <proof prover="2"><result status="valid" time="0.82" steps="109220"/></proof>
+           </goal>
+           <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.84" expl="assertion" proved="true">
+           <proof prover="2"><result status="valid" time="0.74" steps="97776"/></proof>
+           </goal>
+           <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.85" expl="assertion" proved="true">
+           <proof prover="2"><result status="valid" time="0.75" steps="100723"/></proof>
+           </goal>
+           <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.86" expl="assertion" proved="true">
+           <proof prover="2" timelimit="5"><result status="valid" time="0.91" steps="114647"/></proof>
+           </goal>
+           <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.87" expl="assertion" proved="true">
+           <proof prover="2" timelimit="5"><result status="valid" time="1.64" steps="167615"/></proof>
+           </goal>
+           <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.88" expl="precondition" proved="true">
+           <proof prover="1"><result status="valid" time="0.17" steps="148"/></proof>
+           </goal>
+           <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.89" expl="precondition" proved="true">
+           <proof prover="1"><result status="valid" time="0.09" steps="120"/></proof>
+           </goal>
+           <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.90" expl="precondition" proved="true">
+           <proof prover="1" timelimit="1"><result status="valid" time="0.40" steps="869"/></proof>
+           </goal>
+           <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.91" expl="precondition" proved="true">
+           <proof prover="1" timelimit="1"><result status="valid" time="0.60" steps="1152"/></proof>
+           <proof prover="2"><result status="timeout" time="1.00" steps="176259"/></proof>
+           </goal>
+           <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.92" expl="precondition" proved="true">
+           <proof prover="1" timelimit="1"><result status="valid" time="0.09" steps="120"/></proof>
+           </goal>
+           <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.93" expl="precondition" proved="true">
+           <proof prover="1" timelimit="1"><result status="valid" time="0.42" steps="1060"/></proof>
+           </goal>
+           <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.94" expl="precondition" proved="true">
+           <proof prover="1"><result status="valid" time="0.48" steps="858"/></proof>
+           </goal>
+           <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.95" expl="assertion" proved="true">
+           <transf name="destruct_rec" proved="true" arg1="Assert5">
+            <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.95.0" expl="assertion" proved="true">
+            <proof prover="0" timelimit="1"><result status="timeout" time="1.00" steps="1067589"/></proof>
+            <proof prover="1" timelimit="1"><result status="timeout" time="1.00"/></proof>
+            <proof prover="2"><result status="timeout" time="1.00" steps="108352"/></proof>
+            <transf name="split_vc" proved="true" >
+             <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.95.0.0" expl="assertion" proved="true">
+             <proof prover="0" timelimit="1"><result status="timeout" time="1.00" steps="1104318"/></proof>
+             <proof prover="1" timelimit="1"><result status="timeout" time="1.00"/></proof>
+             <proof prover="2"><result status="timeout" time="1.00" steps="151154"/></proof>
+             <transf name="split_vc" proved="true" >
+              <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.95.0.0.0" expl="assertion" proved="true">
+              <proof prover="2"><result status="valid" time="0.57" steps="78963"/></proof>
+              </goal>
+              <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.95.0.0.1" expl="assertion" proved="true">
+              <proof prover="1" timelimit="1"><result status="valid" time="0.25" steps="207"/></proof>
+              <proof prover="2"><result status="timeout" time="1.00" steps="172131"/></proof>
+              </goal>
+             </transf>
+             </goal>
+             <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.95.0.1" expl="assertion" proved="true">
+             <proof prover="1" timelimit="1"><result status="valid" time="0.23" steps="204"/></proof>
+             <proof prover="2"><result status="timeout" time="1.00" steps="100877"/></proof>
+             </goal>
+            </transf>
+            </goal>
+            <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.95.1" expl="assertion" proved="true">
+            <proof prover="0" timelimit="1"><result status="timeout" time="1.00" steps="1064641"/></proof>
+            <proof prover="1" timelimit="1"><result status="timeout" time="1.00"/></proof>
+            <proof prover="2"><result status="timeout" time="1.00" steps="100542"/></proof>
+            <transf name="split_vc" proved="true" >
+             <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.95.1.0" expl="assertion" proved="true">
+             <proof prover="0" timelimit="1"><result status="timeout" time="1.00" steps="1035343"/></proof>
+             <proof prover="1" timelimit="1"><result status="timeout" time="1.00"/></proof>
+             <proof prover="2"><result status="timeout" time="1.00" steps="177498"/></proof>
+             <transf name="split_vc" proved="true" >
+              <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.95.1.0.0" expl="assertion" proved="true">
+              <proof prover="1" timelimit="1"><result status="valid" time="0.24" steps="217"/></proof>
+              <proof prover="2"><result status="timeout" time="1.00" steps="120212"/></proof>
+              </goal>
+              <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.95.1.0.1" expl="assertion" proved="true">
+              <proof prover="2"><result status="valid" time="0.52" steps="79283"/></proof>
+              </goal>
+             </transf>
+             </goal>
+             <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.95.1.1" expl="assertion" proved="true">
+             <proof prover="1" timelimit="1"><result status="valid" time="0.26" steps="201"/></proof>
+             <proof prover="2"><result status="timeout" time="1.00" steps="94308"/></proof>
+             </goal>
+            </transf>
+            </goal>
+            <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.95.2" expl="assertion" proved="true">
+            <proof prover="0" timelimit="1"><result status="timeout" time="1.00" steps="1063779"/></proof>
+            <proof prover="1" timelimit="1"><result status="timeout" time="1.00"/></proof>
+            <proof prover="2"><result status="timeout" time="1.00" steps="125921"/></proof>
+            <transf name="split_vc" proved="true" >
+             <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.95.2.0" expl="assertion" proved="true">
+             <proof prover="1" timelimit="1"><result status="valid" time="0.25" steps="210"/></proof>
+             <proof prover="2"><result status="timeout" time="1.00" steps="151697"/></proof>
+             </goal>
+             <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.95.2.1" expl="assertion" proved="true">
+             <proof prover="0" timelimit="1"><result status="timeout" time="1.00" steps="1035702"/></proof>
+             <proof prover="1" timelimit="1"><result status="timeout" time="1.00"/></proof>
+             <proof prover="2"><result status="timeout" time="1.00" steps="162665"/></proof>
+             <transf name="split_vc" proved="true" >
+              <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.95.2.1.0" expl="assertion" proved="true">
+              <proof prover="2"><result status="valid" time="0.57" steps="79903"/></proof>
+              </goal>
+              <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.95.2.1.1" expl="assertion" proved="true">
+              <proof prover="1" timelimit="1"><result status="valid" time="0.24" steps="196"/></proof>
+              <proof prover="2"><result status="timeout" time="1.00" steps="172237"/></proof>
+              </goal>
+             </transf>
+             </goal>
+            </transf>
+            </goal>
+            <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.95.3" expl="assertion" proved="true">
+            <proof prover="0" timelimit="1"><result status="timeout" time="1.00" steps="1053100"/></proof>
+            <proof prover="1" timelimit="1"><result status="timeout" time="1.00"/></proof>
+            <proof prover="2"><result status="timeout" time="1.00" steps="102870"/></proof>
+            <transf name="split_vc" proved="true" >
+             <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.95.3.0" expl="assertion" proved="true">
+             <proof prover="1" timelimit="1"><result status="valid" time="0.20" steps="193"/></proof>
+             <proof prover="2"><result status="timeout" time="1.00" steps="98702"/></proof>
+             </goal>
+             <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.95.3.1" expl="assertion" proved="true">
+             <proof prover="0" timelimit="1"><result status="timeout" time="1.00" steps="1022701"/></proof>
+             <proof prover="1" timelimit="1"><result status="timeout" time="1.00"/></proof>
+             <proof prover="2"><result status="timeout" time="1.00" steps="99733"/></proof>
+             <transf name="split_vc" proved="true" >
+              <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.95.3.1.0" expl="assertion" proved="true">
+              <proof prover="1" timelimit="1"><result status="valid" time="0.19" steps="198"/></proof>
+              <proof prover="2"><result status="timeout" time="1.00" steps="138064"/></proof>
+              </goal>
+              <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.95.3.1.1" expl="assertion" proved="true">
+              <proof prover="2"><result status="valid" time="0.67" steps="84832"/></proof>
+              </goal>
+             </transf>
+             </goal>
+            </transf>
+            </goal>
+           </transf>
+           </goal>
+           <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.96" expl="assertion" proved="true">
+           <proof prover="0"><result status="valid" time="0.08" steps="251609"/></proof>
+           </goal>
+           <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.97" expl="assertion" proved="true">
+           <transf name="apply" proved="true" arg1="occ_array_zero" arg2="with" arg3="0,((to_int i6))">
+            <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.97.0" expl="apply premises" proved="true">
+            <proof prover="2" timelimit="5"><result status="valid" time="0.10" steps="36809"/></proof>
+            </goal>
+            <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.97.1" expl="apply premises" proved="true">
+            <proof prover="2" timelimit="5"><result status="valid" time="0.33" steps="72542"/></proof>
+            </goal>
+            <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.97.2" expl="apply premises" proved="true">
+            <proof prover="2" timelimit="5"><result status="valid" time="0.09" steps="36818"/></proof>
+            </goal>
+           </transf>
+           </goal>
+           <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.98" expl="index in array bounds" proved="true">
+           <proof prover="2"><result status="valid" time="0.15" steps="40559"/></proof>
+           </goal>
+           <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.99" expl="index in array bounds" proved="true">
+           <proof prover="2"><result status="valid" time="0.17" steps="40640"/></proof>
+           </goal>
+           <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.100" expl="assertion" proved="true">
+           <transf name="split_vc" proved="true" >
+            <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.100.0" expl="assertion" proved="true">
+            <transf name="split_vc" proved="true" >
+             <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.100.0.0" expl="assertion" proved="true">
+             <proof prover="2"><result status="valid" time="0.74" steps="132769"/></proof>
+             </goal>
+             <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.100.0.1" expl="assertion" proved="true">
+             <proof prover="2"><result status="valid" time="0.86" steps="141939"/></proof>
+             </goal>
+            </transf>
+            </goal>
+            <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.100.1" expl="assertion" proved="true">
+            <transf name="split_vc" proved="true" >
+             <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.100.1.0" expl="assertion" proved="true">
+             <transf name="split_vc" proved="true" >
+              <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.100.1.0.0" expl="assertion" proved="true">
+              <proof prover="2"><result status="valid" time="0.15" steps="45332"/></proof>
+              </goal>
+              <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.100.1.0.1" expl="assertion" proved="true">
+              <transf name="split_vc" proved="true" >
+               <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.100.1.0.1.0" expl="assertion" proved="true">
+               <proof prover="2"><result status="valid" time="0.82" steps="131708"/></proof>
+               </goal>
+               <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.100.1.0.1.1" expl="assertion" proved="true">
+               <proof prover="2"><result status="valid" time="0.79" steps="113644"/></proof>
+               </goal>
+              </transf>
+              </goal>
+             </transf>
+             </goal>
+             <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.100.1.1" expl="assertion" proved="true">
+             <proof prover="2"><result status="valid" time="0.75" steps="139526"/></proof>
+             </goal>
+            </transf>
+            </goal>
+           </transf>
+           </goal>
+           <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.101" expl="assertion" proved="true">
+           <proof prover="2"><result status="valid" time="0.17" steps="44372"/></proof>
+           </goal>
+           <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.102" expl="assertion" proved="true">
+           <proof prover="1" timelimit="1"><result status="valid" time="0.34" steps="596"/></proof>
+           </goal>
+           <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.103" expl="integer overflow" proved="true">
+           <proof prover="2"><result status="valid" time="0.40" steps="71054"/></proof>
+           </goal>
+           <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.104" expl="loop variant decrease" proved="true">
+           <proof prover="2"><result status="valid" time="0.16" steps="40496"/></proof>
+           </goal>
+           <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.105" expl="loop invariant preservation" proved="true">
+           <proof prover="2"><result status="valid" time="0.15" steps="40546"/></proof>
+           </goal>
+           <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.106" expl="loop invariant preservation" proved="true">
+           <proof prover="2"><result status="valid" time="0.09" steps="37548"/></proof>
+           </goal>
+           <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.107" expl="loop invariant preservation" proved="true">
+           <proof prover="2"><result status="valid" time="0.45" steps="82052"/></proof>
+           </goal>
+           <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.108" expl="loop invariant preservation" proved="true">
+           <proof prover="2"><result status="valid" time="0.09" steps="37607"/></proof>
+           </goal>
+           <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.109" expl="loop invariant preservation" proved="true">
+           <proof prover="2"><result status="valid" time="0.09" steps="37608"/></proof>
+           </goal>
+           <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.110" expl="loop invariant preservation" proved="true">
+           <proof prover="2"><result status="valid" time="0.15" steps="41423"/></proof>
+           </goal>
+           <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.111" expl="loop invariant preservation" proved="true">
+           <proof prover="2"><result status="valid" time="0.10" steps="37634"/></proof>
+           </goal>
+           <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.112" expl="loop invariant preservation" proved="true">
+           <transf name="split_vc" proved="true" >
+            <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.112.0" expl="loop invariant preservation" proved="true">
+            <transf name="instantiate" proved="true" arg1="int32exists" arg2="(to_int i2+1)">
+             <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.112.0.0" expl="loop invariant preservation" proved="true">
+             <transf name="destruct_rec" proved="true" arg1="Hinst">
+              <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.112.0.0.0" expl="destruct premise" proved="true">
+              <proof prover="2" timelimit="5"><result status="valid" time="0.35" steps="72900"/></proof>
+              </goal>
+              <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.112.0.0.1" expl="loop invariant preservation" proved="true">
+              <transf name="destruct_rec" proved="true" arg1="Assert5">
+               <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.112.0.0.1.0" expl="loop invariant preservation" proved="true">
+               <proof prover="0"><result status="valid" time="0.16" steps="373118"/></proof>
+               </goal>
+               <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.112.0.0.1.1" expl="loop invariant preservation" proved="true">
+               <proof prover="2" timelimit="5"><result status="valid" time="0.60" steps="84652"/></proof>
+               </goal>
+               <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.112.0.0.1.2" expl="loop invariant preservation" proved="true">
+               <proof prover="2" timelimit="5"><result status="valid" time="0.65" steps="86917"/></proof>
+               </goal>
+               <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.112.0.0.1.3" expl="loop invariant preservation" proved="true">
+               <proof prover="2" timelimit="5"><result status="valid" time="0.76" steps="89320"/></proof>
+               </goal>
+              </transf>
+              </goal>
+             </transf>
+             </goal>
+            </transf>
+            </goal>
+            <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.112.1" expl="loop invariant preservation" proved="true">
+            <transf name="instantiate" proved="true" arg1="int32exists" arg2="(to_int i2+1)">
+             <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.112.1.0" expl="loop invariant preservation" proved="true">
+             <transf name="destruct_rec" proved="true" arg1="Hinst">
+              <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.112.1.0.0" expl="destruct premise" proved="true">
+              <proof prover="2" timelimit="5"><result status="valid" time="0.37" steps="72637"/></proof>
+              </goal>
+              <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.112.1.0.1" expl="loop invariant preservation" proved="true">
+              <transf name="destruct_rec" proved="true" arg1="Assert5">
+               <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.112.1.0.1.0" expl="loop invariant preservation" proved="true">
+               <proof prover="0"><result status="valid" time="0.19" steps="396804"/></proof>
+               </goal>
+               <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.112.1.0.1.1" expl="loop invariant preservation" proved="true">
+               <proof prover="2" timelimit="5"><result status="valid" time="0.64" steps="83660"/></proof>
+               </goal>
+               <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.112.1.0.1.2" expl="loop invariant preservation" proved="true">
+               <proof prover="2" timelimit="5"><result status="valid" time="0.67" steps="86901"/></proof>
+               </goal>
+               <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.112.1.0.1.3" expl="loop invariant preservation" proved="true">
+               <proof prover="2" timelimit="5"><result status="valid" time="0.69" steps="89381"/></proof>
+               </goal>
+              </transf>
+              </goal>
+             </transf>
+             </goal>
+            </transf>
+            </goal>
+            <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.112.2" expl="loop invariant preservation" proved="true">
+            <transf name="instantiate" proved="true" arg1="int32exists" arg2="(to_int i2+1)">
+             <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.112.2.0" expl="loop invariant preservation" proved="true">
+             <transf name="destruct_rec" proved="true" arg1="Hinst">
+              <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.112.2.0.0" expl="destruct premise" proved="true">
+              <proof prover="2" timelimit="5"><result status="valid" time="0.38" steps="72653"/></proof>
+              </goal>
+              <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.112.2.0.1" expl="loop invariant preservation" proved="true">
+              <transf name="destruct_rec" proved="true" arg1="Assert5">
+               <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.112.2.0.1.0" expl="loop invariant preservation" proved="true">
+               <proof prover="2" timelimit="5"><result status="valid" time="0.56" steps="83341"/></proof>
+               </goal>
+               <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.112.2.0.1.1" expl="loop invariant preservation" proved="true">
+               <proof prover="0"><result status="valid" time="0.16" steps="370709"/></proof>
+               </goal>
+               <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.112.2.0.1.2" expl="loop invariant preservation" proved="true">
+               <proof prover="2" timelimit="5"><result status="valid" time="0.40" steps="74857"/></proof>
+               </goal>
+               <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.112.2.0.1.3" expl="loop invariant preservation" proved="true">
+               <proof prover="2" timelimit="5"><result status="valid" time="0.54" steps="86749"/></proof>
+               </goal>
+              </transf>
+              </goal>
+             </transf>
+             </goal>
+            </transf>
+            </goal>
+            <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.112.3" expl="loop invariant preservation" proved="true">
+            <transf name="instantiate" proved="true" arg1="int32exists" arg2="(to_int i2+1)">
+             <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.112.3.0" expl="loop invariant preservation" proved="true">
+             <transf name="destruct_rec" proved="true" arg1="Hinst">
+              <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.112.3.0.0" expl="destruct premise" proved="true">
+              <proof prover="2" timelimit="5"><result status="valid" time="0.36" steps="72458"/></proof>
+              </goal>
+              <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.112.3.0.1" expl="loop invariant preservation" proved="true">
+              <transf name="destruct_rec" proved="true" arg1="Assert5">
+               <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.112.3.0.1.0" expl="loop invariant preservation" proved="true">
+               <proof prover="2" timelimit="5"><result status="valid" time="0.52" steps="83402"/></proof>
+               </goal>
+               <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.112.3.0.1.1" expl="loop invariant preservation" proved="true">
+               <proof prover="0"><result status="valid" time="0.19" steps="394508"/></proof>
+               </goal>
+               <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.112.3.0.1.2" expl="loop invariant preservation" proved="true">
+               <proof prover="2" timelimit="5"><result status="valid" time="0.56" steps="74885"/></proof>
+               </goal>
+               <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.112.3.0.1.3" expl="loop invariant preservation" proved="true">
+               <proof prover="2" timelimit="5"><result status="valid" time="0.57" steps="86800"/></proof>
+               </goal>
+              </transf>
+              </goal>
+             </transf>
+             </goal>
+            </transf>
+            </goal>
+            <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.112.4" expl="loop invariant preservation" proved="true">
+            <transf name="instantiate" proved="true" arg1="int32exists" arg2="(to_int i2+1)">
+             <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.112.4.0" expl="loop invariant preservation" proved="true">
+             <transf name="destruct_rec" proved="true" arg1="Hinst">
+              <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.112.4.0.0" expl="destruct premise" proved="true">
+              <proof prover="2" timelimit="5"><result status="valid" time="0.35" steps="73080"/></proof>
+              </goal>
+              <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.112.4.0.1" expl="loop invariant preservation" proved="true">
+              <transf name="destruct_rec" proved="true" arg1="Assert5">
+               <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.112.4.0.1.0" expl="loop invariant preservation" proved="true">
+               <proof prover="2" timelimit="5"><result status="valid" time="0.55" steps="83886"/></proof>
+               </goal>
+               <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.112.4.0.1.1" expl="loop invariant preservation" proved="true">
+               <proof prover="2" timelimit="5"><result status="valid" time="1.12" steps="85830"/></proof>
+               </goal>
+               <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.112.4.0.1.2" expl="loop invariant preservation" proved="true">
+               <proof prover="0"><result status="valid" time="0.16" steps="372135"/></proof>
+               </goal>
+               <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.112.4.0.1.3" expl="loop invariant preservation" proved="true">
+               <proof prover="2" timelimit="5"><result status="valid" time="0.92" steps="88873"/></proof>
+               </goal>
+              </transf>
+              </goal>
+             </transf>
+             </goal>
+            </transf>
+            </goal>
+            <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.112.5" expl="loop invariant preservation" proved="true">
+            <transf name="instantiate" proved="true" arg1="int32exists" arg2="(to_int i2+1)">
+             <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.112.5.0" expl="loop invariant preservation" proved="true">
+             <transf name="destruct_rec" proved="true" arg1="Hinst">
+              <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.112.5.0.0" expl="destruct premise" proved="true">
+              <proof prover="2" timelimit="5"><result status="valid" time="0.37" steps="73049"/></proof>
+              </goal>
+              <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.112.5.0.1" expl="loop invariant preservation" proved="true">
+              <transf name="destruct_rec" proved="true" arg1="Assert5">
+               <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.112.5.0.1.0" expl="loop invariant preservation" proved="true">
+               <proof prover="2" timelimit="5"><result status="valid" time="0.54" steps="83947"/></proof>
+               </goal>
+               <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.112.5.0.1.1" expl="loop invariant preservation" proved="true">
+               <proof prover="2" timelimit="5"><result status="valid" time="0.63" steps="85905"/></proof>
+               </goal>
+               <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.112.5.0.1.2" expl="loop invariant preservation" proved="true">
+               <proof prover="0"><result status="valid" time="0.20" steps="395888"/></proof>
+               </goal>
+               <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.112.5.0.1.3" expl="loop invariant preservation" proved="true">
+               <proof prover="2" timelimit="5"><result status="valid" time="0.78" steps="88924"/></proof>
+               </goal>
+              </transf>
+              </goal>
+             </transf>
+             </goal>
+            </transf>
+            </goal>
+            <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.112.6" expl="loop invariant preservation" proved="true">
+            <transf name="instantiate" proved="true" arg1="int32exists" arg2="(to_int i2+1)">
+             <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.112.6.0" expl="loop invariant preservation" proved="true">
+             <transf name="destruct_rec" proved="true" arg1="Hinst">
+              <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.112.6.0.0" expl="destruct premise" proved="true">
+              <proof prover="2" timelimit="5"><result status="valid" time="0.56" steps="73954"/></proof>
+              </goal>
+              <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.112.6.0.1" expl="loop invariant preservation" proved="true">
+              <transf name="destruct_rec" proved="true" arg1="Assert5">
+               <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.112.6.0.1.0" expl="loop invariant preservation" proved="true">
+               <proof prover="2" timelimit="5"><result status="valid" time="0.92" steps="90517"/></proof>
+               </goal>
+               <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.112.6.0.1.1" expl="loop invariant preservation" proved="true">
+               <proof prover="2" timelimit="5"><result status="valid" time="0.36" steps="75078"/></proof>
+               </goal>
+               <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.112.6.0.1.2" expl="loop invariant preservation" proved="true">
+               <proof prover="2" timelimit="5"><result status="valid" time="0.42" steps="75269"/></proof>
+               </goal>
+               <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.112.6.0.1.3" expl="loop invariant preservation" proved="true">
+               <proof prover="1"><result status="valid" time="3.41" steps="1927"/></proof>
+               </goal>
+              </transf>
+              </goal>
+             </transf>
+             </goal>
+            </transf>
+            </goal>
+            <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.112.7" expl="loop invariant preservation" proved="true">
+            <transf name="instantiate" proved="true" arg1="int32exists" arg2="(to_int i2+1)">
+             <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.112.7.0" expl="loop invariant preservation" proved="true">
+             <transf name="destruct_rec" proved="true" arg1="Hinst">
+              <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.112.7.0.0" expl="destruct premise" proved="true">
+              <proof prover="2" timelimit="5"><result status="valid" time="0.61" steps="73952"/></proof>
+              </goal>
+              <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.112.7.0.1" expl="loop invariant preservation" proved="true">
+              <transf name="destruct_rec" proved="true" arg1="Assert5">
+               <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.112.7.0.1.0" expl="loop invariant preservation" proved="true">
+               <proof prover="2" timelimit="5"><result status="valid" time="0.92" steps="89316"/></proof>
+               </goal>
+               <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.112.7.0.1.1" expl="loop invariant preservation" proved="true">
+               <proof prover="2" timelimit="5"><result status="valid" time="0.36" steps="75146"/></proof>
+               </goal>
+               <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.112.7.0.1.2" expl="loop invariant preservation" proved="true">
+               <proof prover="2" timelimit="5"><result status="valid" time="0.43" steps="75335"/></proof>
+               </goal>
+               <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.112.7.0.1.3" expl="loop invariant preservation" proved="true">
+               <proof prover="1"><result status="valid" time="3.25" steps="1913"/></proof>
+               </goal>
+              </transf>
+              </goal>
+             </transf>
+             </goal>
+            </transf>
+            </goal>
+           </transf>
+           </goal>
+           <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.113" expl="loop invariant preservation" proved="true">
+           <transf name="split_vc" proved="true" >
+            <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.113.0" expl="loop invariant preservation" proved="true">
+            <transf name="instantiate" proved="true" arg1="int32exists" arg2="(to_int i3+1)">
+             <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.113.0.0" expl="loop invariant preservation" proved="true">
+             <transf name="destruct_rec" proved="true" arg1="Hinst">
+              <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.113.0.0.0" expl="destruct premise" proved="true">
+              <proof prover="1"><result status="valid" time="0.71" steps="734"/></proof>
+              </goal>
+              <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.113.0.0.1" expl="loop invariant preservation" proved="true">
+              <transf name="destruct_rec" proved="true" arg1="Assert5">
+               <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.113.0.0.1.0" expl="loop invariant preservation" proved="true">
+               <proof prover="0"><result status="valid" time="0.18" steps="377997"/></proof>
+               </goal>
+               <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.113.0.0.1.1" expl="loop invariant preservation" proved="true">
+               <proof prover="0"><result status="valid" time="3.04" steps="1945921"/></proof>
+               </goal>
+               <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.113.0.0.1.2" expl="loop invariant preservation" proved="true">
+               <proof prover="0"><result status="valid" time="0.31" steps="498381"/></proof>
+               </goal>
+               <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.113.0.0.1.3" expl="loop invariant preservation" proved="true">
+               <proof prover="2" timelimit="5"><result status="valid" time="0.38" steps="77596"/></proof>
+               </goal>
+              </transf>
+              </goal>
+             </transf>
+             </goal>
+            </transf>
+            </goal>
+            <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.113.1" expl="loop invariant preservation" proved="true">
+            <transf name="instantiate" proved="true" arg1="int32exists" arg2="(to_int i3+1)">
+             <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.113.1.0" expl="loop invariant preservation" proved="true">
+             <transf name="destruct_rec" proved="true" arg1="Hinst">
+              <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.113.1.0.0" expl="destruct premise" proved="true">
+              <proof prover="1"><result status="valid" time="0.68" steps="764"/></proof>
+              </goal>
+              <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.113.1.0.1" expl="loop invariant preservation" proved="true">
+              <transf name="destruct_rec" proved="true" arg1="Assert5">
+               <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.113.1.0.1.0" expl="loop invariant preservation" proved="true">
+               <proof prover="0"><result status="valid" time="0.16" steps="378068"/></proof>
+               </goal>
+               <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.113.1.0.1.1" expl="loop invariant preservation" proved="true">
+               <proof prover="0"><result status="valid" time="3.13" steps="1945938"/></proof>
+               </goal>
+               <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.113.1.0.1.2" expl="loop invariant preservation" proved="true">
+               <proof prover="0"><result status="valid" time="0.25" steps="498425"/></proof>
+               </goal>
+               <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.113.1.0.1.3" expl="loop invariant preservation" proved="true">
+               <proof prover="2" timelimit="5"><result status="valid" time="0.37" steps="77612"/></proof>
+               </goal>
+              </transf>
+              </goal>
+             </transf>
+             </goal>
+            </transf>
+            </goal>
+            <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.113.2" expl="loop invariant preservation" proved="true">
+            <transf name="instantiate" proved="true" arg1="int32exists" arg2="(to_int i3+1)">
+             <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.113.2.0" expl="loop invariant preservation" proved="true">
+             <transf name="destruct_rec" proved="true" arg1="Hinst">
+              <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.113.2.0.0" expl="destruct premise" proved="true">
+              <proof prover="1"><result status="valid" time="0.29" steps="483"/></proof>
+              </goal>
+              <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.113.2.0.1" expl="loop invariant preservation" proved="true">
+              <transf name="destruct_rec" proved="true" arg1="Assert5">
+               <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.113.2.0.1.0" expl="loop invariant preservation" proved="true">
+               <proof prover="2" timelimit="5"><result status="valid" time="0.37" steps="77344"/></proof>
+               </goal>
+               <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.113.2.0.1.1" expl="loop invariant preservation" proved="true">
+               <proof prover="0"><result status="valid" time="0.13" steps="376227"/></proof>
+               </goal>
+               <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.113.2.0.1.2" expl="loop invariant preservation" proved="true">
+               <proof prover="2" timelimit="5"><result status="valid" time="0.37" steps="77512"/></proof>
+               </goal>
+               <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.113.2.0.1.3" expl="loop invariant preservation" proved="true">
+               <proof prover="2" timelimit="5"><result status="valid" time="0.39" steps="77550"/></proof>
+               </goal>
+              </transf>
+              </goal>
+             </transf>
+             </goal>
+            </transf>
+            </goal>
+            <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.113.3" expl="loop invariant preservation" proved="true">
+            <transf name="instantiate" proved="true" arg1="int32exists" arg2="(to_int i3+1)">
+             <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.113.3.0" expl="loop invariant preservation" proved="true">
+             <transf name="destruct_rec" proved="true" arg1="Hinst">
+              <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.113.3.0.0" expl="destruct premise" proved="true">
+              <proof prover="1"><result status="valid" time="0.31" steps="491"/></proof>
+              </goal>
+              <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.113.3.0.1" expl="loop invariant preservation" proved="true">
+              <transf name="destruct_rec" proved="true" arg1="Assert5">
+               <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.113.3.0.1.0" expl="loop invariant preservation" proved="true">
+               <proof prover="2" timelimit="5"><result status="valid" time="0.38" steps="77402"/></proof>
+               </goal>
+               <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.113.3.0.1.1" expl="loop invariant preservation" proved="true">
+               <proof prover="0"><result status="valid" time="0.13" steps="376401"/></proof>
+               </goal>
+               <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.113.3.0.1.2" expl="loop invariant preservation" proved="true">
+               <proof prover="2" timelimit="5"><result status="valid" time="0.38" steps="77569"/></proof>
+               </goal>
+               <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.113.3.0.1.3" expl="loop invariant preservation" proved="true">
+               <proof prover="2" timelimit="5"><result status="valid" time="0.39" steps="77587"/></proof>
+               </goal>
+              </transf>
+              </goal>
+             </transf>
+             </goal>
+            </transf>
+            </goal>
+            <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.113.4" expl="loop invariant preservation" proved="true">
+            <transf name="instantiate" proved="true" arg1="int32exists" arg2="(to_int i3+1)">
+             <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.113.4.0" expl="loop invariant preservation" proved="true">
+             <transf name="destruct_rec" proved="true" arg1="Hinst">
+              <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.113.4.0.0" expl="destruct premise" proved="true">
+              <proof prover="1"><result status="valid" time="0.34" steps="504"/></proof>
+              </goal>
+              <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.113.4.0.1" expl="loop invariant preservation" proved="true">
+              <transf name="destruct_rec" proved="true" arg1="Assert5">
+               <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.113.4.0.1.0" expl="loop invariant preservation" proved="true">
+               <proof prover="0"><result status="valid" time="0.29" steps="514675"/></proof>
+               </goal>
+               <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.113.4.0.1.1" expl="loop invariant preservation" proved="true">
+               <proof prover="0"><result status="valid" time="0.27" steps="504395"/></proof>
+               </goal>
+               <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.113.4.0.1.2" expl="loop invariant preservation" proved="true">
+               <proof prover="1"><result status="valid" time="3.42" steps="1380"/></proof>
+               </goal>
+               <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.113.4.0.1.3" expl="loop invariant preservation" proved="true">
+               <proof prover="2" timelimit="5"><result status="valid" time="0.52" steps="77894"/></proof>
+               </goal>
+              </transf>
+              </goal>
+             </transf>
+             </goal>
+            </transf>
+            </goal>
+            <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.113.5" expl="loop invariant preservation" proved="true">
+            <transf name="instantiate" proved="true" arg1="int32exists" arg2="(to_int i3+1)">
+             <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.113.5.0" expl="loop invariant preservation" proved="true">
+             <transf name="destruct_rec" proved="true" arg1="Hinst">
+              <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.113.5.0.0" expl="destruct premise" proved="true">
+              <proof prover="1"><result status="valid" time="0.38" steps="512"/></proof>
+              </goal>
+              <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.113.5.0.1" expl="loop invariant preservation" proved="true">
+              <transf name="destruct_rec" proved="true" arg1="Assert5">
+               <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.113.5.0.1.0" expl="loop invariant preservation" proved="true">
+               <proof prover="0"><result status="valid" time="0.13" steps="514604"/></proof>
+               </goal>
+               <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.113.5.0.1.1" expl="loop invariant preservation" proved="true">
+               <proof prover="0"><result status="valid" time="0.25" steps="504289"/></proof>
+               </goal>
+               <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.113.5.0.1.2" expl="loop invariant preservation" proved="true">
+               <proof prover="1"><result status="valid" time="3.18" steps="1376"/></proof>
+               </goal>
+               <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.113.5.0.1.3" expl="loop invariant preservation" proved="true">
+               <proof prover="2" timelimit="5"><result status="valid" time="0.42" steps="77882"/></proof>
+               </goal>
+              </transf>
+              </goal>
+             </transf>
+             </goal>
+            </transf>
+            </goal>
+            <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.113.6" expl="loop invariant preservation" proved="true">
+            <transf name="instantiate" proved="true" arg1="int32exists" arg2="(to_int i3+1)">
+             <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.113.6.0" expl="loop invariant preservation" proved="true">
+             <transf name="destruct_rec" proved="true" arg1="Hinst">
+              <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.113.6.0.0" expl="destruct premise" proved="true">
+              <proof prover="1"><result status="valid" time="0.26" steps="484"/></proof>
+              </goal>
+              <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.113.6.0.1" expl="loop invariant preservation" proved="true">
+              <transf name="destruct_rec" proved="true" arg1="Assert5">
+               <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.113.6.0.1.0" expl="loop invariant preservation" proved="true">
+               <proof prover="2" timelimit="5"><result status="valid" time="0.35" steps="77985"/></proof>
+               </goal>
+               <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.113.6.0.1.1" expl="loop invariant preservation" proved="true">
+               <proof prover="0"><result status="valid" time="0.13" steps="490544"/></proof>
+               </goal>
+               <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.113.6.0.1.2" expl="loop invariant preservation" proved="true">
+               <proof prover="2" timelimit="5"><result status="valid" time="0.37" steps="78009"/></proof>
+               </goal>
+               <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.113.6.0.1.3" expl="loop invariant preservation" proved="true">
+               <proof prover="1"><result status="valid" time="3.40" steps="1954"/></proof>
+               </goal>
+              </transf>
+              </goal>
+             </transf>
+             </goal>
+            </transf>
+            </goal>
+            <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.113.7" expl="loop invariant preservation" proved="true">
+            <transf name="instantiate" proved="true" arg1="int32exists" arg2="(to_int i3+1)">
+             <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.113.7.0" expl="loop invariant preservation" proved="true">
+             <transf name="destruct_rec" proved="true" arg1="Hinst">
+              <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.113.7.0.0" expl="destruct premise" proved="true">
+              <proof prover="1"><result status="valid" time="0.29" steps="492"/></proof>
+              </goal>
+              <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.113.7.0.1" expl="loop invariant preservation" proved="true">
+              <transf name="destruct_rec" proved="true" arg1="Assert5">
+               <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.113.7.0.1.0" expl="loop invariant preservation" proved="true">
+               <proof prover="2" timelimit="5"><result status="valid" time="0.36" steps="77660"/></proof>
+               </goal>
+               <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.113.7.0.1.1" expl="loop invariant preservation" proved="true">
+               <proof prover="0"><result status="valid" time="0.26" steps="490426"/></proof>
+               </goal>
+               <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.113.7.0.1.2" expl="loop invariant preservation" proved="true">
+               <proof prover="2" timelimit="5"><result status="valid" time="0.39" steps="77981"/></proof>
+               </goal>
+               <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.113.7.0.1.3" expl="loop invariant preservation" proved="true">
+               <proof prover="0"><result status="valid" time="0.14" steps="376304"/></proof>
+               </goal>
+              </transf>
+              </goal>
+             </transf>
+             </goal>
+            </transf>
+            </goal>
+           </transf>
+           </goal>
+           <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.114" expl="loop invariant preservation" proved="true">
+           <proof prover="2"><result status="valid" time="0.18" steps="48462"/></proof>
+           </goal>
+           <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.115" expl="loop invariant preservation" proved="true">
+           <proof prover="2"><result status="valid" time="0.37" steps="79572"/></proof>
+           </goal>
+           <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.116" expl="loop invariant preservation" proved="true">
+           <proof prover="2"><result status="valid" time="0.44" steps="81498"/></proof>
+           </goal>
+           <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.117" expl="loop invariant preservation" proved="true">
+           <proof prover="2"><result status="valid" time="0.20" steps="48724"/></proof>
+           </goal>
+           <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.118" expl="loop invariant preservation" proved="true">
+           <transf name="hide_and_clear" proved="true" arg1="j" arg2="j13">
+            <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.118.0" expl="loop invariant preservation" proved="true">
+            <transf name="hide_and_clear" proved="true" arg1="i" arg2="i6">
+             <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.118.0.0" expl="loop invariant preservation" proved="true">
+             <transf name="hide_and_clear" proved="true" arg1="i1" arg2="i61">
+              <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.118.0.0.0" expl="loop invariant preservation" proved="true">
+              <transf name="hide_and_clear" proved="true" arg1="map1" arg2="map2">
+               <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.118.0.0.0.0" expl="loop invariant preservation" proved="true">
+               <transf name="hide_and_clear" proved="true" arg1="map11" arg2="map21">
+                <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.118.0.0.0.0.0" expl="loop invariant preservation" proved="true">
+                <transf name="instantiate" proved="true" arg1="LoopInvariant4" arg2="j">
+                 <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.118.0.0.0.0.0.0" expl="loop invariant preservation" proved="true">
+                 <transf name="case" proved="true" arg1="j=m1">
+                  <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.118.0.0.0.0.0.0.0" expl="true case (loop invariant preservation)" proved="true">
+                  <transf name="replace" proved="true" arg1="(occ_array j map1 (0:int32) i)" arg2="1">
+                   <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.118.0.0.0.0.0.0.0.0" expl="true case (loop invariant preservation)" proved="true">
+                   <proof prover="2" timelimit="5"><result status="valid" time="0.15" steps="48401"/></proof>
+                   </goal>
+                   <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.118.0.0.0.0.0.0.0.1" expl="equality hypothesis" proved="true">
+                   <transf name="unfold" proved="true" arg1="occ_array">
+                    <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.118.0.0.0.0.0.0.0.1.0" expl="equality hypothesis" proved="true">
+                    <transf name="rewrite" proved="true" arg1="Numof_append" arg2="with" arg3="(to_int i1)">
+                     <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.118.0.0.0.0.0.0.0.1.0.0" expl="equality hypothesis" proved="true">
+                     <transf name="replace" proved="true" arg1="(numof (fun (i:int) -&gt; (elts map1 @ i) = j) (int32&#39;int (0:int32)) (to_int i1))" arg2="0">
+                      <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.118.0.0.0.0.0.0.0.1.0.0.0" expl="equality hypothesis" proved="true">
+                      <proof prover="1"><result status="valid" time="0.39" steps="600"/></proof>
+                      </goal>
+                      <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.118.0.0.0.0.0.0.0.1.0.0.1" expl="equality hypothesis" proved="true">
+                      <transf name="assert" proved="true" arg1="(forall j. 0 &lt;= j &lt; i1 -&gt; map1.elts j = map11.elts j)">
+                       <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.118.0.0.0.0.0.0.0.1.0.0.1.0" expl="asserted formula" proved="true">
+                       <proof prover="2" timelimit="5"><result status="valid" time="0.22" steps="46588"/></proof>
+                       </goal>
+                       <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.118.0.0.0.0.0.0.0.1.0.0.1.1" expl="equality hypothesis" proved="true">
+                       <proof prover="0"><result status="valid" time="0.11" steps="282080"/></proof>
+                       </goal>
+                      </transf>
+                      </goal>
+                     </transf>
+                     </goal>
+                     <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.118.0.0.0.0.0.0.0.1.0.1" expl="rewrite premises" proved="true">
+                     <proof prover="2" timelimit="5"><result status="valid" time="0.14" steps="42930"/></proof>
+                     </goal>
+                    </transf>
+                    </goal>
+                   </transf>
+                   </goal>
+                  </transf>
+                  </goal>
+                  <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.118.0.0.0.0.0.0.1" expl="false case (loop invariant preservation)" proved="true">
+                  <transf name="assert" proved="true" arg1="(occ_array j map11 (0:int32) i1 = occ_array j map1 (0:int32) i)">
+                   <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.118.0.0.0.0.0.0.1.0" expl="asserted formula" proved="true">
+                   <transf name="assert" proved="true" arg1="(forall j. 0 &lt;= j &lt; i1 -&gt; map1.elts j = map11.elts j)">
+                    <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.118.0.0.0.0.0.0.1.0.0" expl="asserted formula" proved="true">
+                    <proof prover="2" timelimit="5"><result status="valid" time="0.16" steps="46308"/></proof>
+                    </goal>
+                    <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.118.0.0.0.0.0.0.1.0.1" expl="asserted formula" proved="true">
+                    <transf name="unfold" proved="true" arg1="occ_array">
+                     <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.118.0.0.0.0.0.0.1.0.1.0" expl="asserted formula" proved="true">
+                     <transf name="assert" proved="true" arg1="(numof (fun (i4:int) -&gt; (elts map1 @ i4) = j) (int32&#39;int (0:int32)) (int32&#39;int i1) = numof (fun (i4:int) -&gt; (elts map11 @ i4) = j) 0 (int32&#39;int i1))">
+                      <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.118.0.0.0.0.0.0.1.0.1.0.0" expl="asserted formula" proved="true">
+                      <proof prover="0"><result status="valid" time="0.12" steps="287162"/></proof>
+                      </goal>
+                      <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.118.0.0.0.0.0.0.1.0.1.0.1" expl="asserted formula" proved="true">
+                      <transf name="assert" proved="true" arg1="(numof (fun (i4:int) -&gt; (elts map1 @ i4) = j) (int32&#39;int i1) (int32&#39;int i) = 0)">
+                       <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.118.0.0.0.0.0.0.1.0.1.0.1.0" expl="asserted formula" proved="true">
+                       <proof prover="1"><result status="valid" time="0.48" steps="611"/></proof>
+                       </goal>
+                       <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.118.0.0.0.0.0.0.1.0.1.0.1.1" expl="asserted formula" proved="true">
+                       <transf name="instantiate" proved="true" arg1="Numof_append" arg2="(fun (i:int) -&gt; (elts map1 @ i) = j),((int32&#39;int (0:int32))),(((int32&#39;int i1)))">
+                        <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.118.0.0.0.0.0.0.1.0.1.0.1.1.0" expl="asserted formula" proved="true">
+                        <transf name="rewrite" proved="true" arg1="Hinst">
+                         <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.118.0.0.0.0.0.0.1.0.1.0.1.1.0.0" expl="asserted formula" proved="true">
+                         <transf name="rewrite" proved="true" arg1="h1">
+                          <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.118.0.0.0.0.0.0.1.0.1.0.1.1.0.0.0" expl="asserted formula" proved="true">
+                          <proof prover="0"><result status="valid" time="0.14" steps="307645"/></proof>
+                          </goal>
+                         </transf>
+                         </goal>
+                         <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.118.0.0.0.0.0.0.1.0.1.0.1.1.0.1" expl="rewrite premises" proved="true">
+                         <proof prover="2" timelimit="5"><result status="valid" time="0.23" steps="43540"/></proof>
+                         </goal>
+                        </transf>
+                        </goal>
+                       </transf>
+                       </goal>
+                      </transf>
+                      </goal>
+                     </transf>
+                     </goal>
+                    </transf>
+                    </goal>
+                   </transf>
+                   </goal>
+                   <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.118.0.0.0.0.0.0.1.1" expl="false case (loop invariant preservation)" proved="true">
+                   <transf name="replace" proved="true" arg1="(occ j (seq1 qBR) (int32&#39;int (0:int32)) (length (seq1 qBR)))" arg2="(occ j (seq1 qBR1) (int32&#39;int (0:int32)) (length (seq1 qBR1)))">
+                    <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.118.0.0.0.0.0.0.1.1.0" expl="false case (loop invariant preservation)" proved="true">
+                    <transf name="replace" proved="true" arg1="(occ j (seq1 qBnR) (int32&#39;int (0:int32)) (length (seq1 qBnR)))" arg2="(occ j (seq1 qBnR1) (int32&#39;int (0:int32)) (length (seq1 qBnR1)))">
+                     <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.118.0.0.0.0.0.0.1.1.0.0" expl="false case (loop invariant preservation)" proved="true">
+                     <transf name="replace" proved="true" arg1="(occ j (seq1 qnBR) (int32&#39;int (0:int32)) (length (seq1 qnBR)))" arg2="(occ j (seq1 qnBR1) (int32&#39;int (0:int32)) (length (seq1 qnBR1)))">
+                      <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.118.0.0.0.0.0.0.1.1.0.0.0" expl="false case (loop invariant preservation)" proved="true">
+                      <transf name="replace" proved="true" arg1="(occ j (seq1 qnBnR) (int32&#39;int (0:int32)) (length (seq1 qnBnR)))" arg2="(occ j (seq1 qnBnR1) (int32&#39;int (0:int32)) (length (seq1 qnBnR1)))">
+                       <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.118.0.0.0.0.0.0.1.1.0.0.0.0" expl="false case (loop invariant preservation)" proved="true">
+                       <transf name="destruct_rec" proved="true" arg1="Hinst">
+                        <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.118.0.0.0.0.0.0.1.1.0.0.0.0.0" expl="destruct premise" proved="true">
+                        <proof prover="2" timelimit="5"><result status="valid" time="0.14" steps="39286"/></proof>
+                        </goal>
+                        <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.118.0.0.0.0.0.0.1.1.0.0.0.0.1" expl="false case (loop invariant preservation)" proved="true">
+                        <proof prover="2" timelimit="5"><result status="valid" time="2.39" steps="298399"/></proof>
+                        </goal>
+                        <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.118.0.0.0.0.0.0.1.1.0.0.0.0.2" expl="false case (loop invariant preservation)" proved="true">
+                        <proof prover="2" timelimit="5"><result status="valid" time="2.83" steps="313791"/></proof>
+                        </goal>
+                       </transf>
+                       </goal>
+                       <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.118.0.0.0.0.0.0.1.1.0.0.0.1" expl="equality hypothesis" proved="true">
+                       <proof prover="2" timelimit="5"><result status="valid" time="2.91" steps="563931"/></proof>
+                       </goal>
+                      </transf>
+                      </goal>
+                      <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.118.0.0.0.0.0.0.1.1.0.0.1" expl="equality hypothesis" proved="true">
+                      <proof prover="1"><result status="valid" time="2.90" steps="1446"/></proof>
+                      </goal>
+                     </transf>
+                     </goal>
+                     <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.118.0.0.0.0.0.0.1.1.0.1" expl="equality hypothesis" proved="true">
+                     <transf name="destruct_rec" proved="true" arg1="Assert5">
+                      <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.118.0.0.0.0.0.0.1.1.0.1.0" expl="equality hypothesis" proved="true">
+                      <proof prover="2" timelimit="5"><result status="valid" time="0.16" steps="48041"/></proof>
+                      </goal>
+                      <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.118.0.0.0.0.0.0.1.1.0.1.1" expl="equality hypothesis" proved="true">
+                      <proof prover="2" timelimit="5"><result status="valid" time="3.03" steps="585615"/></proof>
+                      </goal>
+                      <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.118.0.0.0.0.0.0.1.1.0.1.2" expl="equality hypothesis" proved="true">
+                      <proof prover="2" timelimit="5"><result status="valid" time="0.15" steps="48028"/></proof>
+                      </goal>
+                      <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.118.0.0.0.0.0.0.1.1.0.1.3" expl="equality hypothesis" proved="true">
+                      <proof prover="2" timelimit="5"><result status="valid" time="0.18" steps="48014"/></proof>
+                      </goal>
+                     </transf>
+                     </goal>
+                    </transf>
+                    </goal>
+                    <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.118.0.0.0.0.0.0.1.1.1" expl="equality hypothesis" proved="true">
+                    <proof prover="2" timelimit="5"><result status="valid" time="2.88" steps="565549"/></proof>
+                    </goal>
+                   </transf>
+                   </goal>
+                  </transf>
+                  </goal>
+                 </transf>
+                 </goal>
+                </transf>
+                </goal>
+               </transf>
+               </goal>
+              </transf>
+              </goal>
+             </transf>
+             </goal>
+            </transf>
+            </goal>
+           </transf>
+           </goal>
+           <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.119" expl="loop invariant preservation" proved="true">
+           <proof prover="2"><result status="valid" time="0.61" steps="93958"/></proof>
+           </goal>
+           <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.120" expl="loop invariant preservation" proved="true">
+           <proof prover="2"><result status="valid" time="0.55" steps="93462"/></proof>
+           </goal>
+           <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.121" expl="loop invariant preservation" proved="true">
+           <transf name="hide_and_clear" proved="true" arg1="j" arg2="j16">
+            <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.121.0" expl="loop invariant preservation" proved="true">
+            <transf name="hide_and_clear" proved="true" arg1="i" arg2="i6">
+             <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.121.0.0" expl="loop invariant preservation" proved="true">
+             <transf name="hide_and_clear" proved="true" arg1="i1" arg2="i61">
+              <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.121.0.0.0" expl="loop invariant preservation" proved="true">
+              <transf name="instantiate" proved="true" arg1="LoopInvariant4" arg2="j">
+               <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.121.0.0.0.0" expl="loop invariant preservation" proved="true">
+               <transf name="case" proved="true" arg1="j=m1">
+                <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.121.0.0.0.0.0" expl="true case (loop invariant preservation)" proved="true">
+                <proof prover="2" timelimit="5"><result status="valid" time="0.16" steps="46978"/></proof>
+                </goal>
+                <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.121.0.0.0.0.1" expl="false case (loop invariant preservation)" proved="true">
+                <transf name="destruct_rec" proved="true" arg1="Hinst">
+                 <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.121.0.0.0.0.1.0" expl="destruct premise" proved="true">
+                 <proof prover="2" timelimit="5"><result status="valid" time="0.08" steps="39942"/></proof>
+                 </goal>
+                 <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.121.0.0.0.0.1.1" expl="destruct premise" proved="true">
+                 <transf name="destruct_rec" proved="true" arg1="Assert5">
+                  <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.121.0.0.0.0.1.1.0" expl="destruct premise" proved="true">
+                  <proof prover="2" timelimit="5"><result status="valid" time="3.28" steps="614461"/></proof>
+                  </goal>
+                  <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.121.0.0.0.0.1.1.1" expl="destruct premise" proved="true">
+                  <proof prover="1"><result status="valid" time="2.87" steps="1610"/></proof>
+                  <proof prover="2" timelimit="5"><result status="valid" time="3.76" steps="615787"/></proof>
+                  </goal>
+                  <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.121.0.0.0.0.1.1.2" expl="destruct premise" proved="true">
+                  <proof prover="2" timelimit="5"><result status="valid" time="2.42" steps="455037"/></proof>
+                  </goal>
+                  <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.121.0.0.0.0.1.1.3" expl="destruct premise" proved="true">
+                  <proof prover="2" timelimit="5"><result status="valid" time="3.73" steps="597814"/></proof>
+                  </goal>
+                 </transf>
+                 </goal>
+                 <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.121.0.0.0.0.1.2" expl="false case (loop invariant preservation)" proved="true">
+                 <proof prover="2" timelimit="5"><result status="valid" time="0.15" steps="47527"/></proof>
+                 </goal>
+                </transf>
+                </goal>
+               </transf>
+               </goal>
+              </transf>
+              </goal>
+             </transf>
+             </goal>
+            </transf>
+            </goal>
+           </transf>
+           </goal>
+           <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.122" expl="loop invariant preservation" proved="true">
+           <transf name="hide_and_clear" proved="true" arg1="j" arg2="j17">
+            <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.122.0" expl="loop invariant preservation" proved="true">
+            <transf name="hide_and_clear" proved="true" arg1="i" arg2="i6">
+             <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.122.0.0" expl="loop invariant preservation" proved="true">
+             <transf name="hide_and_clear" proved="true" arg1="i1" arg2="i61">
+              <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.122.0.0.0" expl="loop invariant preservation" proved="true">
+              <transf name="instantiate" proved="true" arg1="LoopInvariant4" arg2="j">
+               <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.122.0.0.0.0" expl="loop invariant preservation" proved="true">
+               <transf name="case" proved="true" arg1="j=m1">
+                <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.122.0.0.0.0.0" expl="true case (loop invariant preservation)" proved="true">
+                <proof prover="2" timelimit="5"><result status="valid" time="0.17" steps="47040"/></proof>
+                </goal>
+                <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.122.0.0.0.0.1" expl="false case (loop invariant preservation)" proved="true">
+                <transf name="case" proved="true" arg1="(occ j qBR1 0 (length qBR1) + occ j qBnR1 0 (length qBnR1) + occ j qnBR1 0 (length qnBR1) + occ j qnBnR1 0 (length qnBnR1) = 1)">
+                 <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.122.0.0.0.0.1.0" expl="false case (true case. loop invariant preservation)" proved="true">
+                 <transf name="assert" proved="true" arg1="(occ j qBR 0 (length qBR) = occ j qBR1 0 (length qBR1))">
+                  <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.122.0.0.0.0.1.0.0" expl="asserted formula" proved="true">
+                  <proof prover="2" timelimit="5"><result status="valid" time="3.68" steps="674970"/></proof>
+                  </goal>
+                  <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.122.0.0.0.0.1.0.1" expl="false case (true case. loop invariant preservation)" proved="true">
+                  <transf name="assert" proved="true" arg1="(occ j qBnR 0 (length qBnR) = occ j qBnR1 0 (length qBnR1))">
+                   <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.122.0.0.0.0.1.0.1.0" expl="asserted formula" proved="true">
+                   <proof prover="2" timelimit="10"><result status="valid" time="5.02" steps="717128"/></proof>
+                   </goal>
+                   <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.122.0.0.0.0.1.0.1.1" expl="false case (true case. loop invariant preservation)" proved="true">
+                   <transf name="assert" proved="true" arg1="(occ j qnBR 0 (length qnBR) = occ j qnBR1 0 (length qnBR1))">
+                    <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.122.0.0.0.0.1.0.1.1.0" expl="asserted formula" proved="true">
+                    <proof prover="1"><result status="valid" time="2.96" steps="1512"/></proof>
+                    </goal>
+                    <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.122.0.0.0.0.1.0.1.1.1" expl="false case (true case. loop invariant preservation)" proved="true">
+                    <transf name="assert" proved="true" arg1="(occ j qnBnR 0 (length qnBnR) = occ j qnBnR1 0 (length qnBnR1))">
+                     <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.122.0.0.0.0.1.0.1.1.1.0" expl="asserted formula" proved="true">
+                     <proof prover="2" timelimit="5"><result status="valid" time="3.51" steps="650233"/></proof>
+                     </goal>
+                     <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.122.0.0.0.0.1.0.1.1.1.1" expl="false case (true case. loop invariant preservation)" proved="true">
+                     <proof prover="2" timelimit="5"><result status="valid" time="0.17" steps="46961"/></proof>
+                     </goal>
+                    </transf>
+                    </goal>
+                   </transf>
+                   </goal>
+                  </transf>
+                  </goal>
+                 </transf>
+                 </goal>
+                 <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.122.0.0.0.0.1.1" expl="false case (loop invariant preservation)" proved="true">
+                 <proof prover="1" timelimit="1"><result status="valid" time="0.41" steps="625"/></proof>
+                 </goal>
+                </transf>
+                </goal>
+               </transf>
+               </goal>
+              </transf>
+              </goal>
+             </transf>
+             </goal>
+            </transf>
+            </goal>
+           </transf>
+           </goal>
+           <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.123" expl="loop invariant preservation">
+           <transf name="case" arg1="j18=m1">
+            <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.123.0" expl="true case (loop invariant preservation)">
+            <transf name="destruct_rec" arg1="Assert5">
+             <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.123.0.0" expl="true case (loop invariant preservation)">
+             </goal>
+             <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.123.0.1" expl="true case (loop invariant preservation)" proved="true">
+             <proof prover="2" timelimit="5"><result status="valid" time="0.45" steps="93132"/></proof>
+             </goal>
+             <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.123.0.2" expl="true case (loop invariant preservation)" proved="true">
+             <proof prover="1"><result status="valid" time="0.32" steps="251"/></proof>
+             <proof prover="2" timelimit="5"><result status="timeout" time="5.00" steps="316068"/></proof>
+             </goal>
+             <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.123.0.3" expl="true case (loop invariant preservation)" proved="true">
+             <proof prover="2" timelimit="5"><result status="valid" time="0.47" steps="94630"/></proof>
+             </goal>
+            </transf>
+            </goal>
+            <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.123.1" expl="false case (loop invariant preservation)" proved="true">
+            <transf name="instantiate" proved="true" arg1="LoopInvariant18" arg2="j18">
+             <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.123.1.0" expl="false case (loop invariant preservation)" proved="true">
+             <transf name="destruct_rec" proved="true" arg1="Hinst">
+              <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.123.1.0.0" expl="destruct premise" proved="true">
+              <proof prover="2" timelimit="5"><result status="valid" time="0.09" steps="40528"/></proof>
+              </goal>
+              <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.123.1.0.1" expl="destruct premise" proved="true">
+              <transf name="replace" proved="true" arg1="(occ j18 (seq1 qBR1) (int32&#39;int (0:int32)) (length (seq1 qBR1)))" arg2="(occ j18 (seq1 qBR) (int32&#39;int (0:int32)) (length (seq1 qBR)))">
+               <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.123.1.0.1.0" expl="destruct premise" proved="true">
+               <transf name="replace" proved="true" arg1="(occ j18 (seq1 qBnR1) (int32&#39;int (0:int32)) (length (seq1 qBnR1)))" arg2="(occ j18 (seq1 qBnR) (int32&#39;int (0:int32)) (length (seq1 qBnR)))">
+                <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.123.1.0.1.0.0" expl="destruct premise" proved="true">
+                <transf name="replace" proved="true" arg1="(occ j18 (seq1 qnBR1) (int32&#39;int (0:int32)) (length (seq1 qnBR1)))" arg2="(occ j18 (seq1 qnBR) (int32&#39;int (0:int32)) (length (seq1 qnBR)))">
+                 <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.123.1.0.1.0.0.0" expl="destruct premise" proved="true">
+                 <transf name="replace" proved="true" arg1="(occ j18 (seq1 qnBnR1) (int32&#39;int (0:int32)) (length (seq1 qnBnR1)))" arg2="(occ j18 (seq1 qnBnR) (int32&#39;int (0:int32)) (length (seq1 qnBnR)))">
+                  <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.123.1.0.1.0.0.0.0" expl="destruct premise" proved="true">
+                  <proof prover="2" timelimit="5"><result status="valid" time="0.13" steps="45741"/></proof>
+                  </goal>
+                  <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.123.1.0.1.0.0.0.1" expl="equality hypothesis" proved="true">
+                  <proof prover="2" timelimit="5"><result status="valid" time="3.19" steps="644551"/></proof>
+                  </goal>
+                 </transf>
+                 </goal>
+                 <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.123.1.0.1.0.0.1" expl="equality hypothesis" proved="true">
+                 <proof prover="2" timelimit="5"><result status="valid" time="4.00" steps="681026"/></proof>
+                 </goal>
+                </transf>
+                </goal>
+                <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.123.1.0.1.0.1" expl="equality hypothesis" proved="true">
+                <proof prover="2" timelimit="5"><result status="valid" time="3.80" steps="670210"/></proof>
+                </goal>
+               </transf>
+               </goal>
+               <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.123.1.0.1.1" expl="equality hypothesis" proved="true">
+               <proof prover="2" timelimit="5"><result status="valid" time="3.04" steps="620470"/></proof>
+               </goal>
+              </transf>
+              </goal>
+              <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.123.1.0.2" expl="destruct premise" proved="true">
+              <proof prover="2" timelimit="5"><result status="valid" time="0.11" steps="44575"/></proof>
+              </goal>
+              <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.123.1.0.3" expl="false case (loop invariant preservation)" proved="true">
+              <proof prover="2" timelimit="5"><result status="valid" time="0.15" steps="48446"/></proof>
+              </goal>
+             </transf>
+             </goal>
+            </transf>
+            </goal>
+           </transf>
+           <transf name="hide_and_clear" arg1="j" arg2="j18">
+            <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.123.0" expl="loop invariant preservation">
+            <transf name="hide_and_clear" arg1="i" arg2="i6">
+             <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.123.0.0" expl="loop invariant preservation">
+             <transf name="hide_and_clear" arg1="i1" arg2="i61">
+              <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.123.0.0.0" expl="loop invariant preservation">
+              <transf name="case" arg1="j=m1">
+               <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.123.0.0.0.0" expl="true case (loop invariant preservation)">
+               <transf name="destruct_rec" arg1="Assert5">
+                <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.123.0.0.0.0.0" expl="true case (loop invariant preservation)">
+                </goal>
+                <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.123.0.0.0.0.1" expl="true case (loop invariant preservation)" proved="true">
+                <proof prover="2" timelimit="5"><result status="valid" time="0.60" steps="93798"/></proof>
+                </goal>
+                <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.123.0.0.0.0.2" expl="true case (loop invariant preservation)" proved="true">
+                <proof prover="1"><result status="valid" time="0.51" steps="254"/></proof>
+                <proof prover="2" timelimit="5"><result status="timeout" time="5.00" steps="278701"/></proof>
+                </goal>
+                <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.123.0.0.0.0.3" expl="true case (loop invariant preservation)" proved="true">
+                <proof prover="2" timelimit="5"><result status="valid" time="0.49" steps="94162"/></proof>
+                </goal>
+               </transf>
+               </goal>
+               <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.123.0.0.0.1" expl="false case (loop invariant preservation)">
+               <transf name="assert" arg1="(inv2.elts j = inv21.elts j)">
+                <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.123.0.0.0.1.0" expl="asserted formula" proved="true">
+                <proof prover="2" timelimit="5"><result status="valid" time="0.19" steps="48355"/></proof>
+                </goal>
+                <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.123.0.0.0.1.1" expl="false case (loop invariant preservation)">
+                <transf name="rewrite" arg1="h">
+                 <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.123.0.0.0.1.1.0" expl="false case (loop invariant preservation)">
+                 <transf name="instantiate" arg1="LoopInvariant23" arg2="j">
+                  <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.123.0.0.0.1.1.0.0" expl="false case (loop invariant preservation)">
+                  <transf name="destruct_rec" arg1="Hinst">
+                   <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.123.0.0.0.1.1.0.0.0" expl="destruct premise" proved="true">
+                   <proof prover="2" timelimit="5"><result status="valid" time="0.11" steps="40579"/></proof>
+                   </goal>
+                   <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.123.0.0.0.1.1.0.0.1" expl="destruct premise">
+                   </goal>
+                   <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.123.0.0.0.1.1.0.0.2" expl="destruct premise" proved="true">
+                   <proof prover="2" timelimit="5"><result status="valid" time="0.12" steps="44626"/></proof>
+                   </goal>
+                   <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.123.0.0.0.1.1.0.0.3" expl="false case (loop invariant preservation)" proved="true">
+                   <proof prover="2" timelimit="5"><result status="valid" time="0.10" steps="43349"/></proof>
+                   </goal>
+                  </transf>
+                  </goal>
+                 </transf>
+                 </goal>
+                </transf>
+                </goal>
+               </transf>
+               <transf name="instantiate" arg1="LoopInvariant23" arg2="j">
+                <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.123.0.0.0.1.0" expl="false case (loop invariant preservation)">
+                <transf name="destruct_rec" arg1="Hinst">
+                 <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.123.0.0.0.1.0.0" expl="destruct premise" proved="true">
+                 <proof prover="2" timelimit="5"><result status="valid" time="0.10" steps="40530"/></proof>
+                 </goal>
+                 <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.123.0.0.0.1.0.1" expl="destruct premise">
+                 <proof prover="0"><result status="timeout" time="5.00" steps="3153831"/></proof>
+                 <proof prover="1"><result status="timeout" time="5.00"/></proof>
+                 <proof prover="2" timelimit="5"><result status="timeout" time="5.00" steps="675494"/></proof>
+                 </goal>
+                 <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.123.0.0.0.1.0.2" expl="destruct premise" proved="true">
+                 <proof prover="2" timelimit="5"><result status="valid" time="0.10" steps="44577"/></proof>
+                 </goal>
+                 <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.123.0.0.0.1.0.3" expl="false case (loop invariant preservation)" proved="true">
+                 <proof prover="2" timelimit="5"><result status="valid" time="0.18" steps="48454"/></proof>
+                 </goal>
+                </transf>
+                </goal>
+               </transf>
+               </goal>
+              </transf>
+              </goal>
+             </transf>
+             </goal>
+            </transf>
+            </goal>
+           </transf>
+           </goal>
+           <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.124" expl="precondition" proved="true">
+           <proof prover="2"><result status="valid" time="0.11" steps="33068"/></proof>
+           </goal>
+           <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.125" expl="precondition" proved="true">
+           <proof prover="2"><result status="valid" time="0.18" steps="45573"/></proof>
+           </goal>
+           <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.126" expl="precondition" proved="true">
+           <proof prover="2"><result status="valid" time="0.31" steps="52352"/></proof>
+           </goal>
+           <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.127" expl="postcondition" proved="true">
+           <proof prover="2"><result status="valid" time="0.08" steps="33475"/></proof>
+           </goal>
+           <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.128" expl="VC for groupeClassement__calculerOrdreAppel_impl" proved="true">
+           <proof prover="2" timelimit="5"><result status="valid" time="0.32" steps="56846"/></proof>
+           </goal>
+           <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.129" expl="postcondition" proved="true">
+           <proof prover="2" timelimit="5"><result status="valid" time="0.08" steps="31195"/></proof>
+           </goal>
+           <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.130" expl="postcondition" proved="true">
+           <proof prover="2" timelimit="5"><result status="valid" time="0.07" steps="31198"/></proof>
+           </goal>
+           <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.131" expl="postcondition" proved="true">
+           <proof prover="2"><result status="valid" time="0.09" steps="31201"/></proof>
+           </goal>
+           <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.132" expl="postcondition" proved="true">
+           <proof prover="2"><result status="valid" time="0.08" steps="31204"/></proof>
+           </goal>
+           <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.133" expl="postcondition" proved="true">
+           <proof prover="2"><result status="valid" time="0.07" steps="31207"/></proof>
+           </goal>
+           <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.134" expl="postcondition" proved="true">
+           <proof prover="2" timelimit="5"><result status="valid" time="0.07" steps="31210"/></proof>
+           </goal>
+           <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.135" expl="postcondition" proved="true">
+           <proof prover="2" timelimit="5"><result status="valid" time="0.08" steps="31213"/></proof>
+           </goal>
+           <goal name="groupeClassement__calculerOrdreAppel_impl&#39;vc.0.0.0.0.0.0.0.0.0.52" expl="VC for groupeClassement__calculerOrdreAppel_impl">
+           <proof prover="2" timelimit="5"><result status="valid" time="0.08" steps="33666"/></proof>
+           </goal>
+          </transf>
+          </goal>
+         </transf>
+         </goal>
+        </transf>
+        </goal>
+       </transf>
+       </goal>
+      </transf>
+      </goal>
+     </transf>
+     </goal>
+    </transf>
+    </goal>
+   </transf>
+   </goal>
+  </transf>
+  </goal>
+ </transf>
+ </goal>
+</theory>
+</file>
+</why3session>

@@ -1,0 +1,44 @@
+
+module Permutation
+
+  use int.Int
+  use map.Map
+
+  predicate range (n: int) (f: int -> int) =
+    forall i. 0 <= i < n -> 0 <= f i < n
+
+  predicate injective (n: int) (f: int -> int) =
+    forall i j. 0 <= i < n -> 0 <= j < n -> i <> j -> f i <> f j
+
+  type permutation = {
+    n: int;
+    map: int -> int;
+    inv: int -> int;
+  } invariant { n >= 0 }
+    invariant { range n map }
+    invariant { injective n map }
+    invariant { range n inv }
+    invariant { injective n inv }
+    invariant { forall i. 0 <= i < n -> inv[map[i]] = i }
+    invariant { forall i. 0 <= i < n -> map[inv[i]] = i }
+  by { n = 0;
+       map = (fun i -> i);
+       inv = (fun i -> i); }
+
+
+  meta coercion function map
+
+  let identity (n: int) : permutation
+    requires { n >= 0 }
+  = { n = n;
+      map = (fun i -> i);
+      inv = (fun i -> i); }
+
+  let compose (p1 p2: permutation) : permutation
+    requires { p1.n = p2.n }
+    ensures { forall i. 0 <= i < p1.n -> result i = p2 (p1 i) }
+  = { n = p1.n;
+      map = (fun i -> p2.map (p1.map i));
+      inv = (fun i -> p1.inv (p2.inv i)); }
+
+end

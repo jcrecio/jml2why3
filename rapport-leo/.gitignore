@@ -1,0 +1,14 @@
+*.pdf
+*.bbl
+*.bcf
+*.blg
+*.log
+*.run.xml
+*.aux
+*.out
+*.cmi
+*.cmx
+*.toc
+*.o
+src/svg-inkscape/
+*.dot.svg

@@ -1,0 +1,29 @@
+\section{Annexes}
+
+  \subsection{Type et exemple d'invariant}\label{type_invariant}
+
+    \inputminted[bgcolor=darkBackground]{ocaml}{algo1_part.mlw}
+
+  \subsection{Séminaires}
+
+    Durant ce stage, j'ai eu l'occasion d'assister à plusieurs séminaires. On en détaille quelques-uns ici.
+
+    \subsubsection{Toward a Coq verified \bsc{SQL}'s compiler}
+
+      Ce séminaire a été donné par Véronique \bsc{Benzaken} et présentait un travail également réalisé par Évelyne \bsc{Contejean} et Chantal \bsc{Keller}. Tout d'abord, il faut préciser que c'est dans le cadre de ce projet que j'avais effectué un stage en 2017.
+
+      \bsc{SQL} est un langage déclaratif, c'est-à-dire que l'on écrit ce que l'on veut obtenir, mais pas comment l'obtenir. Le compilateur doit donc générer un \emph{plan d'exécution}, qui lui, contient les algorithmes qui seront utilisés pour obtenir le résultat demandé. De plus, les bases de données stockant un important volume de données, elles sont forcées d'utiliser le disque, ralentissant énormément leur exécution. Ainsi, les optimisations sont omniprésentes dans tout compilateur \bsc{SQL}.
+
+      Pour ces raisons, la vérification d'un compilateur \bsc{SQL} est difficile. Ce séminaire présentait le travail effectué pour permettre d'arriver à un compilateur vérifié en Coq. Notamment sur la définition d'une sémantique, le lien avec l'algèbre relationnelle et les implémentations en Coq.
+
+    \subsubsection{When Everyday Combinatorics Meets Formal Verification}
+
+      Ce séminaire a été donné par Alain \bsc{Giorgetti}. Il y décrivait son travail sur diverses structures utilisées en combinatoire et son usage des méthodes formelles. Particulièrement, le fait qu'au départ il ne travaillait pas dans le domaines des méthodes formelles mais qu'avec le temps, il a été convaincu par leur importance. Notamment parce que la formalisation de théorèmes peut mener à une meilleure compréhension du domaine étudié. Plusieurs exemples ont été donnés dans le cadre d'une formalisation avec Why3.
+
+    \subsubsection{Scallina: on the Intersection of Scala and Gallina}
+
+	Ce séminaire a été donné par Youssef \bsc{El Bakouny}. Il y décrivait l'extraction de programmes Coq (dans le langage Gallina donc) vers Scala. Du fait de son système de type, Scala lève des difficultés supplémentaires par rapport à OCaml ou Haskell pour lesquels l'extraction est déjà possible. En effet, Scala permet de typer des expressions qui ne sont pas typables en OCaml ou Haskell. De plus, lors de l'extraction, on souhaite généralement obtenir un programme lisible. Une implémentation (Scallina) et les méthodes employées pour résoudres ces différences difficultés ont été détaillés durant le séminaire.
+
+    \subsubsection{Ghost Code in Action: Automated Verification of a Symbolic Interpreter using Why3}
+
+	Ce séminaire a été donné par Benedikt \bsc{Becker}. Il y présentait la réalisation en Why3 d'un interpréteur symbolique pour les scripts POSIX Shell. Le but du projet étant la vérification des scripts d'installation de paquets Debian. La différence entre exécution symbolique et exécution concrète a été rappelée pour ensuite montrer comment il est possible de prouver la correction de l'interpréteur par deux théorèmes. À savoir: l'ensemble des exécutions concrètes est représenté par l'exécution symbolique ; aucun état inutile n'est généré dans l'exécution symbolique. Cela a été réalisé en ayant comme objectif une vérification automatique avec Why3, menant à des techniques de preuve originales, dont un important usage de code \emph{ghost}.

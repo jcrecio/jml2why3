@@ -1,0 +1,272 @@
+module GroupeClassementPermutation
+
+  use bool.Bool
+  use int.Int
+  use mach.int.Int32
+  use option.Option
+  use import mach.peano.Peano as P
+  use seq.FreeMonoid
+  use seq.Occ
+  use int.NumOf
+  use import seq.Seq as S (* is abstract, empty, [], [<-], cons, snoc *)
+  use import queue.Queue as Q (* .seq, coercsion seq, create *)
+  use import map.Map as M (* map α β = α → β [], [<-] *)
+  use import mach.array.Array32 as A (* .elts: int → α, .length: int32, [], [<-] *)
+
+  (** Copied from array.Array; missing from mach.array.Array32 *)
+  val ghost function ([<-]) (a: array 'a) (i: int) (v: 'a): array 'a
+    ensures { result.length = a.length }
+    ensures { result.elts = M.set a.elts i v }
+
+  type voeu = {
+    boursier : bool;
+    resident : bool;
+    rang : int;
+  }
+  invariant { 0 < rang }
+  by { boursier = True; resident = True; rang = 1 }
+
+  type permutation = {
+    map: array int32;
+    ghost inv: array int32;
+  }
+  invariant { forall i. 0 <= i < map.length -> 0 <= map[i] < map.length }
+  invariant { forall i. 0 <= i < map.length -> inv[map[i]] = i }
+  invariant { forall i. 0 <= i < map.length -> 0 <= inv[i] < map.length }
+  invariant { forall i. 0 <= i < map.length -> map[inv[i]] = i }
+  by { map = make 0 0; inv = make 0 0 }
+
+  predicate homogenic (vs: array voeu) (s: seq int32) (boursier resident: bool) =
+    forall j. 0 <= j < S.length s ->
+      vs[S.(s[j])].boursier = boursier /\
+      vs[S.(s[j])].resident = resident
+
+  lemma shift_seq_equal: forall s: seq 'a.
+    forall j. 0 <= j < S.length s - 1 ->
+    S.(s[1..][j] = s[j+1])
+
+  lemma shift_seq_length: forall s: seq 'a.
+    S.(0 < length s -> length s - 1 = length s[1..length s])
+
+  lemma homogenic_rest : forall s: seq int32, vs boursier resident.
+    0 < S.length s ->
+    homogenic vs s boursier resident ->
+    homogenic vs s[1..] boursier resident
+
+  predicate in_range (q: seq int32) (min max: int) =
+    forall j. 0 <= j < S.length q ->
+      min <= S.get q j < max
+
+  lemma in_range_rest : forall s: seq int32, min max.
+    0 < S.length s ->
+    in_range s min max ->
+    in_range s[1..] min max
+
+  let is_none (o: option 'a) : bool
+    ensures { result = True <-> o = None }
+  = match o with
+    | None -> True
+    | Some _ -> False
+    end
+
+  let get_some (o: option 'a) : 'a
+    requires { o <> None }
+    ensures { Some result = o }
+  = match o with
+    | Some x -> x
+    | None -> absurd
+    end
+
+  function occ_array (x: 'a) (a: array 'a) (l u: int) : int =
+    numof (fun i -> a[i] = x) l u
+
+  lemma occ_array_non_negative : forall x: 'a, a l u.
+    0 <= occ_array x a l u
+
+  lemma occ_all_non_negative : forall x: 'a, s.
+    0 <= occ_all x s
+
+  let rec lemma occ_array_zero (a: array 'a) (x: 'a) (l u: int)
+    requires { l <= u }
+    requires { occ_array x a l u = 0 }
+    ensures { forall i: int. l <= i < u -> a[i] <> x }
+    variant { u - l }
+  = if l = u
+    then ()
+    else occ_array_zero a x (l+1) u
+
+  (** {3 Auxiliary lemmas for loop invariant index_in_array_or_queue} *)
+
+  lemma l1 : S.(
+    forall s: seq 'a, x.
+    0 < length s ->
+    x <> s[0] ->
+    occ_all x s = occ_all x s[1..]
+  )
+
+  lemma l2 :  S.(
+    forall s: seq 'a, x.
+    0 < length s ->
+    x = s[0] ->
+    occ_all x s = occ_all x s[1..] + 1
+  )
+
+  lemma aux1 : 
+    forall a: array 'a, i x.
+    a[i <- x][i] = x
+
+  lemma aux2 :
+    forall a: array 'a, i j x.
+    i <> j ->
+    a[i <- x][j] = a[j]
+
+  lemma l3 :
+    forall a1 a2: array 'a, x i.
+    length a1 = length a2 ->
+    0 <= i < a1.length ->
+    a1.elts = set a2.elts i x ->
+    occ_array x a1 0 (i + 1) =
+    occ_array x a2 0 i + 1
+    (* unfold A.([])! *)
+
+  lemma l4 :
+    forall a1 a2: array 'a, x y i.
+    length a1 = length a2 ->
+    0 <= i < a1.length ->
+    x <> y ->
+    a1.elts = set a2.elts i y ->
+    occ_array x a1 0 (i + 1) =
+    occ_array x a2 0 i
+    (* unfold A.([])! *)
+
+  (** {3 Auxiliary lemmas for loop invariant permutation_invariant_1 *)
+
+  lemma l5: S.(
+    forall s: seq 'a, i x.
+    0 <= i < length s ->
+    s[i] = x ->
+    0 < occ_all x s
+  )
+
+  let lemma int32exists (i:int) : int32
+    requires { Int32.in_bounds i }
+    ensures { Int32.to_int result = i }
+  = Int32.of_int i
+
+  let ordre_appel (vs: array voeu) (taux_boursier taux_resident: int32) : permutation
+    requires { vs.length * 100 < Int32.max_int32 }
+    requires { 0 <= taux_boursier <= 100 }
+    requires { 0 <= taux_resident <= 100 }
+    ensures { result.map.length = vs.length }
+  = [@vc:sp]
+    let qBR, qBnR, qnBR, qnBnR = Q.create (), Q.create (), Q.create (), Q.create () in
+    for i = 0 to vs.length-1 do
+      invariant { homogenic vs qBR True True /\ homogenic vs qBnR True False /\ homogenic vs qnBR False True /\ homogenic vs qnBnR False False }
+      invariant { in_range qBR 0 vs.length /\ in_range qBnR 0 vs.length /\ in_range qnBR 0 vs.length /\ in_range qnBnR 0 vs.length }
+      invariant { S.length qBR <= vs.length /\ S.length qBnR <= vs.length /\ S.length qnBR <= vs.length /\ S.length qnBnR <= vs.length }
+      invariant { S.length qBR + S.length qBnR + S.length qnBR + S.length qnBnR = i }
+      invariant { forall j: int32. 0 <= j < i -> occ_all j qBR + occ_all j qBnR + occ_all j qnBR + occ_all j qnBnR = 1 }
+      invariant { forall j: int32. i <= j < vs.length -> occ_all j qBR + occ_all j qBnR + occ_all j qnBR + occ_all j qnBnR = 0 }
+      if vs[i].boursier then
+        if vs[i].resident then
+          Q.push i qBR
+         else
+          Q.push i qBnR
+      else
+        if vs[i].resident then
+          Q.push i qnBR
+         else
+          Q.push i qnBnR
+    done;
+    let boursiers_total = Int32.of_int (P.to_int (Q.length qBR)) + Int32.of_int (P.to_int (Q.length qBnR)) in
+    let residents_total = Int32.of_int (P.to_int (Q.length qBR)) + Int32.of_int (P.to_int (Q.length qnBR)) in
+    let map: array int32 = make vs.length (0:int32) in
+    let inv: array int32 = make vs.length (0:int32) in
+    for i = (0:int32) to vs.length-1 do
+      invariant { homogenic vs qBR True True /\ homogenic vs qBnR True False /\ homogenic vs qnBR False True /\ homogenic vs qnBnR False False }
+      invariant { in_range qBR 0 vs.length /\ in_range qBnR 0 vs.length /\ in_range qnBR 0 vs.length /\ in_range qnBnR 0 vs.length }
+      invariant { S.length qBR <= vs.length /\ S.length qBnR <= vs.length /\ S.length qnBR <= vs.length /\ S.length qnBnR <= vs.length }
+      invariant { 0 <= S.length qBR + S.length qBnR <= boursiers_total }
+      invariant { 0 <= S.length qBR + S.length qnBR <= residents_total }
+      invariant { i + S.length qBR + S.length qBnR + S.length qnBR + S.length qnBnR = vs.length }
+      invariant index_in_array_or_queue {
+        forall j: int32. 0 <= j < vs.length ->
+        occ_array j map 0 i + occ_all j qBR + occ_all j qBnR + occ_all j qnBR + occ_all j qnBnR = 1
+      }
+      invariant { forall j. 0 <= j < i -> 0 <= map[j] < map.length }
+      invariant permutation_invariant_1 { forall j. 0 <= j < i -> inv[map[j]] = j }
+      invariant { forall j: int32. 0 <= j < vs.length ->
+        occ_all j qBR + occ_all j qBnR + occ_all j qnBR + occ_all j qnBnR = 1 ||
+        0 <= inv[j] < map.length }
+      invariant { forall j: int32. 0 <= j < vs.length ->
+        occ_all j qBR + occ_all j qBnR + occ_all j qnBR + occ_all j qnBnR = 1 ||
+        map[inv[j]] = j }
+      let boursiers_restants = Int32.of_int (P.to_int (Q.length qBR)) + Int32.of_int (P.to_int (Q.length qBnR)) in
+      let residents_restants = Int32.of_int (P.to_int (Q.length qBR)) + Int32.of_int (P.to_int (Q.length qnBR)) in
+      let boursiers_appeles = boursiers_total - boursiers_restants in
+      let residents_appeles = residents_total - residents_restants in
+      let contrainte_boursier = Int32.(0 < boursiers_restants && boursiers_appeles * 100 < taux_boursier * (i + 1)) in
+      assert { contrainte_boursier -> 0 < S.length qBR || 0 < S.length qBnR };
+      let contrainte_resident = Int32.(0 < residents_restants && residents_appeles * 100 < taux_resident * (i + 1)) in
+      assert { contrainte_resident -> 0 < S.length qBR || 0 < S.length qnBR };
+      let ref m = None in
+      if not Q.is_empty qBR then (
+        assert { 0 <= S.(qBR[0]) < vs.length };
+        m <- Some (Q.safe_peek qBR)
+      );
+      if not Q.is_empty qnBR && not contrainte_boursier && (is_none m || vs[get_some m].rang < vs[Q.safe_peek qnBR].rang) then (
+        assert { 0 <= S.(qnBR[0]) < vs.length };
+        m <- Some (Q.safe_peek qnBR)
+      );
+      if not Q.is_empty qBnR && not contrainte_resident && (is_none m || vs[get_some m].rang < vs[Q.safe_peek qBnR].rang) then (
+        assert { 0 <= S.(qBnR[0]) < vs.length };
+        m <- Some (Q.safe_peek qBnR)
+      );
+      if not Q.is_empty qnBnR && not contrainte_boursier && not contrainte_resident && (is_none m || vs[get_some m].rang < vs[Q.safe_peek qnBnR].rang) then (
+        assert { 0 <= S.(qnBnR[0]) < vs.length };
+        m <- Some (Q.safe_peek qnBnR)
+      );
+      if is_none m then (
+        assert { qBnR <> S.empty };
+        assert { 0 <= S.(qBnR[0]) < vs.length };
+        m <- Some (Q.safe_peek qBnR)
+      );
+      let m = get_some m in
+      assert { 0 <= m < vs.length };
+      assert some_queue {
+        (qBR <> S.empty   /\ m = S.(qBR[0])) \/
+        (qBnR <> S.empty  /\ m = S.(qBnR[0])) \/
+        (qnBR <> S.empty  /\ m = S.(qnBR[0])) \/
+        (qnBnR <> S.empty /\ m = S.(qnBnR[0]))
+      };
+      assert { occ_all m qBR + occ_all m qBnR + occ_all m qnBR + occ_all m qnBnR = 1 };
+      label X in
+      let _ =
+        if vs[m].boursier then
+          if vs[m].resident then
+            Q.safe_pop qBR
+          else
+            Q.safe_pop qBnR
+         else
+          if vs[m].resident then
+            Q.safe_pop qnBR
+          else
+            Q.safe_pop qnBnR in
+      assert shifted_queue {
+        S.(m = (qBR at X)[0]   /\ qBR   = (qBR at X)[1..]) \/
+        S.(m = (qBnR at X)[0]  /\ qBnR  = (qBnR at X)[1..]) \/
+        S.(m = (qnBR at X)[0]  /\ qnBR  = (qnBR at X)[1..]) \/
+        S.(m = (qnBnR at X)[0] /\ qnBnR = (qnBnR at X)[1..])
+      };
+      assert { occ_array m map 0 i = 0 };
+      assert { forall j. 0 <= j < i -> map[j] <> m };
+      map[i] <- m;
+      inv[m] <- i;
+      assert { occ_all m qBR + occ_all m qBnR + occ_all m qnBR + occ_all m qnBnR = 0 };
+      assert { forall j. 0 <= j < i ->
+        map[j] = (map at X)[j] };
+      assert { forall j. 0 <= j < i ->
+        inv[map[j]] = (inv at X)[(map at X)[j]] };
+    done;
+    { map=map; inv=inv }
+end

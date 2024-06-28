@@ -1,0 +1,151 @@
+@ARTICLE{Milner78,
+    author = {Robin Milner},
+    title = {A theory of type polymorphism in programming},
+    journal = {Journal of Computer and System Sciences},
+    year = {1978},
+    volume = {17},
+    pages = {348--375}
+}
+
+@phdthesis{Filliatre11,
+  author = {Jean-Christophe Filli\^atre},
+  title = {Deductive Program Verification},
+  year = 2011,
+  month = dec,
+  type = {Th\`{e}se d'habilitation},
+  school = {Universit{\'e} Paris-Sud},
+  type_publi = {these},
+  url = {http://www.lri.fr/~filliatr/hdr/memoire.pdf},
+  x-equipes = {demons PROVAL},
+  x-type = {habilitation},
+  x-support = {rapport},
+  topics = {team, proval}
+}
+
+@inproceedings{Filliatre13,
+  author = {Jean-Christophe Filli\^atre and Andrei Paskevich},
+  title = {Why3 --- Where Programs Meet Provers},
+  booktitle = {Proceedings of the 22nd European Symposium on Programming},
+  month = mar,
+  year = 2013,
+  volume = {7792},
+  series = {Lecture Notes in Computer Science},
+  publisher = {Springer},
+  editor = {Matthias Felleisen and Philippa Gardner},
+  pages = {125--128},
+  hal = {http://hal.inria.fr/hal-00789533},
+  topics = {team,lri},
+  keywords = {Why3},
+  type_publi = {icolcomlec},
+  x-equipes = {demons PROVAL},
+  x-type = {article},
+  x-support = {actes},
+  x-cle-support = {ESOP},
+  x-editorial-board = {yes},
+  x-international-audience = {yes}
+}
+
+@inproceedings{Clochard15,
+  hal = {http://hal.inria.fr/hal-01162661},
+  author = {Martin Clochard and Jean-Christophe
+  Filli\^atre and Andrei Paskevich},
+  title = {How to avoid proving the absence of integer overflows},
+  pages = {94--109},
+  crossref = {vstte15},
+  topics = {team,lri},
+  keywords = {Why3},
+  type_publi = {icolcomlec},
+  x-international-audience = {yes},
+  x-proceedings = {yes}
+}
+
+@techreport{Gondelman16,
+  topics = {team},
+  author = {Jean-Christophe Filli\^atre and L\'eon
+            Gondelman and Andrei Paskevich},
+  title = {A Pragmatic Type System for Deductive Verification},
+  type = {Research Report},
+  institution = {Universit\'e Paris Sud},
+  year = 2016,
+  abstract = { In the context of deductive verication, it is customary
+                  today to handle programs with pointers using either
+                  separation logic, dynamic frames, or explicit memory
+                  models. Yet we can observe that in numerous
+                  programs, a large amount of code is within the scope
+                  of Hoare logic, provided we can statically control
+                  aliasing. When this is the case, the code
+                  correctness can be reduced to simpler verication
+                  conditions which do not require any explicit memory
+                  model. This makes verication conditions more
+                  amenable both to automated theorem proving and to
+                  manual inspection and debugging. In this paper, we
+                  devise a method of such static aliasing control for
+                  a programming language featuring nested data
+                  structures with mutable components. Our solution is
+                  based on a type system with singleton regions and
+                  eects, which we prove to be sound.},
+  hal = {https://hal.archives-ouvertes.fr/hal-01256434v3},
+  note = {\url{https://hal.archives-ouvertes.fr/hal-01256434v3}}
+}
+
+@article{Gondelman16_2,
+  author = {Jean-Christophe Filli\^atre and L\'eon
+            Gondelman and Andrei Paskevich},
+  title = {The Spirit of Ghost Code},
+  journal = {Formal Methods in System Design},
+  publisher = {Springer},
+  year = 2016,
+  volume = 48,
+  number = 3,
+  pages = {152--174},
+  issn = {1572-8102},
+  doi = {10.1007/s10703-016-0243-x},
+  topics = {team},
+  hal = {https://hal.archives-ouvertes.fr/hal-01396864v1},
+  keywords = {Why3},
+  type_publi = {irevcomlec},
+  x-international-audience = {yes},
+  x-proceedings = {yes},
+  x-type = {article},
+  x-support = {revue},
+  x-editorial-board = {yes},
+  abstract = {
+  In the context of deductive program verification, ghost code is part
+  of the program that is added for the purpose of specification.
+  Ghost code must not interfere with regular code, in the sense that
+  it can be erased without observable difference in the program outcome.
+  In particular, ghost data cannot participate in regular
+  computations and ghost code cannot mutate regular data or diverge.
+  The idea exists in the folklore since the early notion of auxiliary
+  variables and is implemented in many state-of-the-art program
+  verification tools. However, a rigorous definition and treatment of
+  ghost code is surprisingly subtle and few formalizations exist.
+
+  In this article, we describe a simple ML-style programming language
+  with mutable state and ghost code.  Non-interference is ensured by a
+  type system with effects, which allows, notably, the same data types
+  and functions to be used in both regular and ghost code.
+  We define the procedure of ghost code erasure and we prove its
+  safety using bisimulation.
+  A similar type system, with numerous extensions which we briefly discuss,
+  is implemented in the program verification environment Why3.
+  }
+}
+
+@techreport{Filliatre18,
+  author = {Jean-Christophe Filli{\^a}tre and L{\'e}on Gondelman and
+            Andrei Paskevich and M{\'a}rio Pereira and Sim{\~a}o Melo de Sousa},
+  title = {A Toolchain to {P}roduce {C}orrect-by-{C}onstruction {OC}aml
+           {P}rograms},
+  hal = {https://hal.inria.fr/hal-01783851},
+  pdf = {https://hal.inria.fr/hal-01783851/file/main.pdf},
+  note = {artifact: \url{https://www.lri.fr/~mpereira/correct_ocaml.ova}},
+  year = {2018}
+}
+
+@misc{AlgoPS,
+  author = {Hugo Gimbert},
+  title = {Document de présentation des algorithmes de Parcoursup},
+  year = 2019,
+  url = {https://framagit.org/parcoursup/algorithmes-de-parcoursup/blob/master/doc/presentation_algorithmes_parcoursup_2019.pdf}
+}

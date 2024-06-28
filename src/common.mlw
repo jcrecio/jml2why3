@@ -1,0 +1,197 @@
+module Common
+
+use mach.peano.Peano
+use int.Int
+use seq.Occ
+
+type voeu = {
+  rang: int;
+  boursier: bool;
+  resident: bool;
+} invariant { rang >= 1 }
+
+use array.Array
+
+type groupe_classement = {
+  voeux: array voeu;
+  taux_boursiers: int;
+  taux_residents: int;
+} invariant { 0 <= taux_boursiers <= 100 }
+  invariant { 0 <= taux_residents <= 100 }
+  invariant { forall i. 0 <= i < length voeux -> voeux[i].rang = i + 1 }
+by {
+  voeux = Array.empty ();
+  taux_boursiers = 0;
+  taux_residents = 0;
+}
+
+let function est_boursier p = p.boursier
+let function est_resident p = p.resident
+
+use seq.Seq (* TODO: why do I have to load this to get the Q coercion working ?! *)
+use seq.FreeMonoid
+use common_seq.Common_seq
+
+predicate boursiers_seulement (s: seq voeu) =
+  (* seq_numof s est_boursier = length s *)
+  seq_forall est_boursier s
+
+predicate non_boursiers_seulement (s: seq voeu) =
+  (* seq_numof s est_boursier = 0 *)
+  seq_fornone est_boursier s
+
+predicate residents_seulement (s: seq voeu) =
+  (* seq_numof s est_resident = length s *)
+  seq_forall est_resident s
+
+predicate non_residents_seulement (s: seq voeu) =
+  (* seq_numof s est_resident = 0 *)
+  seq_fornone est_resident s
+
+predicate boursiers_residents (s: seq voeu) =
+  boursiers_seulement s && residents_seulement s
+predicate boursiers_non_residents (s: seq voeu) =
+  boursiers_seulement s && non_residents_seulement s
+predicate non_boursiers_residents (s: seq voeu) =
+  non_boursiers_seulement s && residents_seulement s
+predicate non_boursiers_non_residents (s: seq voeu) =
+  non_boursiers_seulement s && non_residents_seulement s
+
+let function voeu_lt (x: voeu) (y: voeu) =
+  x.rang < y.rang
+
+let function voeu_gt (x: voeu) (y: voeu) =
+  voeu_lt y x
+
+predicate sorted (s: seq voeu) =
+  seq_forall_two voeu_lt s
+
+lemma sorted_cons:
+  forall x: voeu, s: seq voeu.
+  (seq_forall (voeu_lt x) s) /\ sorted s <-> sorted (cons x s)
+
+lemma sorted_append:
+  forall s1 s2: seq voeu.
+  (sorted s1 /\ sorted s2 /\
+    (forall i j: int. 0 <= i < length s1 /\ 0 <= j < length s2 ->
+    voeu_lt s1[i] s2[j])) <-> sorted (s1 ++ s2)
+
+lemma sorted_snoc:
+  forall x: voeu, s: seq voeu.
+    (seq_forall (voeu_gt x) s) /\ sorted s <->
+  sorted (snoc s x)
+
+use queue.Queue as Q
+
+let function taux_ok (taux_p: int) (nb_p: int) (nb_total: int) =
+  100 * nb_p >= taux_p * nb_total
+
+predicate rang_ok (nb_voeux: int) (c: voeu) =
+  1 <= c.rang <= nb_voeux
+
+predicate rang_c_valide (s: seq voeu) (nb_voeux: int) =
+  seq_forall (rang_ok nb_voeux) s
+
+predicate rang_distinct (c: voeu) (c': voeu) =
+  voeu_lt c c' \/ voeu_lt c' c
+
+predicate rang_distincts (s: seq voeu) =
+  seq_forall_two rang_distinct s
+
+lemma rd_sub:
+  forall x: voeu, s: seq voeu.
+  rang_distincts (cons x s) -> rang_distincts s
+
+lemma rd_append:
+  forall s1 s2: seq voeu.
+  (rang_distincts s1 /\ rang_distincts s2 /\
+    (forall i j: int. 0 <= i < length s1 /\ 0 <= j < length s2 ->
+    rang_distinct s1[i] s2[j])) <-> rang_distincts (s1 ++ s2)
+
+lemma rd_comm:
+  forall s1, s2: seq voeu.
+  rang_distincts (s1 ++ s2) <-> rang_distincts (s2 ++ s1)
+
+lemma rd_cons:
+  forall x: voeu, s: seq voeu.
+  rang_distincts s ->
+  (seq_forall (rang_distinct x) s) <-> rang_distincts (cons x s)
+
+lemma rd_snoc:
+  forall x: voeu, s: seq voeu.
+    (seq_forall (rang_distinct x) s) /\ rang_distincts s <->
+  rang_distincts (snoc s x)
+
+lemma rd_mv:
+  forall x: voeu, s1: seq voeu, s2: seq voeu.
+  rang_distincts ((cons x s1) ++ s2) -> rang_distincts (s1 ++ (cons x s2))
+
+lemma rd_mvt:
+  forall b: seq voeu, nb: seq voeu, oa: seq voeu.
+  b <> empty ->
+  rang_distincts (b ++ oa) /\ rang_distincts (b ++ nb) /\ rang_distincts (nb ++ oa) ->
+  rang_distincts (cons b[0] oa) /\ rang_distincts (nb ++ (cons b[0] oa))
+
+lemma rd_dd:
+  forall a, b, c: seq voeu.
+  rang_distincts (a ++ b) /\ rang_distincts (b ++ c) /\ rang_distincts (c ++ a) <->
+  rang_distincts (a ++ b ++ c)
+
+lemma occ_exists:
+  forall s: seq voeu, x, i, j.
+    0 <= i < j <= length s ->
+    occ x s i j > 0 ->
+    exists k. i <= k < j && s[k] = x
+
+lemma occ_pos:
+  forall s: seq voeu, i, j, k.
+  0 <= i <= k < j <= length s ->
+  occ s[k] s i j > 0
+
+let diviser_groupe (g: Q.t voeu) (pred: voeu -> bool) : (g1: Q.t voeu, g2: Q.t voeu)
+  requires { sorted g }
+  ensures { [@expl:ens_size]
+    length g1 + length g2 = length (old g)}
+  ensures { [@expl:ens_filtered_a] seq_forall pred g1 }
+  ensures { [@expl:ens_filtered_b] seq_fornone pred g2 }
+  ensures { [@expl:ens_filtered_bis_a] seq_numof pred g1 = length g1 }
+  ensures { [@expl:ens_filtered_bis_b] seq_numof pred g2 = 0 }
+  ensures { [@expl:ens_permut]
+    forall k. occ_all k (old g) = occ_all k g1 + occ_all k g2 }
+  ensures { length g = 0 }
+  ensures { forall p: voeu -> bool. seq_forall p (old g) -> seq_forall p g1 /\ seq_forall p g2 }
+  ensures { sorted g1 }
+  ensures { sorted g2 }
+  ensures { rang_distincts (g1 ++ g2) }
+=
+  let g1 = Q.create () in
+  let g2 = Q.create () in
+  let n = Peano.to_int (Q.length g) in
+  for i = 0 to n - 1 do
+    invariant { [@expl:g traversed] g == (old g)[i ..] }
+    invariant { [@expl:inv_size_done] i = length g1 + length g2 = length (old g) - length g }
+    invariant { [@expl:inv_filter_p] seq_forall pred g1 }
+    invariant { [@expl:inv_filter_not_p] seq_fornone pred g2 }
+    invariant { [@expl:inv_permut] forall k. occ k (old g) 0 i = occ_all k g1 + occ_all k g2 }
+    invariant { sorted g }
+
+
+    invariant { sorted g1 }
+    invariant { sorted g2 }
+
+    invariant { [@expl:inv_sorted_pred_left] forall k1 k2. 0 <= k1 < length g1 -> 0 <= k2 < length g -> voeu_lt g1[k1] g[k2] }
+    invariant { [@expl:inv_sorted_not_pred_left] forall k1 k2. 0 <= k1 < length g2 -> 0 <= k2 < length g -> voeu_lt g2[k1] g[k2] }
+
+    invariant { rang_distincts (g1 ++ g2 ++ g) }
+    invariant { forall p: voeu -> bool. seq_forall p (old g) -> seq_forall p g1 /\ seq_forall p g2 }
+
+    let v = Q.safe_pop g in
+
+    if pred v then Q.push v g1
+    else Q.push v g2
+
+  done;
+
+  g1, g2
+
+end

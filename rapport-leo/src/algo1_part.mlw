@@ -1,0 +1,31 @@
+type ordre_appel_valide = {
+  ordre_appel: Q.t voeu;
+  boursiers: Q.t voeu;
+  non_boursiers: Q.t voeu;
+  taux_b: int;
+  nb_voeux: int;
+  nb_b_total: int;
+  mutable nb_b_appeles: int;
+} invariant { 0 <= taux_b <= 100 }
+  invariant { nb_voeux >= 0 }
+  invariant { boursiers_seulement boursiers }
+  invariant { sorted boursiers }
+  invariant { length boursiers = 0 <-> nombre_boursiers ordre_appel = nb_b_total }
+  invariant { forall i. 0 <= i <= length ordre_appel ->
+    (nombre_boursiers ordre_appel[..i] = nb_b_total -> length boursiers = 0) }
+  invariant { forall i. 0 <= i <= length ordre_appel ->
+    let nb_b_local = nombre_boursiers ordre_appel[..i] in
+    taux_ok taux_b nb_b_local i \/ nb_b_local = nb_b_total }
+  invariant { forall i. 0 <= i < length ordre_appel ->
+    let candidat = ordre_appel[i] in
+    est_boursier candidat ->
+    boursiers <> empty ->
+    voeu_lt candidat boursiers[0]
+  }
+  invariant { forall i1 i2. 0 <= i1 < i2 < length ordre_appel ->
+    let c1 = ordre_appel[i1] in
+    let c2 = ordre_appel[i2] in
+    (est_boursier c1 && (not est_boursier c2)) ->
+    let nb_b_local = nombre_boursiers ordre_appel[..i1] in
+    voeu_lt c1 c2 \/ not (taux_ok taux_b nb_b_local (i1 + 1))
+  }
