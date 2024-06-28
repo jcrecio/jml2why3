@@ -23,8 +23,6 @@ RUN opam install why3.1.7.2 --yes
 RUN git clone https://github.com/jcrecio/jml2why3 jml2why3root
 RUN cd jml2why3root/jml2why3
 
-COPY RequestValidator.java /opt/jml2why3root/jml2why
-
 RUN opam init --yes
 RUN opam switch 4.08.0
 RUN eval $(opam env)
