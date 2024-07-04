@@ -1,6 +1,5 @@
 OPENJMLVERSION=v0.3
 OPENJMLJAR=openjml-$(OPENJMLVERSION).jar
-CLASSPATH ?=
 
 .PHONY: all replay-proofs openjml.jar
 
@@ -27,7 +26,7 @@ $(OPENJMLJAR):
 	wget -O $@ https://github.com/benozol/OpenJML/releases/download/$(OPENJMLVERSION)/openjml.jar
 
 %.java.json: $(OPENJMLJAR) %.java
-	java -cp $(CLASSPATH) -jar $< -command=tojson $*.java
+	java -jar $< -cp $(TOJSON_CLASSPATH) -command=tojson $*.java
 
 %-generated.mlw: %.java.json build
 	./bin/jml2why3 --dont-prove --write-mlw $@ $<
